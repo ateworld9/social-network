@@ -1,0 +1,13 @@
+{
+  "groupings": [
+    [
+      "@images",
+      "@styles"
+    ],
+    [
+      "@src",
+      "@pages",
+      "@components"
+    ]
+  ]
+}

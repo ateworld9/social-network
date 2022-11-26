@@ -1,0 +1,9 @@
+{"level":"debug","message":"Logging initialized at debug level"}
+{"level":"debug","message":"Using .env file to supply config environment variables"}
+{"level":"error","message":"No client secret. Set SESSION_SECRET environment variable."}
+{"level":"error","message":"No database connection string. Set DB_URL_LOCAL environment variable."}
+{"level":"debug","message":"Logging initialized at debug level"}
+{"level":"debug","message":"Using .env file to supply config environment variables"}
+{"level":"error","message":"No client secret. Set SESSION_SECRET environment variable."}
+{"level":"debug","message":"Logging initialized at debug level"}
+{"level":"debug","message":"Using .env file to supply config environment variables"}
