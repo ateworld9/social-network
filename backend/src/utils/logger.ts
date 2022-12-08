@@ -1,3 +1,4 @@
+import path from 'path';
 import pino from 'pino';
 import pretty from 'pino-pretty';
 
@@ -22,7 +23,10 @@ const logger = pino(
         levelFirst: true,
         translateTime: 'yyyy-dd-mm, h:MM:ss TT',
       })
-    : pino.destination(`${__dirname}/logger.log`),
+    : pino.destination({
+        dest: path.resolve(process.cwd(), 'logger.log'),
+        sync: true,
+      }),
 );
 
 if (process.env.NODE_ENV !== 'production') {
@@ -31,17 +35,8 @@ if (process.env.NODE_ENV !== 'production') {
 
 export default logger;
 
-// import winston from 'winston';
-
-// const options: winston.LoggerOptions = {
-//   transports: [
-//     new winston.transports.Console({
-//       level: process.env.NODE_ENV === 'production' ? 'error' : 'debug',
-//     }),
-//     new winston.transports.File({filename: 'debug.log', level: 'debug'}),
-//   ],
-// };
-
-// const logger = winston.createLogger(options);
-
-// export default logger;
+//transports: [
+//  new winston.transports.Console({
+//    level: process.env.NODE_ENV === 'production' ? 'error' : 'debug',
+//  }),
+//  new winston.transports.File({filename: 'debug.log', level: 'debug'}),

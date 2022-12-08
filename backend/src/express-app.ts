@@ -1,30 +1,29 @@
-import express, {Application, NextFunction, Request, Response} from 'express';
-import cors from 'cors';
-// import {customer, products, shopping} from './api';
-import HandleErrors from './utils/error-handler';
-
+import {Application, Request, Response} from 'express';
 import expressPinoLogger from 'express-pino-logger';
+import cookieParser from 'cookie-parser';
+import bodyParser from 'body-parser';
+import cors from 'cors';
 
 import logger from './utils/logger';
+import ErrorMiddleware from './middleware/error';
+import userRouter from './PresentationLayer/user.route';
 
 export default async (app: Application) => {
-  const loggerMidlleware = expressPinoLogger({
-    logger: logger,
-    autoLogging: true,
-  });
+  app.use(
+    expressPinoLogger({
+      logger: logger,
+      autoLogging: true,
+    }),
+  );
 
-  app.use(loggerMidlleware);
-
-  app.use(express.json());
-  app.use(express.urlencoded({extended: true}));
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({extended: true}));
+  app.use(cookieParser());
   app.use(cors());
-  // app.use(express.static(__dirname + '/public'));
 
-  //api
-  // customer(app);
-  // products(app);
-  // shopping(app);
-  app.get('/', (req: Request, res: Response, next: NextFunction) => {
+  userRouter(app);
+
+  app.get('/', (req: Request, res: Response) => {
     res.status(200).json({
       response: 'successfull',
       data: {
@@ -34,5 +33,5 @@ export default async (app: Application) => {
   });
 
   // error handling
-  app.use(HandleErrors);
+  app.use(ErrorMiddleware);
 };

@@ -1,6 +1,6 @@
 import express from 'express';
 import {PORT} from './config';
-// const {databaseConnection} = require('./database');
+import {checkDatabaseConnection} from './config/database';
 import expressApp from './express-app';
 
 const port = PORT ?? 3000;
@@ -8,7 +8,7 @@ const port = PORT ?? 3000;
 const StartServer = async () => {
   const app = express();
 
-  // await databaseConnection();
+  await checkDatabaseConnection();
 
   await expressApp(app);
 

@@ -6,7 +6,8 @@
   "tabWidth": 2,
   "arrowParens": "always",
   "bracketSpacing": false,
-  "endOfLine": "lf",
+  "endOfLine": "crlf",
+  "bracketSameLine": true,
   "overrides": [
     {
       "files": ["*.ts"],

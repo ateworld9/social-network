@@ -1,0 +1,207 @@
+import bcrypt from 'bcrypt';
+import {AppError} from '../utils/app-errors';
+
+import UsersRepository from '../DataAccessLayer/users.repository';
+import TokensUseCases from './tokens.use-cases';
+import {User} from '../@types/user';
+
+const userRepository = new UsersRepository();
+const tokensUseCases = new TokensUseCases();
+
+class UserUseCases {
+  async registration(email: string, password: string, login?: string) {
+    const checkUser = await userRepository.findUserByEmail(email);
+    if (checkUser)
+      throw AppError.BadRequest('User with this email already exists!');
+
+    const hashPassword = await bcrypt.hash(password, 3);
+
+    // const activationLink = uuid.v4()
+
+    login = login ?? `user${Math.floor(Math.random() * 10000) + 1}`;
+
+    const user = await userRepository.createUser({
+      email,
+      password: hashPassword,
+      login,
+      phone: null,
+      name: null,
+      surname: null,
+      profilePic: null,
+      // isActivated: false,
+      // activationLink
+    });
+
+    if (!user) {
+      throw AppError.InternalError('User is not created, USER Case Error');
+    }
+    // await sendActivationMail(email, activationLink)
+
+    const tokens = tokensUseCases.generateTokens({
+      userId: user.userId,
+      email: user.email,
+      login: user.login,
+    });
+
+    const token = await tokensUseCases.saveToken(
+      user.userId,
+      tokens.refreshToken,
+    );
+
+    if (!token) {
+      throw AppError.InternalError('Token is not created, USER Case Error');
+    }
+
+    return {
+      userId: user.userId,
+      email: user.email,
+      login: user.login,
+      ...tokens,
+    };
+  }
+
+  async login(email: string, password: string, login?: string) {
+    let user = undefined;
+    if (email) user = await userRepository.findUserByEmail(email);
+    if (!user) {
+      throw AppError.NotFound('User with this email is Not Found');
+    }
+
+    if (login) user = await userRepository.findUserByLogin(login);
+    if (!user) {
+      throw AppError.NotFound('User with this login is Not Found');
+    }
+
+    const isPassEquals = await bcrypt.compare(password, user.password);
+    if (!isPassEquals) {
+      throw AppError.BadRequest('Uncorrect password');
+    }
+
+    const tokens = tokensUseCases.generateTokens({
+      userId: user.userId,
+      email: user.email,
+      login: user.login,
+    });
+
+    const token = await tokensUseCases.saveToken(
+      user.userId,
+      tokens.refreshToken,
+    );
+    if (!token) {
+      throw AppError.InternalError('Token is not created, USER Case Error');
+    }
+    return {
+      userId: user.userId,
+      email: user.email,
+      login: user.login,
+      ...tokens,
+    };
+  }
+
+  async logout(refreshToken: string) {
+    try {
+      await tokensUseCases.removeToken(refreshToken);
+    } catch (error) {
+      throw AppError.InternalError('USER logout Use Case Error', [error]);
+    }
+  }
+
+  async refresh(refreshToken: string) {
+    if (!refreshToken) {
+      throw AppError.UnAuthorized('Unauthorized refresh, no refreshToken');
+    }
+    const userData = tokensUseCases.validateRefreshToken(refreshToken);
+    if (!userData) {
+      throw AppError.UnAuthorized(
+        'Unauthorized refresh, not valid data in token',
+      );
+    }
+
+    const tokenFromDb = await tokensUseCases.getTokenByRefreshToken(
+      refreshToken,
+    );
+    if (!tokenFromDb) {
+      throw AppError.UnAuthorized(
+        'Unauthorized refresh, Can`t find token in db',
+      );
+    }
+    const user = await userRepository.findUserById(userData.userId);
+
+    if (!user) {
+      throw AppError.BadRequest('User with this userId is Not Found');
+    }
+    const tokens = tokensUseCases.generateTokens({
+      userId: user.userId,
+      email: user.email,
+      login: user.login,
+    });
+
+    const token = await tokensUseCases.saveToken(
+      user.userId,
+      tokens.refreshToken,
+    );
+    if (!token) {
+      throw AppError.InternalError('Token is not created, USER Case Error');
+    }
+    return {
+      userId: user.userId,
+      email: user.email,
+      login: user.login,
+      ...tokens,
+    };
+  }
+
+  async getAllUsers() {
+    try {
+      const users = await userRepository.findAllUsers();
+      return users;
+    } catch (error) {
+      throw AppError.InternalError('find all users error');
+    }
+  }
+
+  async getUserById(userId: number) {
+    try {
+      const user = await userRepository.findUserById(userId);
+      return user;
+    } catch (error) {
+      throw AppError.InternalError('find user by id error');
+    }
+  }
+
+  async getUserByEmail(email: string) {
+    try {
+      const user = await userRepository.findUserByEmail(email);
+      return user;
+    } catch (error) {
+      throw AppError.InternalError('find user by email error');
+    }
+  }
+
+  async getUsers(query: Partial<User>) {
+    const users = await userRepository.findUsers(query);
+    console.log(query, users);
+
+    if (!users) {
+      throw AppError.NotFound('User is not found');
+    }
+    return users;
+  }
+
+  async getUser(query: Partial<User>) {
+    const user = await userRepository.findUser(query);
+    if (!user) {
+      throw AppError.NotFound('User is not found');
+    }
+    return user;
+  }
+
+  async updateUser(userId: number, fields: Partial<User>) {
+    const user = await userRepository.updateUser(userId, fields);
+    if (!user) {
+      throw AppError.InternalError('User is not updated, USER Case Error');
+    }
+  }
+}
+
+export default UserUseCases;

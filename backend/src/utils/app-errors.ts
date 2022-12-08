@@ -14,71 +14,48 @@ enum STATUS_CODES {
   NOT_IMPLEMENTED = 501,
   BAD_GATEWAY = 502,
 
-	//add new code from MDN if it need
+  //add new code from MDN if it need
 }
 
 class AppError extends Error {
-  public readonly name: string;
-  public readonly statusCode: STATUS_CODES;
-  public readonly isOperational: boolean;
-  public readonly errorStack: any;
-  public readonly logError: any;
+  statusCode: STATUS_CODES;
+  errors: Array<unknown>;
   constructor(
-    name: string,
     statusCode: STATUS_CODES,
-    description: string,
-    isOperational: boolean,
-    errorStack?: string,
-    logingErrorResponse?: any,
+    message: string,
+    errors: Array<unknown> = [],
   ) {
-    super(description);
+    super(message);
+
     Object.setPrototypeOf(this, new.target.prototype);
-    this.name = name;
+    this.name = Error.name;
     this.statusCode = statusCode;
-    this.isOperational = isOperational;
-    this.errorStack = errorStack;
-    this.logError = logingErrorResponse;
-    Error.captureStackTrace(this);
+    this.errors = errors;
+    // Error.captureStackTrace(this, undefined);
+  }
+
+  static BadRequest(message = 'Bad Request', errors: Array<unknown> = []) {
+    return new AppError(STATUS_CODES.BAD_REQUEST, message, errors);
+  }
+  static UnAuthorized(message = 'Un Authorized', errors: Array<unknown> = []) {
+    return new AppError(STATUS_CODES.BAD_REQUEST, message, errors);
+  }
+  static Forbidden(message = 'Forbidden', errors: Array<unknown> = []) {
+    return new AppError(STATUS_CODES.FORBIDDEN, message, errors);
+  }
+
+  static NotFound(message = 'Not Found', errors: Array<unknown> = []) {
+    return new AppError(STATUS_CODES.NOT_FOUND, message, errors);
+  }
+
+  static InternalError(
+    message = 'Internal Error',
+    errors: Array<unknown> = [],
+  ) {
+    return new AppError(STATUS_CODES.INTERNAL_ERROR, message, errors);
   }
 }
 
 //api Specific Errors
-class APIError extends AppError {
-  constructor(
-    name: string,
-    statusCode = STATUS_CODES.INTERNAL_ERROR,
-    description = 'Internal Server Error',
-    isOperational = true,
-  ) {
-    super(name, statusCode, description, isOperational);
-  }
-}
 
-//400
-class BadRequestError extends AppError {
-  constructor(description = 'Bad request', logingErrorResponse: any) {
-    super(
-      'BAD_REQUEST',
-      STATUS_CODES.BAD_REQUEST,
-      description,
-      true,
-      undefined,
-      logingErrorResponse,
-    );
-  }
-}
-
-//400
-class ValidationError extends AppError {
-  constructor(description = 'Validation Error', errorStack: any) {
-    super(
-      'BAD REQUEST',
-      STATUS_CODES.BAD_REQUEST,
-      description,
-      true,
-      errorStack,
-    );
-  }
-}
-
-export {AppError, APIError, BadRequestError, ValidationError, STATUS_CODES};
+export {AppError, STATUS_CODES};

@@ -1,12 +1,11 @@
 module.exports = {
-	env: {
-		es2022: true,
-		node: true,
-	},
+  env: {
+    es2022: true,
+    node: true,
+  },
   parser: '@typescript-eslint/parser',
   extends: [
     'plugin:@typescript-eslint/recommended',
-    'prettier/@typescript-eslint',
     'plugin:prettier/recommended',
   ],
   parserOptions: {
@@ -25,7 +24,7 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': 'warn',
     'no-var': 'error',
     semi: 'error',
-    indent: ['error', 2, {SwitchCase: 1}],
+    indent: ['off', 2],
     'no-multi-spaces': 'error',
     'space-in-parens': 'error',
     'no-multiple-empty-lines': 'error',

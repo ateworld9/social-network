@@ -3,22 +3,26 @@
   "display": "Node 18",
 
   "compilerOptions": {
-		"outDir": "./build",
+    "outDir": "./build",
     "lib": ["es2022"],
     "module": "commonjs",
     "target": "es2022",
+    "moduleResolution": "node",
 
-		"sourceMap": true,
+    "sourceMap": true,
     "allowJs": true,
 
     "strict": true,
-		"allowSyntheticDefaultImports": true,
+    "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "node",
-		"noImplicitReturns": true,
+    "noImplicitReturns": false, //cause of error handling
     "noImplicitThis": true,
     "noImplicitAny": true,
-  }
+    "baseUrl": ".",
+    "typeRoots": ["./src/@types", "./node_modules/@types"]
+  },
+  "include": ["src", "db"],
+  "exclude": ["node_modules", "build"]
 }
