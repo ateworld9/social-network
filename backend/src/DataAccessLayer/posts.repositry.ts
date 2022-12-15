@@ -1,14 +1,8 @@
 import knexdb from '../config/database';
 import logger from '../utils/logger';
-import {Post} from '../@types/post';
+import {Post, PostExt} from '../@types/post';
 
 const POSTS_TABLE = 'posts';
-
-type PostExt = Post & {
-  username: string;
-  profilePic?: string | null;
-  media?: string | null;
-};
 
 class PostsRepository {
   async getAllPosts() {
@@ -46,7 +40,8 @@ class PostsRepository {
         .join('media', 'media.mediaId', '=', 'p2m.mediaId')
         .where(where)
         .limit(limit ?? 10)
-        .offset(offset ?? 0);
+        .offset(offset ?? 0)
+        .orderBy('postId', 'desc');
       return posts;
     } catch (error) {
       logger.error(error, 'DB ERROR');

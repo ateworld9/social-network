@@ -1,4 +1,6 @@
-import { FC } from "react";
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+import { FC, useState } from "react";
 import { Link } from "react-router-dom";
 
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
@@ -9,13 +11,21 @@ import TextsmsOutlinedIcon from "@mui/icons-material/TextsmsOutlined";
 
 import type { Post as IPost } from "../../models/Post";
 
-// import Comments from "../Comments";
+import Comments from "./Comments";
+
 import s from "./post.module.css";
 
 type PostType = IPost;
 
-const Post: FC<PostType> = ({ userId, username, profilePic, text, media }) => {
-  // const [commentOpen, setCommentOpen] = useState(false);
+const Post: FC<PostType> = ({
+  userId,
+  username,
+  profilePic,
+  text,
+  media,
+  comments,
+}) => {
+  const [commentOpen, setCommentOpen] = useState(false);
 
   // TEMPORARY
   const liked = false;
@@ -47,19 +57,16 @@ const Post: FC<PostType> = ({ userId, username, profilePic, text, media }) => {
             {liked ? <FavoriteOutlinedIcon /> : <FavoriteBorderOutlinedIcon />}
             12 Likes
           </div>
-          <div
-            className={s.item}
-            // onClick={() => setCommentOpen(!commentOpen)}
-          >
+          <div className={s.item} onClick={() => setCommentOpen(!commentOpen)}>
             <TextsmsOutlinedIcon />
-            12 Comments
+            {comments.length || "0"} Comments
           </div>
           <div className={s.item}>
             <ShareOutlinedIcon />
             Share
           </div>
         </div>
-        {/* {commentOpen && <Comments />} */}
+        {commentOpen && <Comments comments={comments} />}
       </div>
     </div>
   );

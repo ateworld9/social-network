@@ -1,0 +1,30 @@
+.comment {
+  margin: 30px 0px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+.comment img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.comment .info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  align-self: flex-start;
+}
+.comment .info span {
+  font-weight: 500;
+}
+.comment .info p {
+  color: var(--textColor);
+}
+.comment .date {
+  flex: 1;
+  align-self: center;
+  color: grey;
+  font-size: x 12px;
+}

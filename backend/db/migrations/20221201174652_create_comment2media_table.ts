@@ -5,8 +5,8 @@ export async function up(knex: Knex): Promise<void> {
     table
       .integer('commentId')
       .references('comments.commentId')
-      .onDelete('SET NULL');
-    table.integer('mediaId').references('media.mediaId').onDelete('SET NULL');
+      .onDelete('CASCADE');
+    table.integer('mediaId').references('media.mediaId').onDelete('CASCADE');
     table.primary(['commentId', 'mediaId']);
   });
 }

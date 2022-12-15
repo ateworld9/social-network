@@ -1,3 +1,5 @@
+import {CommentExt} from './comment';
+
 export interface Post {
   postId: number;
   userId: number | null;
@@ -6,3 +8,9 @@ export interface Post {
   createdAt: Date | string;
   updatedAt: Date | string;
 }
+type PostExt = Post & {
+  username: string;
+  profilePic?: string | null;
+  media?: string | null;
+  comments?: CommentExt[];
+};
