@@ -19,12 +19,8 @@ enum STATUS_CODES {
 
 class AppError extends Error {
   statusCode: STATUS_CODES;
-  errors: Array<unknown>;
-  constructor(
-    statusCode: STATUS_CODES,
-    message: string,
-    errors: Array<unknown> = [],
-  ) {
+  errors: any;
+  constructor(statusCode: STATUS_CODES, message: string, errors: any = []) {
     super(message);
 
     Object.setPrototypeOf(this, new.target.prototype);
@@ -34,24 +30,25 @@ class AppError extends Error {
     // Error.captureStackTrace(this, undefined);
   }
 
-  static BadRequest(message = 'Bad Request', errors: Array<unknown> = []) {
+  static NoContent(message = 'No Content', errors: any = []) {
     return new AppError(STATUS_CODES.BAD_REQUEST, message, errors);
   }
-  static UnAuthorized(message = 'Un Authorized', errors: Array<unknown> = []) {
+
+  static BadRequest(message = 'Bad Request', errors: any = []) {
     return new AppError(STATUS_CODES.BAD_REQUEST, message, errors);
   }
-  static Forbidden(message = 'Forbidden', errors: Array<unknown> = []) {
+  static UnAuthorized(message = 'Un Authorized', errors: any = []) {
+    return new AppError(STATUS_CODES.UN_AUTHORISED, message, errors);
+  }
+  static Forbidden(message = 'Forbidden', errors: any = []) {
     return new AppError(STATUS_CODES.FORBIDDEN, message, errors);
   }
 
-  static NotFound(message = 'Not Found', errors: Array<unknown> = []) {
+  static NotFound(message = 'Not Found', errors: any = []) {
     return new AppError(STATUS_CODES.NOT_FOUND, message, errors);
   }
 
-  static InternalError(
-    message = 'Internal Error',
-    errors: Array<unknown> = [],
-  ) {
+  static InternalError(message = 'Internal Error', errors: any = []) {
     return new AppError(STATUS_CODES.INTERNAL_ERROR, message, errors);
   }
 }

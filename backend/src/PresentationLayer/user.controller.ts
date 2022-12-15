@@ -2,6 +2,7 @@ import {NextFunction, Request, Response} from 'express-serve-static-core';
 import {AppError} from '../utils/app-errors';
 import UserUseCases from '../DomainLayer/user.use-cases';
 import {User} from '../@types/user';
+import {validationResult} from 'express-validator';
 
 const userUseCases = new UserUseCases();
 
@@ -9,18 +10,12 @@ const MAX_AGE = 30 * 24 * 60 * 60 * 1000;
 
 class UserController {
   async registration(req: Request, res: Response, next: NextFunction) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return next(AppError.BadRequest('Ошибка при валидации', errors));
+    }
     try {
       const {email, password} = req.body;
-      if (!email) {
-        next(AppError.BadRequest('server did not receive email'));
-        return;
-      }
-      if (!password) {
-        next(AppError.BadRequest('server did not receive password'));
-        return;
-      }
-      // validate email is email, and password is more then 8
-
       const user = await userUseCases.registration(email, password);
       res.cookie('refreshToken', user.refreshToken, {
         maxAge: MAX_AGE,
@@ -33,9 +28,13 @@ class UserController {
     }
   }
   async login(req: Request, res: Response, next: NextFunction) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return next(AppError.BadRequest('Ошибка при валидации', errors));
+    }
     try {
-      const {email, password} = req.body;
-      const user = await userUseCases.login(email, password);
+      const {email, username, password} = req.body;
+      const user = await userUseCases.login(password, email, username);
       res.cookie('refreshToken', user.refreshToken, {
         maxAge: MAX_AGE,
         httpOnly: true,
@@ -55,39 +54,33 @@ class UserController {
       }
       await userUseCases.logout(refreshToken);
       res.clearCookie('refreshToken');
-      res.status(200).json({msg: 'OK, logouted!'});
+      res.status(200).json({message: 'OK, logouted!'});
       return;
     } catch (err) {
       next(err);
     }
   }
   async refresh(req: Request, res: Response, next: NextFunction) {
-    try {
-      const {refreshToken} = req.cookies;
-      if (!refreshToken) {
-        next(AppError.UnAuthorized("no refreshToken, can't refresh"));
-        return;
-      }
-      const userData = await userUseCases.refresh(refreshToken);
-      res.cookie('refreshToken', userData.refreshToken, {
-        maxAge: 30 * 24 * 60 * 60 * 1000,
-        httpOnly: true,
-      });
-      res.status(200).json({msg: 'OK, refreshed!'});
-      // res.status(200).json(userData);
+    const {refreshToken} = req.cookies;
+    if (!refreshToken) {
+      next(AppError.UnAuthorized("no refreshToken, can't refresh"));
       return;
-    } catch (e) {
-      next(e);
     }
-  }
-  async getAllUsers(req: Request, res: Response, next: NextFunction) {
+    let userData;
     try {
-      const users = await userUseCases.getAllUsers();
-      return res.status(200).json(users);
+      userData = await userUseCases.refresh(refreshToken);
     } catch (e) {
-      next(e);
+      return next(e);
     }
+    res.cookie('refreshToken', userData.refreshToken, {
+      maxAge: MAX_AGE,
+      httpOnly: true,
+    });
+    // res.status(200).json({msg: 'OK, refreshed!'});
+    res.status(200).json(userData);
+    return;
   }
+
   async getUserById(req: Request, res: Response, next: NextFunction) {
     try {
       const userId = Number(req.params.userId);
@@ -95,6 +88,7 @@ class UserController {
         next(AppError.BadRequest('Bad request: userId params is not passed'));
       }
       const user = await userUseCases.getUserById(userId);
+
       return res.status(200).json(user);
     } catch (e) {
       next(e);

@@ -7,6 +7,8 @@ import cors from 'cors';
 import logger from './utils/logger';
 import ErrorMiddleware from './middleware/error';
 import userRouter from './PresentationLayer/user.route';
+import postRouter from './PresentationLayer/post.route';
+import {CLIENT_URL} from './config';
 
 export default async (app: Application) => {
   app.use(
@@ -19,9 +21,10 @@ export default async (app: Application) => {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({extended: true}));
   app.use(cookieParser());
-  app.use(cors());
+  app.use(cors({credentials: true, origin: CLIENT_URL}));
 
   userRouter(app);
+  postRouter(app);
 
   app.get('/', (req: Request, res: Response) => {
     res.status(200).json({

@@ -19,6 +19,13 @@ if (fs.existsSync(path.resolve(process.cwd(), '.env'))) {
 }
 
 export const PORT = Number(process.env.PORT || '8000');
+
+export const CLIENT_URL = process.env['CLIENT_URL'];
+if (!CLIENT_URL) {
+  logger.error('No client url. Set CLIENT_URL env variable.');
+  process.exit(1);
+}
+
 export const ENVIRONMENT = process.env.NODE_ENV;
 export const isProd = ENVIRONMENT === 'production';
 export const APP_ACCESS_SECRET = process.env['APP_ACCESS_SECRET'];

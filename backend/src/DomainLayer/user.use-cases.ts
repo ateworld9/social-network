@@ -4,32 +4,42 @@ import {AppError} from '../utils/app-errors';
 import UsersRepository from '../DataAccessLayer/users.repository';
 import TokensUseCases from './tokens.use-cases';
 import {User} from '../@types/user';
+import {Token} from '../@types/token';
 
 const userRepository = new UsersRepository();
 const tokensUseCases = new TokensUseCases();
 
 class UserUseCases {
-  async registration(email: string, password: string, login?: string) {
-    const checkUser = await userRepository.findUserByEmail(email);
-    if (checkUser)
-      throw AppError.BadRequest('User with this email already exists!');
+  async registration(email: string, password: string, username?: string) {
+    let checkUser: User | undefined = undefined;
+    let errorMessage = '';
+
+    checkUser = await userRepository.findUserByEmail(email);
+
+    if (checkUser) errorMessage = 'User with this email already exists!';
+
+    username = username ?? `user${Math.floor(Math.random() * 10000) + 1}`;
+    checkUser = await userRepository.findUserByUsername(username);
+
+    if (checkUser) {
+      errorMessage = 'User with this username already exists!';
+      throw AppError.BadRequest(errorMessage);
+    }
 
     const hashPassword = await bcrypt.hash(password, 3);
 
     // const activationLink = uuid.v4()
 
-    login = login ?? `user${Math.floor(Math.random() * 10000) + 1}`;
-
     const user = await userRepository.createUser({
       email,
       password: hashPassword,
-      login,
+      username,
       phone: null,
       name: null,
       surname: null,
       profilePic: null,
-      // isActivated: false,
-      // activationLink
+      isActivated: false,
+      activationLink: '',
     });
 
     if (!user) {
@@ -40,47 +50,43 @@ class UserUseCases {
     const tokens = tokensUseCases.generateTokens({
       userId: user.userId,
       email: user.email,
-      login: user.login,
+      username: user.username,
     });
 
-    const token = await tokensUseCases.saveToken(
-      user.userId,
-      tokens.refreshToken,
-    );
+    let token: Token | undefined;
 
-    if (!token) {
+    try {
+      token = await tokensUseCases.saveToken(user.userId, tokens.refreshToken);
+    } catch (error) {
       throw AppError.InternalError('Token is not created, USER Case Error');
     }
 
     return {
-      userId: user.userId,
-      email: user.email,
-      login: user.login,
-      ...tokens,
+      user,
+      ...token,
     };
   }
 
-  async login(email: string, password: string, login?: string) {
-    let user = undefined;
+  async login(password: string, email?: string, username?: string) {
+    let user: User | undefined = undefined;
     if (email) user = await userRepository.findUserByEmail(email);
+    if (username && !user)
+      user = await userRepository.findUserByUsername(username);
     if (!user) {
-      throw AppError.NotFound('User with this email is Not Found');
-    }
-
-    if (login) user = await userRepository.findUserByLogin(login);
-    if (!user) {
-      throw AppError.NotFound('User with this login is Not Found');
+      throw AppError.NotFound(
+        `User with this ${username ? 'username' : 'email'} is not found`,
+      );
     }
 
     const isPassEquals = await bcrypt.compare(password, user.password);
     if (!isPassEquals) {
-      throw AppError.BadRequest('Uncorrect password');
+      throw AppError.BadRequest('Un correct password');
     }
 
     const tokens = tokensUseCases.generateTokens({
       userId: user.userId,
       email: user.email,
-      login: user.login,
+      username: user.username,
     });
 
     const token = await tokensUseCases.saveToken(
@@ -91,9 +97,7 @@ class UserUseCases {
       throw AppError.InternalError('Token is not created, USER Case Error');
     }
     return {
-      userId: user.userId,
-      email: user.email,
-      login: user.login,
+      user,
       ...tokens,
     };
   }
@@ -102,7 +106,7 @@ class UserUseCases {
     try {
       await tokensUseCases.removeToken(refreshToken);
     } catch (error) {
-      throw AppError.InternalError('USER logout Use Case Error', [error]);
+      throw AppError.InternalError('Oops :(( Can not logout', [error]);
     }
   }
 
@@ -113,7 +117,7 @@ class UserUseCases {
     const userData = tokensUseCases.validateRefreshToken(refreshToken);
     if (!userData) {
       throw AppError.UnAuthorized(
-        'Unauthorized refresh, not valid data in token',
+        'Unauthorized refresh, token data is not valid',
       );
     }
 
@@ -128,12 +132,12 @@ class UserUseCases {
     const user = await userRepository.findUserById(userData.userId);
 
     if (!user) {
-      throw AppError.BadRequest('User with this userId is Not Found');
+      throw AppError.BadRequest('User with this userId is not found');
     }
     const tokens = tokensUseCases.generateTokens({
       userId: user.userId,
       email: user.email,
-      login: user.login,
+      username: user.username,
     });
 
     const token = await tokensUseCases.saveToken(
@@ -144,20 +148,9 @@ class UserUseCases {
       throw AppError.InternalError('Token is not created, USER Case Error');
     }
     return {
-      userId: user.userId,
-      email: user.email,
-      login: user.login,
+      user,
       ...tokens,
     };
-  }
-
-  async getAllUsers() {
-    try {
-      const users = await userRepository.findAllUsers();
-      return users;
-    } catch (error) {
-      throw AppError.InternalError('find all users error');
-    }
   }
 
   async getUserById(userId: number) {
@@ -178,12 +171,12 @@ class UserUseCases {
     }
   }
 
-  async getUsers(query: Partial<User>) {
-    const users = await userRepository.findUsers(query);
+  async getUsers(query: Partial<User>, limit?: number, offset?: number) {
+    const users = await userRepository.findUsers(query, limit, offset);
     console.log(query, users);
 
     if (!users) {
-      throw AppError.NotFound('User is not found');
+      throw AppError.NotFound('Users is not found');
     }
     return users;
   }

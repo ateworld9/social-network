@@ -10,7 +10,7 @@ import {User, UserTokenPayload} from './user';
 //     user: {
 //       userId: number | undefined;
 //       email: string | undefined;
-//       login: string | undefined;
+//       username: string | undefined;
 //     };
 //   }
 // }

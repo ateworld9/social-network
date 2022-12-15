@@ -5,14 +5,14 @@ export interface User {
   phone: string | null;
   name: string | null;
   surname: string | null;
-  profilePic: number | null;
-  login: string;
+  profilePic: number | string | null;
+  username: string;
 
-  // isActivated: boolean;
-  // activationLink: string;
+  isActivated: boolean;
+  activationLink?: string;
 
   createdAt: Date | string;
   updatedAt: Date | string;
 }
 
-export type UserTokenPayload = Pick<User, 'userId' | 'email' | 'login'>;
+export type UserTokenPayload = Pick<User, 'userId' | 'email' | 'username'>;

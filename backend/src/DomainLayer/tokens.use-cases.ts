@@ -49,16 +49,25 @@ class TokenUseCases {
       const userToken = await tokenRepository.findTokenByUserId(userId);
 
       if (userToken) {
-        const newToken = await tokenRepository.updateToken(
+        const updatedToken = await tokenRepository.updateToken(
           userId,
           refreshToken,
         );
-        if (!newToken) {
+
+        if (!updatedToken) {
           throw AppError.InternalError('db error, on token update');
         }
-        return newToken;
-      }
 
+        return updatedToken;
+      }
+    } catch (e) {
+      throw AppError.InternalError(
+        'TOKEN saveToken>updateToken Use Case Error',
+        [e],
+      );
+    }
+
+    try {
       const newToken = await tokenRepository.createToken({
         userId,
         refreshToken,
@@ -68,7 +77,10 @@ class TokenUseCases {
       }
       return newToken;
     } catch (e) {
-      throw AppError.InternalError('TOKEN saveToken Use Case Error', [e]);
+      throw AppError.InternalError(
+        'TOKEN saveToken>createToken Use Case Error',
+        [e],
+      );
     }
   }
 
@@ -81,18 +93,11 @@ class TokenUseCases {
   }
 
   async getTokenByRefreshToken(refreshToken: string) {
-    try {
-      const token = await tokenRepository.findTokenByRefreshToken(refreshToken);
-      if (!token) {
-        throw AppError.NotFound('Not Found token by refreshToken');
-      }
-      return token;
-    } catch (e) {
-      throw AppError.InternalError(
-        'TOKEN getTokenByRefreshToken Use Case Error',
-        [e],
-      );
+    const token = await tokenRepository.findTokenByRefreshToken(refreshToken);
+    if (!token) {
+      throw AppError.NotFound('Not Found token by refreshToken');
     }
+    return token;
   }
 }
 

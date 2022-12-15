@@ -22,7 +22,7 @@ export async function up(knex: Knex): Promise<void> {
       .references('media.mediaId')
       .onDelete('SET NULL')
       .defaultTo(null);
-    table.string('login', 255).notNullable().unique();
+    table.string('username', 255).notNullable().unique();
     table.timestamps(false, true, true);
   });
 }

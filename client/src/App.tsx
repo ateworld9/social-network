@@ -1,27 +1,22 @@
-import Layout from '@layouts/Layout';
-import {Home, Login, Profile, Registration} from '@pages/index';
-import {
-  Link,
-  Navigate,
-  RouterProvider,
-  createBrowserRouter,
-} from 'react-router-dom';
+import { useEffect } from "react";
+import { RouterProvider, createBrowserRouter, Link } from "react-router-dom";
 
-import {ThemeProvider} from './themeContext';
+import { useAppDispatch } from "./hooks/store";
+import { ThemeProvider } from "./hooks/themeContext";
 
-const ProtectedRoute = ({children}: {children: JSX.Element}) => {
-  const currentUser = true;
+import { fetchCheckAuth } from "./features/auth/authThunks";
+import { ProtectedRoute, UnProtectedRoute } from "./pages/guards";
+import Login from "./pages/Login";
+import Registration from "./pages/Registration";
 
-  if (!currentUser) {
-    // dispatch error to snackbar
-    return <Navigate to="/login" />;
-  }
-  return children;
-};
+import Layout from "./features/Layout";
+import ProfileContainer from "./features/Profile";
+
+import Home from "./features/Home";
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: (
       <ProtectedRoute>
         <Layout />
@@ -29,27 +24,50 @@ const router = createBrowserRouter([
     ),
     children: [
       {
-        path: '/',
+        path: "/",
         element: <Home />,
       },
       {
-        path: '/profile/:id',
-        element: <Profile />,
+        path: "/profile",
+        element: <ProfileContainer />,
+      },
+      {
+        path: "/profile/:userId",
+        element: <ProfileContainer />,
       },
     ],
-    errorElement: <Link to="/">Home</Link>,
+    errorElement: (
+      <div>
+        <Link to="/">Home</Link>
+        <p>Красивая страничка с 404 нот фаунд</p>
+      </div>
+    ),
   },
   {
-    path: '/login',
-    element: <Login />,
+    path: "/login",
+    element: (
+      <UnProtectedRoute>
+        <Login />
+      </UnProtectedRoute>
+    ),
   },
   {
-    path: '/registration',
-    element: <Registration />,
+    path: "/registration",
+    element: (
+      <UnProtectedRoute>
+        <Registration />
+      </UnProtectedRoute>
+    ),
   },
 ]);
 
 function App() {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) dispatch(fetchCheckAuth());
+  }, [dispatch]);
+
   return (
     <ThemeProvider>
       <RouterProvider router={router} />;

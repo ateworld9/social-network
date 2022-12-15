@@ -1,13 +1,17 @@
-import './login.scss';
+import {
+  Link,
+  //  useNavigate
+} from "react-router-dom";
 
-import {Link} from 'react-router-dom';
+import s from "./login.module.css";
+import LoginForm from "./LoginForm";
 
-export const Login = () => {
+const Login = () => {
   return (
-    <div className="login">
-      <div className="card">
-        <div className="left">
-          <h1>Hello World!</h1>
+    <div className={s.login}>
+      <div className={s.card}>
+        <div className={s.left}>
+          <h1 className={s.header}>Hello World!</h1>
           <p>
             Lorem ipsum, dolor sit amet consectetur adipisicing elit.
             Consequatur, maxime corrupti magni hic illum aspernatur
@@ -15,21 +19,16 @@ export const Login = () => {
           </p>
           <span>Don't you have an account?</span>
           <Link to="/registration">
-          <button>Registration</button>
+            <button type="button">Registration</button>
           </Link>
         </div>
-        <div className="right">
+        <div className={s.right}>
           <h1>Login</h1>
-          <form>
-            <input type="text" placeholder="Username" />
-            <input type="password" placeholder="password" />
-
-            <button>Login</button>
-          </form>
+          <LoginForm />
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default Login;

@@ -1,22 +1,18 @@
-import './registration.scss';
+import { Link } from "react-router-dom";
 
-import {Link} from 'react-router-dom';
+import s from "./registration.module.css";
 
-export const Registration = () => {
+import RegistrationForm from "./RegistrationForm";
+
+const Registration = () => {
   return (
-    <div className="registration">
-      <div className="card">
-        <div className="left">
+    <div className={s.registration}>
+      <div className={s.card}>
+        <div className={s.left}>
           <h1>Registration</h1>
-          <form>
-            <input type="text" placeholder="Username" />
-            <input type="text" placeholder="Name" />
-            <input type="email" placeholder="Email" />
-            <input type="password" placeholder="password" />
-            <button>Registration</button>
-          </form>
+          <RegistrationForm />
         </div>
-        <div className="right">
+        <div className={s.right}>
           <h1>Hello World!</h1>
           <p>
             Lorem ipsum, dolor sit amet consectetur adipisicing elit.
@@ -25,12 +21,12 @@ export const Registration = () => {
           </p>
           <span>Do you have an account?</span>
           <Link to="/login">
-            <button>Login</button>
+            <button type="button">Login</button>
           </Link>
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default Registration;
