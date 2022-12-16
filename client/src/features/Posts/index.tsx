@@ -10,10 +10,10 @@ const Posts: FC<{ posts?: IPost[]; isLoading: boolean }> = ({
   return (
     <div
       style={{
-        padding: "20px 70px",
+        padding: "1cqw 3cqw",
         display: "flex",
         flexDirection: "column",
-        gap: "50px",
+        gap: "2cqw",
       }}
     >
       {isLoading && <div>posts loading skeleton</div>}

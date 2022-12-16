@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { FC, useState } from "react";
 import { Link } from "react-router-dom";
+import cn from "classnames";
 
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
@@ -57,7 +58,10 @@ const Post: FC<PostType> = ({
             {liked ? <FavoriteOutlinedIcon /> : <FavoriteBorderOutlinedIcon />}
             12 Likes
           </div>
-          <div className={s.item} onClick={() => setCommentOpen(!commentOpen)}>
+          <div
+            className={cn(s.item, !comments.length && s.disabled)}
+            onClick={() => setCommentOpen(!commentOpen)}
+          >
             <TextsmsOutlinedIcon />
             {comments.length || "0"} Comments
           </div>
@@ -66,7 +70,7 @@ const Post: FC<PostType> = ({
             Share
           </div>
         </div>
-        {commentOpen && <Comments comments={comments} />}
+        {commentOpen && comments.length && <Comments comments={comments} />}
       </div>
     </div>
   );

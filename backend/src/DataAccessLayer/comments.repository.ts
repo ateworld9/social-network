@@ -28,11 +28,10 @@ class CommentsRepository {
         .join('media', 'media.mediaId', '=', 'p2m.mediaId')
         .where({postId});
 
-      console.log(comments);
-
       return comments;
     } catch (error) {
       logger.error(error, 'DB Error');
+      throw error;
     }
   }
 
@@ -61,6 +60,7 @@ class CommentsRepository {
       return comments;
     } catch (error) {
       logger.error(error, 'DB Error');
+      throw error;
     }
   }
 
@@ -73,6 +73,7 @@ class CommentsRepository {
       return result[0];
     } catch (error) {
       logger.error(error, 'DB Error');
+      throw error;
     }
   }
 
@@ -86,25 +87,9 @@ class CommentsRepository {
       return result;
     } catch (error) {
       logger.error(error, 'DB Error');
+      throw error;
     }
   }
 }
 
 export default CommentsRepository;
-
-// select
-//  "comments"."userId" as "userId",
-//  "users"."username" as "username",
-//  "um"."path" as "profilePic",
-//  "comments"."postId" as "postId",
-//  "comments"."text" as "text",
-//  "comments"."status" as "status",
-//  "media"."path" as "media",
-//  "comments"."createdAt",
-//  "comments"."updatedAt"
-//  from "comments"
-// inner join "users" on "users"."userId" = "comments"."userId"
-// left join "media" as "um" on "um"."mediaId" = "users"."profilePic"
-// left join "comment2media" as "c2m" on "c2m"."commentId" = "media"."mediaId"
-// inner join "media" on "media"."mediaId" = "c2m"."mediaId"
-// where "postId" in ($1, $2, $3) - invalid reference to FROM-clause entry for table "media"

@@ -27,6 +27,7 @@ class UsersRepository {
       return users;
     } catch (error) {
       logger.error(error, 'DB ERROR');
+      throw error;
     }
   }
 
@@ -50,6 +51,7 @@ class UsersRepository {
       return users[0];
     } catch (error) {
       logger.error(error, 'DB ERROR');
+      throw error;
     }
   }
 
@@ -74,6 +76,7 @@ class UsersRepository {
       return users[0];
     } catch (error) {
       logger.error(error, 'DB ERROR');
+      throw error;
     }
   }
   async findUserByEmail(email: string) {
@@ -96,6 +99,7 @@ class UsersRepository {
       return users[0];
     } catch (error) {
       logger.error(error, 'DB ERROR');
+      throw error;
     }
   }
 
@@ -119,6 +123,7 @@ class UsersRepository {
       return users[0];
     } catch (error) {
       logger.error(error, 'DB ERROR');
+      throw error;
     }
   }
 
@@ -128,6 +133,7 @@ class UsersRepository {
       return result[0];
     } catch (error) {
       logger.error(error, 'DB ERROR');
+      throw error;
     }
   }
 
@@ -161,6 +167,7 @@ class UsersRepository {
       return updatedUser[0];
     } catch (error) {
       logger.error(error, 'DB ERROR');
+      throw error;
     }
   }
 }

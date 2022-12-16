@@ -1,7 +1,8 @@
+import cn from "classnames";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 
-import { Button } from "@mui/material";
+import { IconButton } from "@mui/material";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import GridViewOutlinedIcon from "@mui/icons-material/GridViewOutlined";
@@ -34,23 +35,29 @@ const NavBar: React.FC = () => {
         <Link to="/" style={{ textDecoration: "none" }}>
           <span>worldsocial</span>
         </Link>
-        <HomeOutlinedIcon />
+        <HomeOutlinedIcon className={s.icon} />
         {theme === ThemeEnum.light && (
-          <WbSunnyOutlinedIcon className={s.themeIcon} onClick={toggleTheme} />
+          <WbSunnyOutlinedIcon
+            className={cn(s.themeIcon, s.icon)}
+            onClick={toggleTheme}
+          />
         )}
         {theme === ThemeEnum.dark && (
-          <DarkModeOutlinedIcon className={s.themeIcon} onClick={toggleTheme} />
+          <DarkModeOutlinedIcon
+            className={cn(s.themeIcon, s.icon)}
+            onClick={toggleTheme}
+          />
         )}
-        <GridViewOutlinedIcon />
+        <GridViewOutlinedIcon className={s.icon} />
         <div className={s.search}>
-          <SearchOutlinedIcon />
+          <SearchOutlinedIcon className={s.icon} />
           <input type="text" placeholder="Search..." />
         </div>
       </div>
       <div className={s.right}>
-        <PersonOutlinedIcon />
-        <EmailOutlinedIcon />
-        <NotificationsOutlinedIcon />
+        <PersonOutlinedIcon className={s.icon} />
+        <EmailOutlinedIcon className={s.icon} />
+        <NotificationsOutlinedIcon className={s.icon} />
         <Link to="/profile" className={s.userLink}>
           <div className={s.user}>
             <img
@@ -60,19 +67,16 @@ const NavBar: React.FC = () => {
             <span>{user?.username}</span>
           </div>
         </Link>
-        <Button
-          color="warning"
-          variant="contained"
-          size="medium"
-          startIcon={<LogoutIcon />}
-          sx={{
-            fontSize: "12px",
-            fontWeight: "700",
-          }}
+        <IconButton
+          color="error"
+          // variant="contained"
+          className={s.logout}
           onClick={handleLogout}
         >
-          Logout
-        </Button>
+          <LogoutIcon className={s.logoutIcon} />
+        </IconButton>
+        {/* Logout
+        </Button> */}
       </div>
     </nav>
   );

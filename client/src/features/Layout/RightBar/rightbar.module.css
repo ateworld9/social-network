@@ -1,22 +1,6 @@
 .rightBar {
-  flex: 3;
-  position: sticky;
-  top: 70px;
-  height: calc(100vh - 70px);
-  overflow: scroll;
-
-  color: var(--textColor);
-  background-color: var(--bgSoft);
-
-/* 
-  @include tablet {
-    display: none;
-  }
-
-  @include mobile {
-    display: none;
-  }
-*/
+  display: none;
+  /* container-type: size; */
 }
 
 .rightBar::-webkit-scrollbar {
@@ -24,68 +8,95 @@
 }
 
 .container {
-  padding: 20px;
+  display: grid;
+  padding: 1cqw;
 }
-.container .item {
-  padding: 20px;
-  margin-bottom: 20px;
+.item {
+  /* height: 30vh; */
+  container-type: inline-size;
+  padding: 1vw;
   background-color: var(--bg);
+  margin-bottom: 1vh;
   -webkit-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09);
   -moz-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09);
   box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09);
+  font-size: 0.6cqw;
 }
-.container .item span {
+.item span {
   color: grey;
 }
-.container .item .user {
+.user {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 20px 0;
+  margin: 1cqh 0;
 }
-.container .item .user .userInfo {
+.userInfo {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 2cqw;
   position: relative;
 }
-.container .item .user .userInfo img {
-  width: 40px;
-  height: 40px;
+.userInfo img {
+  width: 8cqw;
+  height: 8cqw;
   border-radius: 50%;
   border: 1px solid lightgrey;
   object-fit: cover;
 }
-.container .item .user .userInfo .online {
-  width: 12px;
-  height: 12px;
+.userInfo .online {
+  width: 2.3cqw;
+  height: 2.3cqw;
   border-radius: 50%;
   background-color: limegreen;
   position: absolute;
   top: 0;
-  left: 30px;
+  left: 6cqw;
 }
-.container .item .user .userInfo p {
+.userInfo p {
   color: var(--textColorSoft);
 }
-.container .item .user .userInfo span {
+.userInfo span {
   font-weight: 500;
   color: var(--textColor);
 }
-.container .item .user .buttons {
+
+.time {
+  font-size: 3cqw;
+  white-space: nowrap;
+}
+.user .buttons {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 2cqw;
 }
-.container .item .user .buttons button {
+.user .buttons button {
+  width: 12cqw;
+  font-size: 3cqw;
   border: none;
-  padding: 5px;
+  padding: 1cqw;
   color: white;
   cursor: pointer;
 }
-.container .item .user .buttons .follow {
+.user .buttons .follow {
   background-color: #5271ff;
 }
-.container .item .user .buttons .dismiss {
+.user .buttons .dismiss {
   background-color: #f0544f;
+}
+
+@media (min-width: 1080px) {
+  .rightBar {
+    /* container-type: size; */
+    display: block;
+    position: sticky;
+    top: 5vh;
+    height: 96vh;
+    overflow: scroll;
+    width: 20vw;
+    padding-right: 10vw;
+
+    color: var(--textColor);
+    background-color: var(--bgSoft);
+  }
 }

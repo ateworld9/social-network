@@ -11,6 +11,7 @@ class PostsRepository {
       return posts;
     } catch (error) {
       logger.error(error, 'DB ERROR');
+      throw error;
     }
   }
 
@@ -45,6 +46,7 @@ class PostsRepository {
       return posts;
     } catch (error) {
       logger.error(error, 'DB ERROR');
+      throw error;
     }
   }
 
@@ -55,6 +57,7 @@ class PostsRepository {
       return result[0];
     } catch (error) {
       logger.error(error, 'DB ERROR');
+      throw error;
     }
   }
 }

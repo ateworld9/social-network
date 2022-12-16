@@ -11,6 +11,7 @@ class TokenRepository {
       return tokens[0];
     } catch (e) {
       logger.error(e);
+      throw e;
     }
   }
 
@@ -24,6 +25,7 @@ class TokenRepository {
       return tokens[0];
     } catch (e) {
       logger.error(e);
+      throw e;
     }
   }
 
@@ -33,6 +35,7 @@ class TokenRepository {
       return tokens[0];
     } catch (e) {
       logger.error(e);
+      throw e;
     }
   }
 
@@ -44,6 +47,7 @@ class TokenRepository {
       return tokens[0];
     } catch (e) {
       logger.error(e);
+      throw e;
     }
   }
 
@@ -56,6 +60,7 @@ class TokenRepository {
       );
     } catch (e) {
       logger.error(e);
+      throw e;
     }
   }
 }

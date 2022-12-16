@@ -14,6 +14,7 @@ export async function seed(knex: Knex): Promise<void> {
   await knex('messages').del();
   await knex('comments').del();
   await knex('posts').del();
+  await knex('tokens').del();
   await knex('users').del();
   await knex('media').del();
 
@@ -26,6 +27,9 @@ export async function seed(knex: Knex): Promise<void> {
     {path: 'https://picsum.photos/400/400'},
     {path: 'https://picsum.photos/400/500'},
     {path: 'https://picsum.photos/500/500'},
+    {path: 'https://picsum.photos/1400/1400'},
+    {path: 'https://picsum.photos/1500/1500'},
+    {path: 'https://picsum.photos/1600/1600'},
   ]);
   await knex('users').insert([
     {
@@ -142,9 +146,9 @@ export async function seed(knex: Knex): Promise<void> {
   ]);
 
   await knex('post2media').insert([
-    {postId: 1, mediaId: 1},
-    {postId: 2, mediaId: 2},
-    {postId: 3, mediaId: 3},
+    {postId: 1, mediaId: 8},
+    {postId: 2, mediaId: 9},
+    {postId: 3, mediaId: 10},
   ]);
   await knex('comment2media').insert([
     {commentId: 1, mediaId: 4},

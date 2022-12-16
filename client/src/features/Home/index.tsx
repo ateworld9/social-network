@@ -21,15 +21,11 @@ const Home = () => {
     dispatch(fetchPosts({ fields: {} }));
   }, [dispatch]);
 
-  return (
-    <>
-      <div style={{ padding: "20px 70px" }}>
-        storis
-        {/* <Stories stories={stories} /> */}
-      </div>
-      <Posts posts={posts} isLoading={isPostsLoading} />
-    </>
-  );
+  return <Posts posts={posts} isLoading={isPostsLoading} />;
 };
 
 export default Home;
+// <div style={{ padding: "1cqw 3cqw" }}>
+// storis
+// {/* <Stories stories={stories} /> */}
+// </div>

@@ -30,7 +30,7 @@ const RightBar = () => {
                 <span>Jane Doe</span> changed their cover picture
               </p>
             </div>
-            <span>1 min ago</span>
+            <span className={s.time}>1 min ago</span>
           </div>
           <div className={s.user}>
             <div className={s.userInfo}>
@@ -39,7 +39,7 @@ const RightBar = () => {
                 <span>Jane Doe</span> changed their cover picture
               </p>
             </div>
-            <span>1 min ago</span>
+            <span className={s.time}>1 min ago</span>
           </div>
           <div className={s.user}>
             <div className={s.userInfo}>
@@ -48,7 +48,7 @@ const RightBar = () => {
                 <span>Jane Doe</span> changed their cover picture
               </p>
             </div>
-            <span>1 min ago</span>
+            <span className={s.time}>1 min ago</span>
           </div>
           <div className={s.user}>
             <div className={s.userInfo}>
@@ -57,7 +57,7 @@ const RightBar = () => {
                 <span>Jane Doe</span> changed their cover picture
               </p>
             </div>
-            <span>1 min ago</span>
+            <span className={s.time}>1 min ago</span>
           </div>
         </div>
 
