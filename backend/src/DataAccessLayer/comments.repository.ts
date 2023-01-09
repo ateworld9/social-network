@@ -11,13 +11,13 @@ class CommentsRepository {
         .select(
           `${COMMENTS_TABLE}.userId as userId`,
           `users.username as username`,
-          `um.path as profilePic`,
+          `um.filepath as profilePic`,
 
           `${COMMENTS_TABLE}.postId as postId`,
           `${COMMENTS_TABLE}.commentId as commentId`,
           `${COMMENTS_TABLE}.text as text`,
           `${COMMENTS_TABLE}.status as status`,
-          `media.path as media`, // TODO: update when multiple medias
+          `media.filepath as media`, // TODO: update when multiple medias
 
           `${COMMENTS_TABLE}.createdAt as createdAt`,
           `${COMMENTS_TABLE}.updatedAt as updatedAt`,
@@ -41,13 +41,13 @@ class CommentsRepository {
         .select(
           `${COMMENTS_TABLE}.userId as userId`,
           `users.username as username`,
-          `um.path as profilePic`,
+          `um.filepath as profilePic`,
 
           `${COMMENTS_TABLE}.commentId as commentId`,
           `${COMMENTS_TABLE}.postId as postId`,
           `${COMMENTS_TABLE}.text as text`,
           `${COMMENTS_TABLE}.status as status`,
-          `media.path as media`, // TODO: update when multiple medias
+          `media.filepath as media`, // TODO: update when multiple medias
 
           `${COMMENTS_TABLE}.createdAt`,
           `${COMMENTS_TABLE}.updatedAt`,

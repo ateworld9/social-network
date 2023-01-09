@@ -1,5 +1,5 @@
 import type { AxiosResponse } from "axios";
-import type { User } from "../../models/User";
+import type { User } from "../../@types/User";
 
 import $api from "../http/api";
 
@@ -9,18 +9,18 @@ import $api from "../http/api";
 
 class UserService {
   static async fetchUserById(userId: number): Promise<AxiosResponse<User>> {
-    return $api.get<User>(`/user?userId=${userId}`);
+    return $api.get<User>(`/users/${userId}`);
   }
 
   static async fetchUserByQuery(
     fields: Partial<User>,
-  ): Promise<AxiosResponse<User>> {
+  ): Promise<AxiosResponse<User[]>> {
     const queryArr = Object.entries(fields).map(
       ([key, value]) => `${key}=${value}`,
     );
     const queryStr = queryArr.join("&");
 
-    return $api.get<User>(`/user?${queryStr}`);
+    return $api.get<User[]>(`/users?${queryStr}&limit=1`);
   }
 
   static async fetchUsers(

@@ -11,7 +11,7 @@ import PinterestIcon from "@mui/icons-material/Pinterest";
 import PlaceIcon from "@mui/icons-material/Place";
 import TwitterIcon from "@mui/icons-material/Twitter";
 
-import type { User } from "../../models/User";
+import type { User } from "../../@types/User";
 
 // import Posts from "@components/Posts";
 
@@ -38,19 +38,19 @@ const Profile: FC<ProfileProps> = ({ profilePic, username }) => {
         <div className={s.userInfo}>
           <div className={s.left}>
             <a href="http://facebook.com">
-              <FacebookTwoToneIcon fontSize="large" />
+              <FacebookTwoToneIcon className={s.icon} />
             </a>
             <a href="http://facebook.com">
-              <InstagramIcon fontSize="large" />
+              <InstagramIcon className={s.icon} />
             </a>
             <a href="http://facebook.com">
-              <TwitterIcon fontSize="large" />
+              <TwitterIcon className={s.icon} />
             </a>
             <a href="http://facebook.com">
-              <LinkedInIcon fontSize="large" />
+              <LinkedInIcon className={s.icon} />
             </a>
             <a href="http://facebook.com">
-              <PinterestIcon fontSize="large" />
+              <PinterestIcon className={s.icon} />
             </a>
           </div>
           <div className={s.center}>

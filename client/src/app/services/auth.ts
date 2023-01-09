@@ -1,6 +1,6 @@
 import type { AxiosResponse } from "axios";
 
-import type { User } from "../../models/User";
+import type { User } from "../../@types/User";
 
 import $api from "../http/api";
 

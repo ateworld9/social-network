@@ -14,6 +14,8 @@ import ProfileContainer from "./features/Profile";
 
 import Home from "./features/Home";
 
+import Testovaya from "./Testovaya";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -58,6 +60,11 @@ const router = createBrowserRouter([
         <Registration />
       </UnProtectedRoute>
     ),
+  },
+
+  {
+    path: "/test",
+    element: <Testovaya />,
   },
 ]);
 

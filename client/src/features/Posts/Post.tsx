@@ -10,7 +10,10 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import TextsmsOutlinedIcon from "@mui/icons-material/TextsmsOutlined";
 
-import type { Post as IPost } from "../../models/Post";
+import type { Post as IPost } from "../../@types/Post";
+import { timeStringBetweenDates } from "../util";
+
+import { API_BASE } from "../../app/http/api";
 
 import Comments from "./Comments";
 
@@ -25,6 +28,7 @@ const Post: FC<PostType> = ({
   text,
   media,
   comments,
+  createdAt,
 }) => {
   const [commentOpen, setCommentOpen] = useState(false);
 
@@ -43,14 +47,21 @@ const Post: FC<PostType> = ({
               >
                 <span className={s.namespan}>{username}</span>
               </Link>
-              <span className={s.date}>1 min ago</span>
+              <span className={s.date}>
+                {timeStringBetweenDates(new Date(), new Date(createdAt))}
+              </span>
             </div>
           </div>
           <MoreHorizIcon />
         </div>
         <div className={s.content}>
           <p>{text}</p>
-          {media && <img src={media} alt="post pic" />}
+          {!!media?.length && (
+            <img
+              src={`${API_BASE}/public/images/${media[0]?.filename}`}
+              alt="post pic"
+            />
+          )}
           {/* add image skeleton loader */}
         </div>
         <div className={s.info}>
@@ -59,18 +70,18 @@ const Post: FC<PostType> = ({
             12 Likes
           </div>
           <div
-            className={cn(s.item, !comments.length && s.disabled)}
+            className={cn(s.item, !comments?.length && s.disabled)}
             onClick={() => setCommentOpen(!commentOpen)}
           >
             <TextsmsOutlinedIcon />
-            {comments.length || "0"} Comments
+            {comments?.length || "0"} Comments
           </div>
           <div className={s.item}>
             <ShareOutlinedIcon />
             Share
           </div>
         </div>
-        {commentOpen && comments.length && <Comments comments={comments} />}
+        {commentOpen && comments?.length && <Comments comments={comments} />}
       </div>
     </div>
   );

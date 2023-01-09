@@ -1,5 +1,5 @@
 export interface Media {
-  mediaId: string;
+  mediaId: number;
   filename: string;
   filepath: string;
   mimetype: string;

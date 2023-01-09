@@ -6,8 +6,10 @@ import cors from 'cors';
 
 import logger from './utils/logger';
 import ErrorMiddleware from './middleware/error';
-import userRouter from './PresentationLayer/user.route';
-import postRouter from './PresentationLayer/post.route';
+import mediaRouter from './PresentationLayer/media/route';
+import authRouter from './PresentationLayer/auth/route';
+import userRouter from './PresentationLayer/users/route';
+import postRouter from './PresentationLayer/posts/route';
 import {CLIENT_URL} from './config';
 
 export default async (app: Application) => {
@@ -23,6 +25,8 @@ export default async (app: Application) => {
   app.use(cookieParser());
   app.use(cors({credentials: true, origin: CLIENT_URL}));
 
+  mediaRouter(app);
+  authRouter(app);
   userRouter(app);
   postRouter(app);
 

@@ -10,6 +10,6 @@ export interface Message {
     | 'edited'
     | 'invisible'
     | 'deleted';
-  created_at: string;
-  updated_at: string;
+  createdAt: string;
+  updatedAt: string;
 }

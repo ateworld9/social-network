@@ -2,11 +2,12 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useTypedSelector } from "../../hooks/store";
-import type { User } from "../../models/User";
+import type { User } from "../../@types/User";
 
-import Profile from "./Profile";
 import { fetchUserPosts, fetchUserProfile } from "./profileThunks";
 
+import Profile from "./Profile";
+import PostForm from "./PostForm";
 import Posts from "../Posts";
 
 const ProfileContainer = () => {
@@ -33,6 +34,7 @@ const ProfileContainer = () => {
   ) : (
     <>
       <Profile username={profile.username} profilePic={profile?.profilePic} />
+      {!userId && authedUserId && <PostForm />}
       <Posts posts={posts} isLoading={isPostsLoading} />
     </>
   );

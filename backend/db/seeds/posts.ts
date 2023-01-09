@@ -20,16 +20,56 @@ export async function seed(knex: Knex): Promise<void> {
 
   // Inserts seed entries
   await knex('media').insert([
-    {path: 'https://picsum.photos/200/200'},
-    {path: 'https://picsum.photos/200/300'},
-    {path: 'https://picsum.photos/300/300'},
-    {path: 'https://picsum.photos/300/400'},
-    {path: 'https://picsum.photos/400/400'},
-    {path: 'https://picsum.photos/400/500'},
-    {path: 'https://picsum.photos/500/500'},
-    {path: 'https://picsum.photos/1400/1400'},
-    {path: 'https://picsum.photos/1500/1500'},
-    {path: 'https://picsum.photos/1600/1600'},
+    {
+      filepath: 'https://picsum.photos/200/200',
+      filename: '1a',
+      mimetype: 'image/*',
+    },
+    {
+      filepath: 'https://picsum.photos/200/300',
+      filename: '2b',
+      mimetype: 'image/*',
+    },
+    {
+      filepath: 'https://picsum.photos/300/300',
+      filename: '3c',
+      mimetype: 'image/*',
+    },
+    {
+      filepath: 'https://picsum.photos/300/400',
+      filename: '4d',
+      mimetype: 'image/*',
+    },
+    {
+      filepath: 'https://picsum.photos/400/400',
+      filename: '5e',
+      mimetype: 'image/*',
+    },
+    {
+      filepath: 'https://picsum.photos/400/500',
+      filename: '6f',
+      mimetype: 'image/*',
+    },
+    {
+      filepath: 'https://picsum.photos/500/500',
+      filename: '7g',
+      mimetype: 'image/*',
+    },
+    {
+      filepath: 'http://localhost:3001/public/images/390-1600x1600.jpg',
+      filename: '390-1600x1600.jpg',
+      mimetype: 'image/*',
+    },
+    {
+      filepath: 'http://localhost:3001/public/images/482-1400x1400.jpg',
+      filename: '482-1400x1400.jpg',
+      mimetype: 'image/*',
+    },
+    {
+      filepath: 'http://localhost:3001/public/images/922-1500x1500.jpg',
+      filename: '922-1500x1500.jpg',
+      mimetype: 'image/*',
+    },
   ]);
   await knex('users').insert([
     {

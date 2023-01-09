@@ -1,14 +1,20 @@
+/* eslint-disable import/no-cycle */
 import { createSlice } from "@reduxjs/toolkit";
 
-import type { User } from "../../models/User";
-import type { Post } from "../../models/Post";
-import { fetchUserPosts, fetchUserProfile } from "./profileThunks";
+import type { User } from "../../@types/User";
+import type { Post } from "../../@types/Post";
+
+import { fetchUserPosts, fetchUserProfile, sendPost } from "./profileThunks";
 
 type ProfileState = {
   profile?: User;
-  posts?: Post[];
   isLoading: boolean;
+
+  posts: Post[];
   isPostsLoading: boolean;
+
+  isPostLoading: boolean;
+  fileLoadingProgress: number | null;
   error: string | null | undefined;
 };
 
@@ -16,12 +22,25 @@ const profileSlice = createSlice({
   name: "profile",
   initialState: {
     profile: undefined,
-    posts: undefined,
     isLoading: true,
+
+    posts: [],
     isPostsLoading: true,
+
+    isPostLoading: false,
+
+    fileLoadingProgress: null,
+
     error: "",
   } as ProfileState,
-  reducers: {},
+  reducers: {
+    setFileLoadingProgress(state, action) {
+      state.fileLoadingProgress = action.payload;
+    },
+    resetFileLoadingProgress(state) {
+      state.fileLoadingProgress = null;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchUserProfile.pending, (state) => {
       state.isLoading = true;
@@ -50,10 +69,26 @@ const profileSlice = createSlice({
       if (action.payload) {
         state.error = action.payload.message;
       }
-      // state.profile = null;
       state.isPostsLoading = false;
+    });
+
+    builder.addCase(sendPost.pending, (state) => {
+      state.isPostLoading = true;
+    });
+    builder.addCase(sendPost.fulfilled, (state, action) => {
+      state.posts.unshift(action.payload);
+      state.isPostLoading = false;
+      state.error = "";
+    });
+    builder.addCase(sendPost.rejected, (state, action) => {
+      if (action.payload) {
+        state.error = action.payload.message;
+      }
+      state.isPostLoading = false;
     });
   },
 });
 
+export const { setFileLoadingProgress, resetFileLoadingProgress } =
+  profileSlice.actions;
 export default profileSlice.reducer;

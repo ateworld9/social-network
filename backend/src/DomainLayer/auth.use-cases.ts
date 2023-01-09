@@ -5,11 +5,14 @@ import UsersRepository from '../DataAccessLayer/users.repository';
 import TokensUseCases from './tokens.use-cases';
 import {User} from '../@types/user';
 import {Token} from '../@types/token';
+import UsersUseCases from './users.use-cases';
 
+// TODO: use usersUseCases
 const userRepository = new UsersRepository();
+const usersUseCases = new UsersUseCases();
 const tokensUseCases = new TokensUseCases();
 
-class UserUseCases {
+class AuthUseCases {
   async registration(email: string, password: string, username?: string) {
     let checkUser: User | undefined = undefined;
     let errorMessage = '';
@@ -152,49 +155,6 @@ class UserUseCases {
       ...tokens,
     };
   }
-
-  async getUserById(userId: number) {
-    try {
-      const user = await userRepository.findUserById(userId);
-      return user;
-    } catch (error) {
-      throw AppError.InternalError('find user by id error');
-    }
-  }
-
-  async getUserByEmail(email: string) {
-    try {
-      const user = await userRepository.findUserByEmail(email);
-      return user;
-    } catch (error) {
-      throw AppError.InternalError('find user by email error');
-    }
-  }
-
-  async getUsers(query: Partial<User>, limit?: number, offset?: number) {
-    const users = await userRepository.findUsers(query, limit, offset);
-    console.log(query, users);
-
-    if (!users) {
-      throw AppError.NotFound('Users is not found');
-    }
-    return users;
-  }
-
-  async getUser(query: Partial<User>) {
-    const user = await userRepository.findUser(query);
-    if (!user) {
-      throw AppError.NotFound('User is not found');
-    }
-    return user;
-  }
-
-  async updateUser(userId: number, fields: Partial<User>) {
-    const user = await userRepository.updateUser(userId, fields);
-    if (!user) {
-      throw AppError.InternalError('User is not updated, USER Case Error');
-    }
-  }
 }
 
-export default UserUseCases;
+export default AuthUseCases;

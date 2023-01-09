@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Comment as IComment } from "../../../models/Comment";
+import { Comment as IComment } from "../../../@types/Comment";
 import Comment from "./Comment";
 
 const Comments: FC<{ comments: IComment[] }> = ({ comments }) => {

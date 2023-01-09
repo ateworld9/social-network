@@ -1,9 +1,10 @@
 import { Comment } from "./Comment";
+import { Media } from "./Media";
 
 export interface Post {
   postId: number;
   text: string;
-  media?: string;
+  media?: Media[];
   status: "created" | "edited" | "invisible" | "deleted";
 
   comments: Comment[];

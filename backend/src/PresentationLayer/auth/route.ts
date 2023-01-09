@@ -1,17 +1,18 @@
 import {Application} from 'express';
 import {body} from 'express-validator';
 import {oneOf} from 'express-validator/src/middlewares/one-of';
-import AuthMiddleware from '../middleware/auth';
-import UserController from './user.controller';
+import AuthMiddleware from '../../middleware/auth';
+import AuthController from './controller';
 
 export default (app: Application) => {
-  const userController = new UserController();
+  const authController = new AuthController();
 
+  // TODO: create new service: auth
   app.post(
     '/registration',
     body('email').isEmail(),
     body('password').isLength({min: 8, max: 32}),
-    userController.registration,
+    authController.registration,
   );
   app.post(
     '/login',
@@ -21,14 +22,9 @@ export default (app: Application) => {
       // body('phone').isMobilePhone('ru-RU'),
     ]),
     body('password').isLength({min: 8, max: 32}),
-    userController.login,
+    authController.login,
   );
-  app.post('/logout', AuthMiddleware, userController.logout);
+  app.post('/logout', AuthMiddleware, authController.logout);
+  app.get('/refresh', authController.refresh);
   // app.get('/activate/:link', userController);
-  app.get('/refresh', userController.refresh);
-
-  // app.get('/users', userController.getAllUsers);
-  app.get('/user/:userId', AuthMiddleware, userController.getUserById);
-  app.get('/user', AuthMiddleware, userController.getUserByQuery);
-  app.get('/users', userController.getUsersByQuery);
 };

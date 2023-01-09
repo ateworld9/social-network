@@ -1,4 +1,5 @@
 import {CommentExt} from './comment';
+import {Media} from './media';
 
 export interface Post {
   postId: number;
@@ -8,9 +9,23 @@ export interface Post {
   createdAt: Date | string;
   updatedAt: Date | string;
 }
-type PostExt = Post & {
+
+export type PostTempExt = Post & {
   username: string;
   profilePic?: string | null;
-  media?: string | null;
   comments?: CommentExt[];
+};
+
+export type PostExt = Post & {
+  username: string;
+  profilePic?: string | null;
+  media?: Array<{
+    mediaPath?: string;
+    mediaName?: string;
+  }>;
+  comments?: CommentExt[];
+};
+
+export type Post2Media = Media & {
+  postId: number;
 };

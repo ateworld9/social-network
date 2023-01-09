@@ -26,8 +26,8 @@ declare module 'knex/types/tables' {
     media: Media;
     media_composite: Knex.CompositeTableType<
       Media,
-      Media,
-      Partial<Omit<Media, 'mediaId'>>
+      Partial<Pick<Media, 'created_at' | 'updated_at'>>,
+      Partial<Omit<Media, 'messageId'>>
     >;
     // This is same as specifying `knex<User>('users')`
     users: User;

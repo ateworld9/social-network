@@ -1,17 +1,23 @@
 import { FC } from "react";
+import type { Comment as IComment } from "../../../@types/Comment";
+
+import { timeStringBetweenDates } from "../../util";
+
 import s from "./comment.module.css";
 
-import type { Comment as IComment } from "../../../models/Comment";
-
-const Comment: FC<IComment> = ({ profilePic, username, text }) => (
-  <div className={s.comment}>
-    <img src={profilePic ?? "/assets/noAvatar.png"} alt="avatar" />
-    <div className={s.info}>
-      <span>{username}</span>
-      <p>{text}</p>
+const Comment: FC<IComment> = ({ profilePic, username, text, createdAt }) => {
+  return (
+    <div className={s.comment}>
+      <img src={profilePic ?? "/assets/noAvatar.png"} alt="avatar" />
+      <div className={s.info}>
+        <span>{username}</span>
+        <p>{text}</p>
+      </div>
+      <span className={s.date}>
+        {timeStringBetweenDates(new Date(), new Date(createdAt))}
+      </span>
     </div>
-    <span className={s.date}>1 hour ago</span>
-  </div>
-);
+  );
+};
 
 export default Comment;

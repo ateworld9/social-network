@@ -1,0 +1,32 @@
+.container {
+  padding: 1cqw 3cqw;
+  color: var(--textColor);
+}
+
+.form {
+  border-radius: 20px;
+  background-color: var(--bg);
+  padding: 2cqw;
+}
+
+.input {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  color: var(--textColor);
+  width: 100%;
+  line-height: 130%;
+  font-size: 2cqw;
+}
+
+.submit {
+  border: none;
+  background-color: #5271ff;
+  color: var(--bg);
+  padding: 1cqw;
+  border-radius: 10px;
+  display: block;
+  margin-right: 0;
+  margin-left: auto;
+  cursor: pointer;
+}

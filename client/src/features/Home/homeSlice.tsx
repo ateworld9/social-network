@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import type { Post } from "../../models/Post";
+import type { Post } from "../../@types/Post";
 import { fetchPosts } from "./homeThunks";
 
 type Hometate = {
