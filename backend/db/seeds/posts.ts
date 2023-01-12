@@ -70,6 +70,11 @@ export async function seed(knex: Knex): Promise<void> {
       filename: '922-1500x1500.jpg',
       mimetype: 'image/*',
     },
+    {
+      filepath: 'http://localhost:3001/public/images/vahratar.jpg',
+      filename: 'vahratar.jpg',
+      mimetype: 'image/*',
+    },
   ]);
   await knex('users').insert([
     {
@@ -87,7 +92,7 @@ export async function seed(knex: Knex): Promise<void> {
       password: await bcrypt.hash('password', 3),
       name: 'Dmitriy',
       surname: 'Vahrammev',
-      profilePic: 3,
+      profilePic: 11,
       username: 'ateworld9',
     },
     {
