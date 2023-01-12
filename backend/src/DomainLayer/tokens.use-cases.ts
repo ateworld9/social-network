@@ -9,7 +9,7 @@ class TokenUseCases {
   generateTokens(payload: UserTokenPayload) {
     try {
       const accessToken = jwt.sign(payload, APP_ACCESS_SECRET as string, {
-        expiresIn: '12h',
+        expiresIn: '15m',
       });
       const refreshToken = jwt.sign(payload, APP_REFRESH_SECRET as string, {
         expiresIn: '30d',

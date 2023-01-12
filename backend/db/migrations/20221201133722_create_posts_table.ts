@@ -4,7 +4,8 @@ export async function up(knex: Knex): Promise<void> {
   return knex.schema.createTable('posts', (table) => {
     table.increments('postId');
     table.integer('userId').references('users.userId').onDelete('SET NULL');
-    table.text('text').notNullable();
+    table.text('text');
+    // .notNullable();
     table
       .enu('status', ['created', 'edited', 'invisible', 'deleted'])
       .defaultTo('created');

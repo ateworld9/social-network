@@ -12,9 +12,10 @@ import Registration from "./pages/Registration";
 import Layout from "./features/Layout";
 import ProfileContainer from "./features/Profile";
 
-import Home from "./features/Home";
+import Home from "./pages/Home";
 
 import Testovaya from "./Testovaya";
+import ContactsPage from "./pages/Contacts";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
       {
         path: "/profile/:userId",
         element: <ProfileContainer />,
+      },
+      {
+        path: "/contacts",
+        element: <ContactsPage />,
       },
     ],
     errorElement: (

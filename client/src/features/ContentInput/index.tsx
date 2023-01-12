@@ -61,13 +61,18 @@ const ContentInput: FC<ContentInputI> = ({ onFormSubmit }) => {
           onChange={(e) => handleImageChange(e)}
           accept="image/*"
         />
-        {images.length && (
+        {/* {images.length && (
           <div className="prewiev">
-            {images.map((img) => (
-              <img src={`${API_BASE}/${img.filename}`} alt="uploadedImage" />
+            {images.map((img, i) => (
+              <img
+                // eslint-disable-next-line react/no-array-index-key
+                key={`${img.filename} ${i}`}
+                src={`${API_BASE}/${img.filename}`}
+                alt="uploadedImage"
+              />
             ))}
           </div>
-        )}
+        )} */}
 
         {/* {fileLoadingProgress && (
           <p style={{ color: "green" }}>{fileLoadingProgress} loaded</p>

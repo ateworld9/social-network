@@ -2,12 +2,14 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 
 import auth from "../features/auth/authSlice";
 import profile from "../features/Profile/profileSlice";
-import home from "../features/Home/homeSlice";
+import home from "../pages/Home/homeSlice";
+import contacts from "../pages/Contacts/contactsSlice";
 
 const rootReducer = combineReducers({
   auth,
   profile,
   home,
+  contacts,
 });
 
 const store = configureStore({

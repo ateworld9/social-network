@@ -62,7 +62,7 @@ const RightBar = () => {
         </div>
 
         <div className={s.item}>
-          <span>Online Friends</span>
+          <span>Online Contacts</span>
           <div className={s.user}>
             <div className={s.userInfo}>
               <img src="/assets/noAvatar.png" alt="noAvatar" />

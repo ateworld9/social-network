@@ -37,18 +37,6 @@ class UsersController {
       next(e);
     }
   }
-  async getUserByQuery(req: Request, res: Response, next: NextFunction) {
-    try {
-      const user = await userUseCases.getUser(req.query);
-      if (!user) {
-        next(AppError.NotFound('User is not found'));
-      }
-
-      return res.status(200).json(user);
-    } catch (e) {
-      next(e);
-    }
-  }
 
   async getUsersByQuery(req: Request, res: Response, next: NextFunction) {
     try {
@@ -57,7 +45,7 @@ class UsersController {
         next(AppError.NotFound('Users is not found'));
       }
 
-      return res.status(200).json(users);
+      return res.status(200).json({data: users, meta: {}});
     } catch (e) {
       next(e);
     }

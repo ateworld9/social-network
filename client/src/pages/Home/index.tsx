@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useAppDispatch, useTypedSelector } from "../../hooks/store";
 
-import Posts from "../Posts";
+import Posts from "../../features/Posts";
 import { fetchPosts } from "./homeThunks";
 
 // const stories = [

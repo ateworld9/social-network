@@ -8,8 +8,7 @@ export async function up(knex: Knex): Promise<void> {
       .string('password', 255)
       .notNullable()
       .checkLength('>=', 8, 'password_length_check');
-    table.boolean('isActivated').defaultTo(false);
-    table.string('activationLink').defaultTo('');
+
     table
       .string('phone', 255)
       .unique()
@@ -23,6 +22,9 @@ export async function up(knex: Knex): Promise<void> {
       .onDelete('SET NULL')
       .defaultTo(null);
     table.string('username', 255).notNullable().unique();
+
+    table.boolean('isActivated').defaultTo(false);
+    table.string('activationLink').defaultTo('');
     table.timestamps(false, true, true);
   });
 }

@@ -12,9 +12,7 @@ type Hometate = {
 const homeSlice = createSlice({
   name: "home",
   initialState: {
-    profile: undefined,
     posts: undefined,
-    isLoading: true,
     isPostsLoading: true,
     error: "",
   } as Hometate,

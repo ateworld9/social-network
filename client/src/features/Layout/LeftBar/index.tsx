@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useTypedSelector } from "../../../hooks/store";
 import s from "./leftbar.module.css";
 
@@ -14,10 +15,12 @@ const LeftBar = () => {
             />
             <span>{user?.username}</span>
           </div>
-          <div className={s.item}>
-            <img src="/assets/1.png" alt="Friends Icon" />
-            <span>Friends</span>
-          </div>
+          <Link to="/contacts">
+            <div className={s.item}>
+              <img src="/assets/1.png" alt="Contacts Icon" />
+              <span>Contacts</span>
+            </div>
+          </Link>
           <div className={s.item}>
             <img src="/assets/2.png" alt="Groups Icon" />
             <span>Groups</span>

@@ -21,7 +21,7 @@ const AuthMiddleware = (req: Request, res: Response, next: NextFunction) => {
       return next(AppError.UnAuthorized());
     }
 
-    req.user = userData;
+    // req.user = userData;
     next();
   } catch (error) {
     return next(AppError.UnAuthorized());
