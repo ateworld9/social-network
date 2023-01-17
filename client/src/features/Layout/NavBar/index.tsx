@@ -64,7 +64,13 @@ const NavBar: React.FC = () => {
               src={user?.profilePic ?? "/assets/noAvatar.png"}
               alt="avatar"
             />
-            <span>{user?.username}</span>
+            {user?.name && user?.surname ? (
+              <span className={s.fullname}>
+                {user.name} {user.surname}
+              </span>
+            ) : (
+              <span className={s.username}>{user?.username}</span>
+            )}
           </div>
         </Link>
         <IconButton

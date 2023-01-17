@@ -1,7 +1,8 @@
-import {NextFunction, Request, Response} from 'express-serve-static-core';
+import {NextFunction, Request, Response} from 'express';
+import {validationResult} from 'express-validator';
+
 import {AppError} from '../../utils/app-errors';
 import AuthUseCases from '../../DomainLayer/auth.use-cases';
-import {validationResult} from 'express-validator';
 
 const authUseCases = new AuthUseCases();
 

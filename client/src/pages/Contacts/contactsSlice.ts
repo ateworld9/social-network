@@ -1,7 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import type { User } from "../../@types/User";
-import { fetchContacts, fetchUsersSearch } from "./contactsThunks";
+import {
+  fetchUserContacts,
+  fetchUsersSearch,
+  fetchAddToContacts,
+} from "./contactsThunks";
 
 type ContactsState = {
   contacts?: User[];
@@ -26,15 +30,15 @@ const contactsSlice = createSlice({
   } as ContactsState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchContacts.pending, (state) => {
+    builder.addCase(fetchUserContacts.pending, (state) => {
       state.isContactsLoading = true;
     });
-    builder.addCase(fetchContacts.fulfilled, (state, action) => {
+    builder.addCase(fetchUserContacts.fulfilled, (state, action) => {
       state.contacts = action.payload;
       state.isContactsLoading = false;
       state.contactsError = "";
     });
-    builder.addCase(fetchContacts.rejected, (state, action) => {
+    builder.addCase(fetchUserContacts.rejected, (state, action) => {
       if (action.payload) {
         state.contactsError = action.payload.message;
       }
@@ -54,6 +58,21 @@ const contactsSlice = createSlice({
         state.usersError = action.payload.message;
       }
       state.isUsersLoading = false;
+    });
+
+    builder.addCase(fetchAddToContacts.pending, (state) => {
+      state.isContactsLoading = true;
+    });
+    builder.addCase(fetchAddToContacts.fulfilled, (state, action) => {
+      state.contacts = action.payload;
+      state.isContactsLoading = false;
+      state.contactsError = "";
+    });
+    builder.addCase(fetchAddToContacts.rejected, (state, action) => {
+      if (action.payload) {
+        state.contactsError = action.payload.message;
+      }
+      state.isContactsLoading = false;
     });
   },
 });

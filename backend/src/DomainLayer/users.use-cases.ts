@@ -52,38 +52,85 @@ class UsersUseCases {
     };
   }
 
-  async getUserByEmail(email: string) {
-    try {
-      const user = await userRepository.findUserByEmail(email);
-      return user;
-    } catch (error) {
-      throw AppError.InternalError('find user by email error');
-    }
-  }
-
-  async getUsers(query: Partial<User>, limit?: number, offset?: number) {
+  async getUsersByQuery(
+    query: Partial<User> | null,
+    limit?: number,
+    offset?: number,
+  ) {
     const users = await userRepository.findUsers(query, limit, offset);
 
     if (!users) {
-      throw AppError.NotFound('Users is not found');
+      throw AppError.NoContent('Users is not found');
     }
     return users;
   }
 
-  async getUser(query: Partial<User>) {
-    const user = await userRepository.findUser(query);
-    if (!user) {
-      throw AppError.NotFound('User is not found');
+  async getUserContacts(userId: number) {
+    console.log('>>>>>>>>>>>>>>>>>>>');
+
+    const contacts = await userRepository.findContactsByUserId(userId);
+
+    if (!contacts) {
+      throw AppError.NoContent('Contacts is not found');
     }
-    return user;
+
+    return contacts;
   }
 
-  async updateUser(userId: number, fields: Partial<User>) {
-    const user = await userRepository.updateUser(userId, fields);
-    if (!user) {
-      throw AppError.InternalError('User is not updated, USER Case Error');
+  async addUserToContacts(currentUserId: number, addedUserId: number) {
+    try {
+      await userRepository.findUserById(currentUserId);
+    } catch (error) {
+      throw AppError.BadRequest(
+        `user with userId: ${currentUserId} is not exists`,
+      );
+    }
+
+    try {
+      await userRepository.findUserById(addedUserId);
+    } catch (error) {
+      throw AppError.BadRequest(
+        `user with userId: ${addedUserId} is not exists`,
+      );
+    }
+
+    try {
+      await userRepository.addNewContact(currentUserId, addedUserId);
+    } catch (error) {
+      throw AppError.BadRequest('Error while insert contact to database');
+    }
+
+    try {
+      const contacts = await userRepository.findContactsByUserId(currentUserId);
+      return contacts;
+    } catch (error) {
+      throw AppError.BadRequest('Error while insert contact to database');
     }
   }
+
+  // async getUserByEmail(email: string) {
+  //   try {
+  //     const user = await userRepository.findUserByEmail(email);
+  //     return user;
+  //   } catch (error) {
+  //     throw AppError.InternalError('find user by email error');
+  //   }
+  // }
+
+  // async getUser(query: Partial<User>) {
+  //   const user = await userRepository.findUser(query);
+  //   if (!user) {
+  //     throw AppError.NotFound('User is not found');
+  //   }
+  //   return user;
+  // }
+
+  // async updateUser(userId: number, fields: Partial<User>) {
+  //   const user = await userRepository.updateUser(userId, fields);
+  //   if (!user) {
+  //     throw AppError.InternalError('User is not updated, USER Case Error');
+  //   }
+  // }
 }
 
 export default UsersUseCases;

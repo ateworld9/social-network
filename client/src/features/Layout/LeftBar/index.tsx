@@ -8,20 +8,24 @@ const LeftBar = () => {
     <aside className={s.leftBar}>
       <div className={s.container}>
         <div className={s.menu}>
-          <div className={s.user}>
+          <Link to="profile" className={s.user}>
             <img
               src={user?.profilePic ?? "/assets/noAvatar.png"}
               alt="avatar"
             />
-            <span>{user?.username}</span>
-          </div>
-          <Link to="/contacts">
-            <div className={s.item}>
-              <img src="/assets/1.png" alt="Contacts Icon" />
-              <span>Contacts</span>
-            </div>
+            {user?.name && user?.surname ? (
+              <span className={s.fullname}>
+                {user.name} {user.surname}
+              </span>
+            ) : (
+              <span className={s.username}>{user?.username}</span>
+            )}
           </Link>
-          <div className={s.item}>
+          <Link className={s.item} to="/contacts">
+            <img src="/assets/1.png" alt="Contacts Icon" />
+            <span>Contacts</span>
+          </Link>
+          {/* <div className={s.item}>
             <img src="/assets/2.png" alt="Groups Icon" />
             <span>Groups</span>
           </div>
@@ -36,10 +40,10 @@ const LeftBar = () => {
           <div className={s.item}>
             <img src="/assets/5.png" alt="Memories Icon" />
             <span>Memories</span>
-          </div>
+          </div> */}
         </div>
         <hr />
-        <div className={s.menu}>
+        {/* <div className={s.menu}>
           <span>Your shortcuts</span>
           <div className={s.item}>
             <img src="/assets/6.png" alt="Events Icon" />
@@ -77,7 +81,7 @@ const LeftBar = () => {
             <img src="/assets/13.png" alt="Fund Icon" />
             <span>Fund</span>
           </div>
-        </div>
+        </div> */}
       </div>
     </aside>
   );

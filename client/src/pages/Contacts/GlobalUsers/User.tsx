@@ -1,5 +1,9 @@
 import { FC } from "react";
+import cn from "classnames";
+import { Link } from "react-router-dom";
+
 import { User as TUser } from "../../../@types/User";
+
 import s from "./User.module.css";
 
 type IUser = TUser & {
@@ -16,14 +20,26 @@ const User: FC<IUser> = ({
 }) => {
   return (
     <div className={s.container}>
-      <div className={s.avatar}>
+      <Link className={cn(s.avatar, s.link)} to={`/profile/${userId}`}>
         <img src={profilePic ?? "/assets/noAvatar.png"} alt="avatar" />
-      </div>
+      </Link>
       <div>
-        <span>{name && surname ? `${name} ${surname}` : username}</span>
+        <Link className={cn(s.link)} to={`/profile/${userId}`}>
+          {name && surname ? (
+            <span className={s.fullname}>
+              {name} {surname}
+            </span>
+          ) : (
+            <span className={s.username}>{username}</span>
+          )}
+        </Link>
       </div>
-      <div>
-        <button type="button" onClick={() => handleAddToContacts(userId)}>
+      <div className={s.controllers}>
+        <button
+          className={s.addContact}
+          type="button"
+          onClick={() => handleAddToContacts(userId)}
+        >
           Add to Contact
         </button>
       </div>

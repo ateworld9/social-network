@@ -1,6 +1,6 @@
 import {Application} from 'express';
-import {body} from 'express-validator';
-// import AuthMiddleware from '../../middleware/auth';
+import {body, param} from 'express-validator';
+import AuthMiddleware from '../../middleware/auth';
 
 import UsersController from './controller';
 
@@ -18,9 +18,23 @@ export default (app: Application) => {
   // TODO: pagination query like page[size]=30&page[number]=2
   app.get('/users', usersController.getUsersByQuery);
   app.get('/users/:userId', usersController.getUserById);
+
   // TODO:
   // app.patch('/users/:userId', AuthMiddleware, userController.patchUser)
   // app.delete('/users/:userId', AuthMiddleware, userController.deleteUser);
+
+  app.get(
+    '/contacts/:userId',
+    param('userId').isNumeric(),
+    usersController.getUserContacts,
+  );
+  app.post(
+    '/contacts',
+    AuthMiddleware,
+    body('currentUserId').isNumeric(),
+    body('addedUserId').isNumeric(),
+    usersController.addUserToContacts,
+  );
 
   // Need it for authentication, cause it's dangerous to send a hashed password on every request
   // maybe disable it by cors ????

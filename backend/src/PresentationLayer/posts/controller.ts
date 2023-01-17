@@ -1,4 +1,4 @@
-import {NextFunction, Request, Response} from 'express-serve-static-core';
+import {NextFunction, Request, Response} from 'express';
 import {AppError} from '../../utils/app-errors';
 import PostsUseCases from '../../DomainLayer/posts.use-cases';
 import {Post} from '../../@types/post';

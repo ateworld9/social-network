@@ -33,7 +33,12 @@ const ProfileContainer = () => {
     <div>profile skeleton</div>
   ) : (
     <>
-      <Profile username={profile.username} profilePic={profile?.profilePic} />
+      <Profile
+        username={profile.username}
+        name={profile.name}
+        surname={profile.surname}
+        profilePic={profile?.profilePic}
+      />
       {!userId && authedUserId && <PostForm />}
       <Posts posts={posts} isLoading={isPostsLoading} />
     </>

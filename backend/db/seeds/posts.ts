@@ -202,4 +202,8 @@ export async function seed(knex: Knex): Promise<void> {
   ]);
   await knex('message2media').insert([{messageId: 1, mediaId: 7}]);
   await knex('message2message').insert([{messageId: 4, forwardedMessageId: 3}]);
+  await knex('contacts').insert([
+    {userId1: 2, userId2: 1},
+    {userId1: 2, userId2: 3},
+  ]);
 }

@@ -8,6 +8,11 @@ type FetchUsersResponse = {
   meta?: any;
 };
 
+// type AddContactResponse = {
+//   data: any;
+//   errors?: any;
+// };
+
 class UserService {
   static async fetchUserById(userId: number): Promise<AxiosResponse<User>> {
     return $api.get<User>(`/users/${userId}`);
@@ -40,18 +45,30 @@ class UserService {
     }
 
     return $api.get<FetchUsersResponse>(
-      `/users?${queryArr.length && queryStr}limit=${limit}&offset=${offset}`,
+      `/users?${
+        queryArr.length ? queryStr : ""
+      }limit=${limit}&offset=${offset}`,
     );
   }
 
   static async fetchUserContacts(
-    fields: Partial<User> | null,
+    userId: number,
     limit: number = 10,
     offset: number = 0,
   ): Promise<AxiosResponse<FetchUsersResponse>> {
     return $api.get<FetchUsersResponse>(
-      `/users?$limit=${limit}&offset=${offset}`,
+      `/contacts/${userId}?$limit=${limit}&offset=${offset}`,
     );
+  }
+
+  static async fetchAddToContacts(
+    currentUserId: number,
+    addedUserId: number,
+  ): Promise<AxiosResponse<FetchUsersResponse>> {
+    return $api.post<FetchUsersResponse>("/contacts", {
+      currentUserId,
+      addedUserId,
+    });
   }
 }
 

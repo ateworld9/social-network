@@ -2,13 +2,17 @@ import logger from '..//utils/logger';
 import {User} from '../@types/user';
 import knexdb from '../config/database';
 
-const USERS_TABLE = 'users';
-// const USER2USERS_TABLE = 'user2users';
+const USERS = 'users';
+const CONTACTS = 'contacts';
 
 class UsersRepository {
-  async findUsers(fields: Partial<User>, limit?: number, offset?: number) {
+  async findUsers(
+    fields: Partial<User> | null,
+    limit?: number,
+    offset?: number,
+  ) {
     try {
-      const users: User[] = await knexdb(USERS_TABLE)
+      const users: User[] = await knexdb(USERS)
         .select(
           'users.userId',
           'users.email',
@@ -21,9 +25,18 @@ class UsersRepository {
           'users.updatedAt',
         )
         .leftJoin('media', 'users.profilePic', '=', 'media.mediaId')
-        .where(fields)
-        .limit(limit ?? 10)
-        .offset(offset ?? 0);
+        .modify(function (queryBuilder) {
+          if (fields) {
+            queryBuilder.where(fields);
+          }
+          if (limit) {
+            queryBuilder.where(limit);
+          }
+          if (offset) {
+            queryBuilder.where(offset);
+          }
+        });
+
       return users;
     } catch (error) {
       logger.error(error, 'DB ERROR');
@@ -33,7 +46,7 @@ class UsersRepository {
 
   async findUser(fields: Partial<User>) {
     try {
-      const users: User[] = await knexdb(USERS_TABLE)
+      const users: User[] = await knexdb(USERS)
         .select(
           'users.userId',
           'users.email',
@@ -57,7 +70,7 @@ class UsersRepository {
 
   async findUserById(userId: number) {
     try {
-      const users: User[] = await knexdb(USERS_TABLE)
+      const users: User[] = await knexdb(USERS)
         .select(
           'users.userId',
           'users.email',
@@ -81,7 +94,7 @@ class UsersRepository {
   }
   async findUserByEmail(email: string) {
     try {
-      const users: User[] = await knexdb(USERS_TABLE)
+      const users: User[] = await knexdb(USERS)
         .select(
           'users.userId',
           'users.email',
@@ -105,7 +118,7 @@ class UsersRepository {
 
   async findUserByUsername(username: string) {
     try {
-      const users: User[] = await knexdb(USERS_TABLE)
+      const users: User[] = await knexdb(USERS)
         .select(
           'users.userId',
           'users.email',
@@ -129,7 +142,7 @@ class UsersRepository {
 
   async createUser(fields: Omit<User, 'userId' | 'createdAt' | 'updatedAt'>) {
     try {
-      const result = await knexdb(USERS_TABLE).insert(fields).returning('*');
+      const result = await knexdb(USERS).insert(fields).returning('*');
       return result[0];
     } catch (error) {
       logger.error(error, 'DB ERROR');
@@ -142,13 +155,13 @@ class UsersRepository {
     fields: Partial<Omit<User, 'userId' | 'createdAt'>>,
   ) {
     try {
-      const result = await knexdb(USERS_TABLE)
+      const result = await knexdb(USERS)
         .where({userId})
         .update({...fields, updatedAt: new Date()})
         .returning('*');
       logger.info(JSON.stringify(result[0]));
 
-      const updatedUser = await knexdb(USERS_TABLE)
+      const updatedUser = await knexdb(USERS)
         .select(
           'users.userId',
           'users.email',
@@ -163,8 +176,48 @@ class UsersRepository {
         )
         .leftJoin('media', 'users.profilePic', '=', 'media.mediaId')
         .where({userId});
-      logger.info(JSON.stringify(updatedUser[0]));
       return updatedUser[0];
+    } catch (error) {
+      logger.error(error, 'DB ERROR');
+      throw error;
+    }
+  }
+
+  async findContactsByUserId(userId: number) {
+    try {
+      const contacts: User[] = await knexdb(CONTACTS)
+        .select(
+          'users.userId',
+          'users.email',
+          'users.password',
+          'users.phone',
+          'users.name',
+          'users.surname',
+          'media.filepath as profilePic',
+          'users.username',
+          'users.createdAt',
+          'users.updatedAt',
+        )
+        .leftJoin(USERS, `${USERS}.userId`, '=', `${CONTACTS}.userId2`)
+        .leftJoin('media', `${USERS}.profilePic`, '=', 'media.mediaId')
+        .where({userId1: String(userId)});
+
+      return contacts;
+    } catch (error) {
+      logger.error(error, 'DB ERROR');
+      throw error;
+    }
+  }
+
+  async addNewContact(userId1: number, userId2: number, status?: string) {
+    try {
+      await knexdb(CONTACTS).insert([
+        {
+          userId1,
+          userId2,
+          status,
+        },
+      ]);
     } catch (error) {
       logger.error(error, 'DB ERROR');
       throw error;

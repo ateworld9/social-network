@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 
 import LeftBar from "./LeftBar";
 import NavBar from "./NavBar";
-import RightBar from "./RightBar";
+// import RightBar from "./RightBar";
 
 import s from "./layout.module.css";
 
@@ -16,7 +16,7 @@ const Layout: FC = () => {
         <main className={s.main}>
           <Outlet />
         </main>
-        <RightBar />
+        {/* <RightBar /> */}
       </div>
     </>
   );

@@ -17,9 +17,9 @@ import type { User } from "../../@types/User";
 
 import s from "./profile.module.css";
 
-type ProfileProps = Pick<User, "profilePic" | "username">;
+type ProfileProps = Pick<User, "profilePic" | "name" | "surname" | "username">;
 
-const Profile: FC<ProfileProps> = ({ profilePic, username }) => {
+const Profile: FC<ProfileProps> = ({ profilePic, name, surname, username }) => {
   return (
     <>
       <div className={s.images}>
@@ -54,7 +54,12 @@ const Profile: FC<ProfileProps> = ({ profilePic, username }) => {
             </a>
           </div>
           <div className={s.center}>
-            <span>{username}</span>
+            {name && surname && (
+              <span className={s.fullname}>
+                {name} {surname}
+              </span>
+            )}
+            <span className={s.username}>{username}</span>
             <div className={s.info}>
               <div className={s.item}>
                 <PlaceIcon />

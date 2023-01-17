@@ -11,14 +11,16 @@ interface IGlobalUsers {
 const GlobalUsers: FC<IGlobalUsers> = ({ users, handleAddToContacts }) => {
   return (
     <section className={s.container}>
-      <h5>Global Search</h5>
-      {users.map((user) => (
-        <User
-          key={user.userId}
-          {...user}
-          handleAddToContacts={handleAddToContacts}
-        />
-      ))}
+      <h3>Global Search</h3>
+      <div className={s.list}>
+        {users.map((user) => (
+          <User
+            key={user.userId}
+            {...user}
+            handleAddToContacts={handleAddToContacts}
+          />
+        ))}
+      </div>
     </section>
   );
 };
