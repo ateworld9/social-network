@@ -5,7 +5,7 @@ import CommentsRepository from '../DataAccessLayer/comments.repository';
 const commentsRepository = new CommentsRepository();
 class CommentsUseCases {
   async getCommentsByPostsIds(postsIds: number[]) {
-    const comments = await commentsRepository.findCommentsByPostIDs(postsIds);
+    const comments = await commentsRepository.findCommentsByPostIds(postsIds);
 
     if (!comments) {
       throw AppError.NoContent('No posts');

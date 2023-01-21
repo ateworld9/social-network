@@ -1,9 +1,12 @@
 import knexdb from '../config/database';
 import logger from '../utils/logger';
-import {Post, PostTempExt, Post2Media} from '../@types/post';
+
+import {UserId} from '../@types/user';
+import {Post, PostTempExt} from '../@types/post';
 import {Media} from '../@types/media';
 
 const POSTS_TABLE = 'posts';
+const MEDIA_TABLE = 'media';
 
 class PostsRepository {
   async findPosts(fields: Partial<Post>, limit?: number, offset?: number) {
@@ -14,34 +17,35 @@ class PostsRepository {
     try {
       const posts: PostTempExt[] = await knexdb(POSTS_TABLE)
         .select(
-          'posts.userId as userId',
+          `${POSTS_TABLE}.userId as userId`,
           'users.username as username',
           'um.filepath as profilePic',
 
-          'posts.postId as postId',
-          'posts.text as text',
-          'posts.status as status',
+          `${POSTS_TABLE}.postId as postId`,
+          `${POSTS_TABLE}.text as text`,
+          `${POSTS_TABLE}.status as status`,
 
-          'posts.createdAt',
-          'posts.updatedAt',
+          `${POSTS_TABLE}.createdAt`,
+          `${POSTS_TABLE}.updatedAt`,
         )
         .join('users', 'users.userId', '=', 'posts.userId')
-        .leftJoin('media as um', 'um.mediaId', '=', 'users.profilePic')
+        .leftJoin(`${MEDIA_TABLE} as um`, 'um.mediaId', '=', 'users.profilePic')
         .where(where)
         .limit(limit ?? 10)
         .offset(offset ?? 0)
         .orderBy('postId', 'desc');
 
-      const postsMedia: Post2Media[] = await knexdb('post2media')
+      const postsMedia: Media[] = await knexdb(MEDIA_TABLE)
         .select(
-          'post2media.postId as postId',
-          'media.mediaId as mediaId',
-          'media.filepath as filepath',
-          'media.filename as filename',
-          'media.mimetype as mimetype',
-          'media.size as size',
+          `${MEDIA_TABLE}.mediaId as mediaId`,
+          `${MEDIA_TABLE}.filepath as filepath`,
+          `${MEDIA_TABLE}.filename as filename`,
+          `${MEDIA_TABLE}.mimetype as mimetype`,
+          `${MEDIA_TABLE}.size as size`,
+          `${MEDIA_TABLE}.postId as postId`,
+          `${MEDIA_TABLE}.commentId as commentId`,
+          `${MEDIA_TABLE}.messageId as messageId`,
         )
-        .join('media', 'media.mediaId', '=', 'post2media.mediaId')
         .whereIn(
           'postId',
           posts.map((post) => post.postId),
@@ -61,23 +65,11 @@ class PostsRepository {
     }
   }
 
-  async createPost(userId: number, text: string, mediaIds?: number[]) {
+  async createPost(userId: UserId, text: string, mediaIds?: number[]) {
     try {
       const posts: Post[] = await knexdb(POSTS_TABLE)
         .insert({userId, text})
         .returning('*');
-
-      // if (mediaIds?.length) {
-      //   const newRows = mediaIds.map((mediaId) => ({
-      //     postId: posts[0].postId,
-      //     mediaId,
-      //   }));
-      //   const post2medias = await knexdb('post2media').insert(newRows);
-      //   return {
-      //     ...posts[0],
-      //     media: post2medias,
-      //   };
-      // }
 
       return posts[0];
     } catch (error) {
@@ -85,14 +77,12 @@ class PostsRepository {
       throw error;
     }
   }
-  async createPost2Medias(postId: number, mediaIds: number[]) {
+  async updatePostMedias(postId: number, mediaIds: number[]) {
     try {
-      const newRows = mediaIds.map((mediaId) => ({
-        postId,
-        mediaId,
-      }));
-      const post2medias = await knexdb('post2media').insert(newRows);
-      return post2medias;
+      const media = await knexdb(MEDIA_TABLE)
+        .whereIn('mediaId', mediaIds)
+        .update({postId});
+      return media;
     } catch (error) {
       logger.error(error, 'DB ERROR');
       throw error;

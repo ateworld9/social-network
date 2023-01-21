@@ -35,9 +35,6 @@ class PostsController {
 
   async createPost(req: Request, res: Response, next: NextFunction) {
     try {
-      //TODO: RESEND IMAGES ?
-      console.log('REQBODY', req.body);
-
       const {userId, text, mediaIds} = req.body;
       const post = await postsUseCases.createPost(userId, text, mediaIds);
 

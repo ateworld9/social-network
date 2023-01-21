@@ -1,5 +1,5 @@
-import {Comment, CommentExt} from 'src/@types/comment';
-import logger from '..//utils/logger';
+import {Comment, CommentExt, CommentStatus} from '../@types/comment';
+import logger from '../utils/logger';
 import knexdb from '../config/database';
 
 const COMMENTS_TABLE = 'comments';
@@ -24,9 +24,13 @@ class CommentsRepository {
         )
         .join('users', 'users.userId', '=', `${COMMENTS_TABLE}.userId`)
         .leftJoin('media as um', 'um.mediaId', '=', 'users.profilePic')
-        .leftJoin('comment2media as c2m', 'c2m.commentId', 'comments.commentId')
-        .join('media', 'media.mediaId', '=', 'p2m.mediaId')
-        .where({postId});
+        .leftJoin(
+          'media',
+          'media.commentId',
+          '=',
+          `${COMMENTS_TABLE}.commentId`,
+        )
+        .where(`${COMMENTS_TABLE}.postId`, postId);
 
       return comments;
     } catch (error) {
@@ -35,7 +39,7 @@ class CommentsRepository {
     }
   }
 
-  async findCommentsByPostIDs(postsIds: number[]) {
+  async findCommentsByPostIds(postsIds: number[]) {
     try {
       const comments: CommentExt[] = await knexdb(COMMENTS_TABLE)
         .select(
@@ -54,9 +58,13 @@ class CommentsRepository {
         )
         .join('users', 'users.userId', '=', `${COMMENTS_TABLE}.userId`)
         .leftJoin('media as um', 'um.mediaId', '=', 'users.profilePic')
-        .leftJoin('comment2media as c2m', 'c2m.commentId', 'comments.commentId')
-        .leftJoin('media', 'media.mediaId', '=', 'c2m.mediaId')
-        .whereIn('postId', postsIds);
+        .leftJoin(
+          'media',
+          'media.commentId',
+          '=',
+          `${COMMENTS_TABLE}.commentId`,
+        )
+        .whereIn(`${COMMENTS_TABLE}.postId`, postsIds);
       return comments;
     } catch (error) {
       logger.error(error, 'DB Error');
@@ -80,7 +88,11 @@ class CommentsRepository {
   async updateComment(commentId: number, fieldstoUpdate: Partial<Comment>) {
     try {
       const result = await knexdb(COMMENTS_TABLE)
-        .update({...fieldstoUpdate, status: 'edited', updatedAt: new Date()})
+        .update({
+          ...fieldstoUpdate,
+          status: CommentStatus.edited,
+          updatedAt: new Date(),
+        })
         .where({commentId})
         .returning('*');
 

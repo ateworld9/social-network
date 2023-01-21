@@ -1,4 +1,4 @@
-import {Application, Request, Response} from 'express';
+import {Application} from 'express';
 import expressPinoLogger from 'express-pino-logger';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
@@ -25,19 +25,12 @@ export default async (app: Application) => {
   app.use(cookieParser());
   app.use(cors({credentials: true, origin: CLIENT_URL}));
 
+  // TODO: Health Check
+
   mediaRouter(app);
   authRouter(app);
   userRouter(app);
   postRouter(app);
-
-  app.get('/', (req: Request, res: Response) => {
-    res.status(200).json({
-      response: 'successfull',
-      data: {
-        answer: 'Hello, World!',
-      },
-    });
-  });
 
   // error handling
   app.use(ErrorMiddleware);

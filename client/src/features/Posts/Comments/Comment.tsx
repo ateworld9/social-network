@@ -1,7 +1,7 @@
 import { FC } from "react";
 import type { Comment as IComment } from "../../../@types/Comment";
 
-import { timeStringBetweenDates } from "../../util";
+import { timeStringBetweenDates } from "../../../utils";
 
 import s from "./comment.module.css";
 
