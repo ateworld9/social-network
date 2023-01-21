@@ -1,4 +1,6 @@
+import {UserId} from './user';
+
 export interface Token {
-  userId: number;
+  userId: UserId;
   refreshToken: string;
 }

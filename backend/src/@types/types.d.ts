@@ -3,30 +3,21 @@ import {Token} from './token';
 import {Comment} from './comment';
 import {Media} from './media';
 import {Message} from './message';
-import {User, UserTokenPayload} from './user';
+import {User} from './user';
 
-// declare module 'express' {
-//   export interface Request {
-//     user: {
-//       userId: number | undefined;
-//       email: string | undefined;
-//       username: string | undefined;
-//     };
-//   }
-// }
+import {Page} from '.';
 
-declare module 'express-serve-static-core' {
-  export interface Request {
-    user: UserTokenPayload;
-  }
-}
+export type Page = {
+  limit: number;
+  offset: number;
+};
 
 declare module 'knex/types/tables' {
   interface Tables {
     media: Media;
     media_composite: Knex.CompositeTableType<
       Media,
-      Partial<Pick<Media, 'created_at' | 'updated_at'>>,
+      Partial<Pick<Media, 'createdAt' | 'updatedAt'>>,
       Partial<Omit<Media, 'messageId'>>
     >;
     // This is same as specifying `knex<User>('users')`
@@ -49,17 +40,17 @@ declare module 'knex/types/tables' {
       // `insert({ a: '' })` will complain about missing fields.
       //
       // For example, this will require only "name" field when inserting
-      // and make created_at and updated_at optional.
+      // and make createdAt and updatedAt optional.
       // And "id" can't be provided at all.
       // Defaults to "base" type.
-      Pick<User, 'name'> & Partial<Pick<User, 'created_at' | 'updated_at'>>,
+      Pick<User, 'name'> & Partial<Pick<User, 'createdAt' | 'updatedAt'>>,
       // This interface is used for "update()" calls.
       // As opposed to regular specifying interface only once,
       // when specifying separate update interface, user will be
       // required to match it  exactly. So it's recommended to
       // provide partial interfaces for "update". Unless you want to always
-      // require some field (e.g., `Partial<User> & { updated_at: string }`
-      // will allow updating any field for User but require updated_at to be
+      // require some field (e.g., `Partial<User> & { updatedAt: string }`
+      // will allow updating any field for User but require updatedAt to be
       // always provided as well.
       //
       // For example, this wil allow updating all fields except "id".
@@ -75,19 +66,19 @@ declare module 'knex/types/tables' {
     posts: Post;
     posts_composite: Knex.CompositeTableType<
       Post,
-      Partial<Pick<Post, 'created_at' | 'updated_at'>>,
+      Partial<Pick<Post, 'createdAt' | 'updatedAt'>>,
       Partial<Omit<Post, 'postId'>>
     >;
     comments: Comment;
     comments_composite: Knex.CompositeTableType<
       Comment,
-      Partial<Pick<Comment, 'created_at' | 'updated_at'>>,
+      Partial<Pick<Comment, 'createdAt' | 'updatedAt'>>,
       Partial<Omit<Comment, 'commentId'>>
     >;
     messages: Message;
     messages_composite: Knex.CompositeTableType<
       Message,
-      Partial<Pick<Message, 'created_at' | 'updated_at'>>,
+      Partial<Pick<Message, 'createdAt' | 'updatedAt'>>,
       Partial<Omit<Message, 'messageId'>>
     >;
   }

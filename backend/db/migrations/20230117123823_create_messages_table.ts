@@ -3,9 +3,9 @@ import {Knex} from 'knex';
 export async function up(knex: Knex): Promise<void> {
   return knex.schema.createTable('messages', (table) => {
     table.increments('messageId');
+    table.integer('chatId').references('chats.chatId').onDelete('SET NULL');
     table.integer('fromUserId').references('users.userId').onDelete('SET NULL');
-    table.integer('toUserId').references('users.userId').onDelete('SET NULL');
-    table.text('text').notNullable();
+    table.text('text');
     table
       .enu('status', [
         'not-sended',
@@ -15,7 +15,7 @@ export async function up(knex: Knex): Promise<void> {
         'invisible',
         'deleted',
       ])
-      .defaultTo('created');
+      .defaultTo('sended');
     table.timestamps(false, true, true);
   });
 }

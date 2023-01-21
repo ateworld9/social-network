@@ -1,9 +1,20 @@
+import {PostId} from './post';
+import {UserId} from './user';
+
+export type CommentId = number;
+
+export enum CommentStatus {
+  created = 'created',
+  edited = 'edited',
+  deleted = 'deleted',
+}
+
 export interface Comment {
-  commentId: number;
-  postId: number | null;
-  userId: number | null;
+  commentId: CommentId;
+  postId: PostId | null;
+  userId: UserId | null;
   text: string;
-  status: 'created' | 'edited' | 'invisible' | 'deleted';
+  status: CommentStatus;
   createdAt: Date | string;
   updatedAt: Date | string;
 }

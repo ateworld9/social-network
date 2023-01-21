@@ -1,11 +1,20 @@
 import {CommentExt} from './comment';
-import {Media} from './media';
+import {UserId} from './user';
 
+export type PostId = number;
+
+export enum PostStatus {
+  created = 'created',
+  edited = 'edited',
+  invisible = 'invisible',
+  deleted = 'deleted',
+  archived = 'archived',
+}
 export interface Post {
-  postId: number;
-  userId: number | null;
+  postId: PostId;
+  userId: UserId | null;
   text: string;
-  status: 'created' | 'edited' | 'invisible' | 'deleted';
+  status: PostStatus;
   createdAt: Date | string;
   updatedAt: Date | string;
 }
@@ -24,8 +33,4 @@ export type PostExt = Post & {
     mediaName?: string;
   }>;
   comments?: CommentExt[];
-};
-
-export type Post2Media = Media & {
-  postId: number;
 };

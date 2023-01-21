@@ -5,7 +5,7 @@ export async function up(knex: Knex): Promise<void> {
     table.integer('userId1').references('users.userId').onDelete('SET NULL');
     table.integer('userId2').references('users.userId').onDelete('SET NULL');
     table.primary(['userId1', 'userId2']);
-    table.string('status', 225);
+    table.enu('status', ['friend', 'blocked']); //UPDATE: to enum
   });
 }
 

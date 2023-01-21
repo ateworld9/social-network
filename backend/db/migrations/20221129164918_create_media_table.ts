@@ -7,11 +7,12 @@ export async function up(knex: Knex): Promise<void> {
     table.text('filepath').notNullable();
     table.text('mimetype').notNullable();
     table.bigint('size').defaultTo(null);
-    table.timestamps(false, true, true);
 
-    // postId
-    // commentId
-    // messageId
+    // table.integer('messageId');
+    // table.integer('postId');
+    // table.integer('commentId');
+
+    table.timestamps(false, true, true);
   });
 }
 

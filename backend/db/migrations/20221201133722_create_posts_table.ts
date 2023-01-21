@@ -5,9 +5,8 @@ export async function up(knex: Knex): Promise<void> {
     table.increments('postId');
     table.integer('userId').references('users.userId').onDelete('SET NULL');
     table.text('text');
-    // .notNullable();
     table
-      .enu('status', ['created', 'edited', 'invisible', 'deleted'])
+      .enu('status', ['created', 'edited', 'invisible', 'archived', 'deleted'])
       .defaultTo('created');
     table.timestamps(false, true, true);
   });
