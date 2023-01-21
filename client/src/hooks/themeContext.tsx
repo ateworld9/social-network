@@ -13,6 +13,7 @@ interface Theme {
   bgSoft: string;
   logo: string;
   borderColor: string;
+  substrate: string;
 }
 
 const themes: Record<ThemeEnum, Theme> = {
@@ -23,6 +24,7 @@ const themes: Record<ThemeEnum, Theme> = {
     bgSoft: "#f6f3f3",
     logo: "darkblue",
     borderColor: "lightgrey",
+    substrate: "lightgrey",
   },
   dark: {
     textColor: "whitesmoke",
@@ -31,6 +33,7 @@ const themes: Record<ThemeEnum, Theme> = {
     bgSoft: "#333333",
     logo: "white",
     borderColor: "#444444",
+    substrate: "grey",
   },
 };
 

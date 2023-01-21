@@ -11,7 +11,7 @@ import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import TextsmsOutlinedIcon from "@mui/icons-material/TextsmsOutlined";
 
 import type { Post as IPost } from "../../@types/Post";
-import { timeStringBetweenDates } from "../util";
+import { timeStringBetweenDates } from "../../utils";
 
 import { API_BASE } from "../../app/http/api";
 
@@ -39,7 +39,12 @@ const Post: FC<PostType> = ({
       <div className={s.container}>
         <div className={s.user}>
           <div className={s.userInfo}>
-            <img src={profilePic ?? "/assets/noAvatar.png"} alt="avatar" />
+            <Link
+              to={`/profile/${userId}`}
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              <img src={profilePic ?? "/assets/noAvatar.png"} alt="avatar" />
+            </Link>
             <div className={s.details}>
               <Link
                 to={`/profile/${userId}`}

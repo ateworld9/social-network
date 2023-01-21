@@ -1,6 +1,7 @@
 import {AppError} from '../utils/app-errors';
 
 import {Post} from '../@types/post';
+import {UserId} from '../@types/user';
 
 import PostsRepository from '../DataAccessLayer/posts.repositry';
 import CommentsUseCases from './comments.use-cases';
@@ -30,8 +31,8 @@ class PostsUseCases {
     return posts;
   }
 
-  async createPost(userId: number, text: string, mediaIds?: number[]) {
-    const user = usersUseCases.getUserById(userId);
+  async createPost(userId: UserId, text: string, mediaIds?: number[]) {
+    const user = usersUseCases.findUserByQuery({filter: {userId}});
     if (!user) AppError.UnAuthorized('UnAuthorized: no user with this id');
 
     const post = await postsRepository.createPost(userId, text, mediaIds);
@@ -40,12 +41,12 @@ class PostsUseCases {
     }
 
     if (mediaIds?.length) {
-      const post2medias = await postsRepository.createPost2Medias(
+      const media = await postsRepository.updatePostMedias(
         post.postId,
         mediaIds,
       );
 
-      if (!post2medias) {
+      if (!media) {
         throw AppError.InternalError(
           'can`t save post and medias relationships to database',
         );

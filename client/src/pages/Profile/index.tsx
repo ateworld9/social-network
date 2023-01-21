@@ -8,9 +8,9 @@ import { fetchUserPosts, fetchUserProfile } from "./profileThunks";
 
 import Profile from "./Profile";
 import PostForm from "./PostForm";
-import Posts from "../Posts";
+import Posts from "../../features/Posts";
 
-const ProfileContainer = () => {
+const ProfilePage = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const { userId } = useParams();
   const authedUserId = useTypedSelector(
@@ -45,4 +45,4 @@ const ProfileContainer = () => {
   );
 };
 
-export default ProfileContainer;
+export default ProfilePage;

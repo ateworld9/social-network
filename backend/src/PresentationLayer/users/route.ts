@@ -1,5 +1,5 @@
 import {Application} from 'express';
-import {body, param} from 'express-validator';
+import {body, param, query} from 'express-validator';
 import AuthMiddleware from '../../middleware/auth';
 
 import UsersController from './controller';
@@ -7,25 +7,26 @@ import UsersController from './controller';
 export default (app: Application) => {
   const usersController = new UsersController();
 
-  app.post(
+  app.get(
+    '/users/:userId',
+    param('userId', 'userId must be numeric').isNumeric(),
+    usersController.getUserById,
+  );
+  app.get(
     '/users',
-    body('email').isEmail(),
-    // cause i want hashed password there
-    body('password').isString().isLength({min: 59}), // after hashing pass.length >= 60
-    usersController.createUser,
+    query('page.limit', 'page[limit] must be numeric').isNumeric(),
+    query('page.offset', 'page[offset] must be numeric').isNumeric(),
+    usersController.getUsersByQuery,
   );
 
-  // TODO: pagination query like page[size]=30&page[number]=2
-  app.get('/users', usersController.getUsersByQuery);
-  app.get('/users/:userId', usersController.getUserById);
-
   // TODO:
-  // app.patch('/users/:userId', AuthMiddleware, userController.patchUser)
-  // app.delete('/users/:userId', AuthMiddleware, userController.deleteUser);
+  // app.patch('/users/:userId', AuthMiddleware, param('userId', 'userId must be numeric').isNumeric(), body('',''), userController.patchUser)
+  // app.delete('/users/:userId', AuthMiddleware, param('userId', 'userId must be numeric').isNumeric(), userController.deleteUser);
+  // maybe //app.post('/users', userController.createUser)
 
   app.get(
     '/contacts/:userId',
-    param('userId').isNumeric(),
+    param('userId', 'userId must be numeric').isNumeric(),
     usersController.getUserContacts,
   );
   app.post(
@@ -35,8 +36,4 @@ export default (app: Application) => {
     body('addedUserId').isNumeric(),
     usersController.addUserToContacts,
   );
-
-  // Need it for authentication, cause it's dangerous to send a hashed password on every request
-  // maybe disable it by cors ????
-  // app.get('/usersForAuth/:userId', userController.);
 };

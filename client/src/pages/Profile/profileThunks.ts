@@ -2,7 +2,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import type { AxiosError } from "axios";
 import type { ResponseError } from "../../app/http/api";
-import type { User } from "../../@types/User";
+import type { User, UserId } from "../../@types/User";
 import type { Post } from "../../@types/Post";
 
 import UserService from "../../app/services/user";
@@ -45,7 +45,7 @@ export const fetchUserPosts = createAsyncThunk<
 
 export const sendPost = createAsyncThunk<
   Post,
-  { userId: number; text: string; mediaIds?: number[] },
+  { userId: UserId; text: string; mediaIds?: number[] },
   { rejectValue: ResponseError }
 >("profile/sendPost", async (fields, thunkAPI) => {
   try {

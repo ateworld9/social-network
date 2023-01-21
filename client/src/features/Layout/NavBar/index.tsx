@@ -20,7 +20,7 @@ import { ThemeContext, ThemeEnum } from "../../../hooks/themeContext";
 
 import { fetchLogout } from "../../auth/authThunks";
 
-const NavBar: React.FC = () => {
+const NavBar = () => {
   const dispatch = useAppDispatch();
   const user = useTypedSelector((state) => state.auth.user);
 
@@ -61,7 +61,7 @@ const NavBar: React.FC = () => {
         <Link to="/profile" className={s.userLink}>
           <div className={s.user}>
             <img
-              src={user?.profilePic ?? "/assets/noAvatar.png"}
+              src={user?.profilePic.filepath ?? "/assets/noAvatar.png"}
               alt="avatar"
             />
             {user?.name && user?.surname ? (

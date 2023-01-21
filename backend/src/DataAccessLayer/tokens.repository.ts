@@ -1,6 +1,7 @@
 import knexdb from '../config/database';
 import logger from '../utils/logger';
 import {Token} from '../@types/token';
+import {UserId} from '../@types/user';
 
 const TOKENS_TABLE = 'tokens';
 
@@ -15,7 +16,7 @@ class TokenRepository {
     }
   }
 
-  async updateToken(userId: number, refreshToken: string) {
+  async updateToken(userId: UserId, refreshToken: string) {
     try {
       const tokens = await knexdb(TOKENS_TABLE)
         .where({userId})
@@ -29,7 +30,7 @@ class TokenRepository {
     }
   }
 
-  async findTokenByUserId(userId: number) {
+  async findTokenByUserId(userId: UserId) {
     try {
       const tokens = await knexdb(TOKENS_TABLE).where({userId});
       return tokens[0];

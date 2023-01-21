@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import type { AxiosError } from "axios";
 import type { ResponseError } from "../../app/http/api";
-import type { User } from "../../@types/User";
+import type { User, UserId } from "../../@types/User";
 
 import UserService from "../../app/services/user";
 
@@ -14,7 +14,7 @@ type FetchPropsArgs = {
 
 export const fetchUserContacts = createAsyncThunk<
   User[],
-  { userId: number },
+  { userId: UserId },
   { rejectValue: ResponseError }
 >("contacts/fetchContacts", async ({ userId }, thunkAPI) => {
   try {

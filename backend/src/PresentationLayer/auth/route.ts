@@ -7,18 +7,17 @@ import AuthController from './controller';
 export default (app: Application) => {
   const authController = new AuthController();
 
-  // TODO: create new service: auth
   app.post(
     '/registration',
-    body('email').isEmail(),
+    body('email', 'Incorrect email').isEmail(),
     body('password').isLength({min: 8, max: 32}),
     authController.registration,
   );
   app.post(
     '/login',
     oneOf([
-      body('email', 'Неправильный email').isEmail(),
-      body('username', 'Введите username').isLength({min: 1}),
+      body('email', 'Incorrect email').isEmail(),
+      body('username', 'Incorrect username').isLength({min: 1}),
       // body('phone').isMobilePhone('ru-RU'),
     ]),
     body('password').isLength({min: 8, max: 32}),
@@ -26,5 +25,6 @@ export default (app: Application) => {
   );
   app.post('/logout', AuthMiddleware, authController.logout);
   app.get('/refresh', authController.refresh);
-  // app.get('/activate/:link', userController);
+  // app.get('/activate/:link', authController);
+  // app.post('/recover-password', authController)
 };

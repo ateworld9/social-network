@@ -2,12 +2,12 @@ import { FC } from "react";
 import cn from "classnames";
 import { Link } from "react-router-dom";
 
-import { User as TUser } from "../../../@types/User";
+import { User as TUser, UserId } from "../../../@types/User";
 
 import s from "./User.module.css";
 
 type IUser = TUser & {
-  handleAddToContacts: (userId: number) => void;
+  handleAddToContacts: (userId: UserId) => void;
 };
 
 const User: FC<IUser> = ({
@@ -21,7 +21,7 @@ const User: FC<IUser> = ({
   return (
     <div className={s.container}>
       <Link className={cn(s.avatar, s.link)} to={`/profile/${userId}`}>
-        <img src={profilePic ?? "/assets/noAvatar.png"} alt="avatar" />
+        <img src={profilePic.filepath ?? "/assets/noAvatar.png"} alt="avatar" />
       </Link>
       <div>
         <Link className={cn(s.link)} to={`/profile/${userId}`}>

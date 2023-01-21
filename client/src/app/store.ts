@@ -1,7 +1,7 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 
 import auth from "../features/auth/authSlice";
-import profile from "../features/Profile/profileSlice";
+import profile from "../pages/Profile/profileSlice";
 import home from "../pages/Home/homeSlice";
 import contacts from "../pages/Contacts/contactsSlice";
 

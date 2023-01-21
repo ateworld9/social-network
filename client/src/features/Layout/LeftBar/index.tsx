@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useTypedSelector } from "../../../hooks/store";
 import s from "./leftbar.module.css";
 
-const LeftBar = () => {
+const LeftBar = (): JSX.Element => {
   const user = useTypedSelector((state) => state.auth.user);
   return (
     <aside className={s.leftBar}>
@@ -10,7 +10,7 @@ const LeftBar = () => {
         <div className={s.menu}>
           <Link to="profile" className={s.user}>
             <img
-              src={user?.profilePic ?? "/assets/noAvatar.png"}
+              src={user?.profilePic.filepath ?? "/assets/noAvatar.png"}
               alt="avatar"
             />
             {user?.name && user?.surname ? (
@@ -24,6 +24,10 @@ const LeftBar = () => {
           <Link className={s.item} to="/contacts">
             <img src="/assets/1.png" alt="Contacts Icon" />
             <span>Contacts</span>
+          </Link>
+          <Link className={s.item} to="/chats">
+            <img src="/assets/10.png" alt="Messages Icon" />
+            <span>Messages</span>
           </Link>
           {/* <div className={s.item}>
             <img src="/assets/2.png" alt="Groups Icon" />

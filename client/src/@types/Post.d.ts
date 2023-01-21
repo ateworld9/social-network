@@ -1,15 +1,17 @@
 import { Comment } from "./Comment";
 import { Media } from "./Media";
+import { UserId } from "./User";
 
+export type PostId = number;
 export interface Post {
-  postId: number;
+  postId: PostId;
   text: string;
   media?: Media[];
   status: "created" | "edited" | "invisible" | "deleted";
 
   comments: Comment[];
 
-  userId: number | null;
+  userId: UserId | null;
   username: string;
   profilePic?: string;
 

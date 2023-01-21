@@ -1,11 +1,13 @@
+export type UserId = number;
+
 export interface User {
-  userId: number;
+  userId: UserId;
   email: string;
   password: string;
   phone: string | null;
   name: string | null;
   surname: string | null;
-  profilePic: string | null;
+  profilePic: Media | null;
   username: string;
 
   isActivated: boolean;

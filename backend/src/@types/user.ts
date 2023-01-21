@@ -1,4 +1,4 @@
-import {Media} from './media';
+import {Media, MediaId} from './media';
 
 export type UserId = number;
 

@@ -23,16 +23,20 @@ const Profile: FC<ProfileProps> = ({ profilePic, name, surname, username }) => {
   return (
     <>
       <div className={s.images}>
-        <img
-          src="https://picsum.photos/1500/1500"
-          alt="cover"
-          className={s.cover}
-        />
-        <img
-          src={profilePic || "/assets/noAvatar.png"}
-          alt="avatar"
-          className={s.profilePic}
-        />
+        <div className={s.coverContainer}>
+          <img
+            src="https://picsum.photos/1500/1500"
+            alt="cover"
+            className={s.cover}
+          />
+        </div>
+        <div className={s.avatarContainer}>
+          <img
+            src={profilePic.filepath || "/assets/noAvatar.png"}
+            alt="avatar"
+            className={s.avatar}
+          />
+        </div>
       </div>
       <div className={s.profileContainer}>
         <div className={s.userInfo}>

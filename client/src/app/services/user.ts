@@ -1,11 +1,13 @@
 import type { AxiosResponse } from "axios";
-import type { User } from "../../@types/User";
+import type { User, UserId } from "../../@types/User";
 
 import $api from "../http/api";
 
 type FetchUsersResponse = {
   data: User[];
-  meta?: any;
+  meta?: {
+    count?: number;
+  };
 };
 
 // type AddContactResponse = {
@@ -14,7 +16,7 @@ type FetchUsersResponse = {
 // };
 
 class UserService {
-  static async fetchUserById(userId: number): Promise<AxiosResponse<User>> {
+  static async fetchUserById(userId: UserId): Promise<AxiosResponse<User>> {
     return $api.get<User>(`/users/${userId}`);
   }
 
@@ -47,17 +49,17 @@ class UserService {
     return $api.get<FetchUsersResponse>(
       `/users?${
         queryArr.length ? queryStr : ""
-      }limit=${limit}&offset=${offset}`,
+      }page[limit]=${limit}&page[offset]=${offset}`,
     );
   }
 
   static async fetchUserContacts(
-    userId: number,
+    userId: UserId,
     limit: number = 10,
     offset: number = 0,
   ): Promise<AxiosResponse<FetchUsersResponse>> {
     return $api.get<FetchUsersResponse>(
-      `/contacts/${userId}?$limit=${limit}&offset=${offset}`,
+      `/contacts/${userId}?$page[limit]=${limit}&page[offset]=${offset}`,
     );
   }
 

@@ -1,11 +1,11 @@
 import { FC } from "react";
-import { User as TUser } from "../../../@types/User";
+import { User as TUser, UserId } from "../../../@types/User";
 import User from "./User";
 import s from "./GlobalUsers.module.css";
 
 interface IGlobalUsers {
   users: TUser[];
-  handleAddToContacts: (userId: number) => void;
+  handleAddToContacts: (userId: UserId) => void;
 }
 
 const GlobalUsers: FC<IGlobalUsers> = ({ users, handleAddToContacts }) => {

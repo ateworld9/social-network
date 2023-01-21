@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import TokenRepository from '../DataAccessLayer/tokens.repository';
 import {APP_ACCESS_SECRET, APP_REFRESH_SECRET} from '../config';
 import {AppError} from '../utils/app-errors';
-import {UserTokenPayload} from '../@types/user';
+import {UserId, UserTokenPayload} from '../@types/user';
 
 const tokenRepository = new TokenRepository();
 class TokenUseCases {
@@ -44,7 +44,7 @@ class TokenUseCases {
     }
   }
 
-  async saveToken(userId: number, refreshToken: string) {
+  async saveToken(userId: UserId, refreshToken: string) {
     try {
       const userToken = await tokenRepository.findTokenByUserId(userId);
 

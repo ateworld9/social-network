@@ -1,5 +1,6 @@
 import type { AxiosResponse } from "axios";
 import type { Post } from "../../@types/Post";
+import type { UserId } from "../../@types/User";
 
 import $api from "../http/api";
 
@@ -29,7 +30,7 @@ class PostService {
   }
 
   static async postPost(FormData: {
-    userId: number;
+    userId: UserId;
     text: string;
     mediaIds?: number[];
   }): Promise<AxiosResponse<Post>> {

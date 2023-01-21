@@ -8,11 +8,6 @@ const ErrorMiddleware = async (
   res: Response,
   next: NextFunction,
 ) => {
-  process.on('uncaughtException', (error) => {
-    console.log('UNCAUGHT Error', error);
-    process.exit(1);
-  });
-
   if (err) {
     logger.error(err);
     if (err instanceof AppError) {
@@ -20,9 +15,12 @@ const ErrorMiddleware = async (
         .status(err.statusCode)
         .json({message: err.message, errors: err.errors});
     } else {
-      logger.error(err);
-      process.exit(1);
+      console.log(
+        '==========================\n===========EXIT===========\n==========================\n',
+      );
+      // process.exit(1);
       //process exit // terriablly wrong with flow need restart
+      return res.status(500).json({message: err.message});
     }
   }
   next();
