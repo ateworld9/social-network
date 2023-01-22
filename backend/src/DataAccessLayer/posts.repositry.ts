@@ -5,8 +5,7 @@ import {UserId} from '../@types/user';
 import {Post, PostTempExt} from '../@types/post';
 import {Media} from '../@types/media';
 
-const POSTS_TABLE = 'posts';
-const MEDIA_TABLE = 'media';
+import {MEDIA_TABLE, POSTS_TABLE} from './constants';
 
 class PostsRepository {
   async findPosts(fields: Partial<Post>, limit?: number, offset?: number) {

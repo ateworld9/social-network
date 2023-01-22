@@ -1,9 +1,10 @@
 import knexdb from '../config/database';
 import logger from '../utils/logger';
+
 import {Token} from '../@types/token';
 import {UserId} from '../@types/user';
 
-const TOKENS_TABLE = 'tokens';
+import {TOKENS_TABLE} from './constants';
 
 class TokenRepository {
   async createToken(fields: Token) {

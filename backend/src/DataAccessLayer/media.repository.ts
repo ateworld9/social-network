@@ -1,8 +1,9 @@
+import type {Media} from '../@types/media';
+
 import knexdb from '../config/database';
 import logger from '../utils/logger';
-import {Media} from '../@types/media';
 
-const MEDIA_TABLE = 'media';
+import {MEDIA_TABLE} from './constants';
 
 class MediaRepository {
   async createMedia(fields: Omit<Media, 'mediaId'>) {

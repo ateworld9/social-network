@@ -5,9 +5,7 @@ import type {User, UserId} from '../@types/user';
 import knexdb from '../config/database';
 import logger from '../utils/logger';
 
-const USERS_TABLE = 'users';
-const MEDIA_TABLE = 'media';
-const CONTACTS_TABLE = 'contacts';
+import {CONTACTS_TABLE, MEDIA_TABLE, USERS_TABLE} from './constants';
 
 const DEFAULT_USER_SELECT = [
   `${USERS_TABLE}.userId as userId `,
@@ -137,49 +135,39 @@ class UsersRepository {
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   async findContactsByUserId(userId: UserId) {
-    try {
-      const contacts: User[] = await knexdb(CONTACTS_TABLE)
-        .select(
-          'users.userId',
-          'users.email',
-          'users.password',
-          'users.phone',
-          'users.name',
-          'users.surname',
-          'media.filepath as profilePic',
-          'users.username',
-          'users.createdAt',
-          'users.updatedAt',
-        )
-        .leftJoin(
-          USERS_TABLE,
-          `${USERS_TABLE}.userId`,
-          '=',
-          `${CONTACTS_TABLE}.userId2`,
-        )
-        .leftJoin('media', `${USERS_TABLE}.profilePic`, '=', 'media.mediaId')
-        .where({userId1: String(userId)});
+    const contacts: User[] = await knexdb(CONTACTS_TABLE)
+      .select(
+        'users.userId',
+        'users.email',
+        'users.password',
+        'users.phone',
+        'users.name',
+        'users.surname',
+        'media.filepath as profilePic',
+        'users.username',
+        'users.createdAt',
+        'users.updatedAt',
+      )
+      .leftJoin(
+        USERS_TABLE,
+        `${USERS_TABLE}.userId`,
+        '=',
+        `${CONTACTS_TABLE}.userId2`,
+      )
+      .leftJoin('media', `${USERS_TABLE}.profilePic`, '=', 'media.mediaId')
+      .where({userId1: String(userId)});
 
-      return contacts;
-    } catch (error) {
-      logger.error(error, 'DB ERROR');
-      throw error;
-    }
+    return contacts;
   }
 
   async addNewContact(userId1: number, userId2: number, status?: string) {
-    try {
-      await knexdb(CONTACTS_TABLE).insert([
-        {
-          userId1,
-          userId2,
-          status,
-        },
-      ]);
-    } catch (error) {
-      logger.error(error, 'DB ERROR');
-      throw error;
-    }
+    await knexdb(CONTACTS_TABLE).insert([
+      {
+        userId1,
+        userId2,
+        status,
+      },
+    ]);
   }
 }
 

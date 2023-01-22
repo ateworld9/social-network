@@ -2,7 +2,7 @@ import {Comment, CommentExt, CommentStatus} from '../@types/comment';
 import logger from '../utils/logger';
 import knexdb from '../config/database';
 
-const COMMENTS_TABLE = 'comments';
+import {COMMENTS_TABLE} from './constants';
 
 class CommentsRepository {
   async findCommentsByPostId(postId: number) {
