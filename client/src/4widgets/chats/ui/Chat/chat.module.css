@@ -29,14 +29,14 @@
   border-radius: 50%;
   background-color: var(--bgSoft);
 }
-.avatar img {
-  /* width: 4em;
+/* .avatar img {
+  width: 4em;
   height: 4em;
   border-radius: 50%;
-  object-fit: cover; */
+  object-fit: cover;
 }
 .chatInfo {
-}
+} */
 
 .fullname {
   text-transform: capitalize;
