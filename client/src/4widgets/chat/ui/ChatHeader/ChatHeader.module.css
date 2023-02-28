@@ -1,0 +1,47 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+  border-bottom: 4px solid var(--substrate);
+}
+
+.back {
+  align-self: center;
+}
+.info {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: space-between;
+}
+.info .name {
+  font-weight: 700;
+}
+
+.info a {
+  text-decoration: none;
+}
+.info a .fullname {
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--textColor);
+}
+.info a .username {
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--textColor);
+}
+.info .lastOnline {
+  font-size: 0.9em;
+  color: var(--textColorSoft);
+}
+
+.controls {
+  display: flex;
+  flex-direction: row;
+  align-self: center;
+}
+
+.control:not(:last-child) {
+  margin-right: 8px;
+}

@@ -9,6 +9,7 @@ enum STATUS_CODES {
   NOT_FOUND = 404,
   METHOD_NOT_ALLOWED = 405,
   PROXY_AUTHENTICATION_REQUIRED = 407,
+  CONFLICT = 409,
   I_AM_TEAPOT = 418,
   INTERNAL_ERROR = 500,
   NOT_IMPLEMENTED = 501,
@@ -48,6 +49,10 @@ class AppError extends Error {
     return new AppError(STATUS_CODES.NOT_FOUND, message, errors);
   }
 
+  static Conflict(message = 'Conflict', errors: any = []) {
+    return new AppError(STATUS_CODES.NOT_FOUND, message, errors);
+  }
+
   static InternalError(message = 'Internal Error', errors: any = []) {
     return new AppError(STATUS_CODES.INTERNAL_ERROR, message, errors);
   }
@@ -55,4 +60,5 @@ class AppError extends Error {
 
 //api Specific Errors
 // TODO: ValidationError
+// TODO: DatabaseError
 export {AppError, STATUS_CODES};

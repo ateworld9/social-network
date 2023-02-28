@@ -1,16 +1,19 @@
-import {Knex} from 'knex';
-import {Token} from './token';
-import {Comment} from './comment';
-import {Media} from './media';
-import {Message} from './message';
-import {User} from './user';
+declare interface Page {
+  limit?: number;
+  offset?: number;
+}
 
-import {Page} from '.';
+declare interface FilterWithOperatorObject {
+  columnName: string;
+  operator: '=' | '<' | '>' | '<>' | 'in' | 'like';
+  value: any;
+}
+declare type Filter<T = any> = Partial<T> | FilterWithOperatorObject[];
 
-export type Page = {
-  limit: number;
-  offset: number;
-};
+declare type Sort = string; //sort=-created,title                 -------------------------Partial<T> | `-${Partial<T>}`;
+declare type Include = string; //include=comments.author,ratings
+
+declare type Fields = string; //fields[articles]=title,body&fields[people]=name
 
 declare module 'knex/types/tables' {
   interface Tables {
@@ -75,6 +78,12 @@ declare module 'knex/types/tables' {
       Partial<Pick<Comment, 'createdAt' | 'updatedAt'>>,
       Partial<Omit<Comment, 'commentId'>>
     >;
+    chats: Chat;
+    chats_composite: Knex.CompositeTableType<
+      Chat,
+      Partial<Pick<Chat, 'createdAt' | 'updatedAt'>>,
+      Partial<Omit<Chat, 'chatId'>>
+    >;
     messages: Message;
     messages_composite: Knex.CompositeTableType<
       Message,
@@ -83,3 +92,51 @@ declare module 'knex/types/tables' {
     >;
   }
 }
+
+// type GetQuery = {
+
+//   fields:
+//   page: Page;
+// };
+
+// type ErrorObject = {
+//   id: number | string;
+//   status: STATUS_CODES;
+//   code: string;
+//   title: string;
+//   detail: string;
+//   source: {
+//     pointer?: string;
+//   };
+// };
+
+// type ResourseObject<T> = {
+//   id: string | number;
+//   type: string;
+//   attributes: any;
+//   relationships: {
+//     links: {
+//       self: string;
+//       related: string;
+//       // member?
+//     };
+//     data: {};
+//     meta: {};
+//   };
+// };
+
+// type ResBody = {
+//   jsonapi?: {
+//     version: string;
+//   };
+//   links?: {
+//     self: string;
+//     related: string;
+//   };
+//   meta: {
+//     count: number;
+//   };
+//   data: any;
+//   included: any;
+//   errors?: ErrorObject[];
+// };

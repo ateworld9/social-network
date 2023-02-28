@@ -1,0 +1,30 @@
+.leftBar {
+  overflow-y: auto;
+  background-color: var(--bg);
+  color: var(--textColor);
+  padding: 1vw;
+  box-sizing: border-box;
+}
+/* .leftBar::-webkit-scrollbar {
+  display: none;
+} */
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  color: var(--textColor);
+  text-decoration: none;
+  cursor: pointer;
+}
+.item img {
+  width: 1em;
+}
+.item span {
+}

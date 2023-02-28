@@ -1,5 +1,4 @@
-import type {User, UserId} from '../@types/user';
-import type {Media} from '../@types/media';
+import * as crypto from 'node:crypto';
 
 import {AppError} from '../utils/app-errors';
 
@@ -44,7 +43,7 @@ class UsersUseCases {
 
     if (checkUser) errorMessage = 'User with this email already exists!';
 
-    username = username ?? `user${Math.floor(Math.random() * 10000) + 1}`;
+    username = username ?? `user${crypto.randomBytes(8).toString('hex')}`;
     if (!errorMessage) {
       checkUser = await userRepository.findUser({filter: {username}});
       errorMessage = 'User with this username already exists!';
@@ -89,20 +88,21 @@ class UsersUseCases {
 
   async findUsersByQuery({
     filter,
+    sort,
     page,
   }: {
-    filter: Partial<User> | undefined;
-    page: {
-      limit: number;
-      offset: number;
-    };
+    include?: Include;
+    fields?: Fields;
+    sort?: Sort;
+    page?: Page;
+    filter?: Filter<User>;
   }) {
-    const users = await userRepository.findUsers(filter, page);
+    const users = await userRepository.findUsers({filter, sort, page});
     const count = await userRepository.getCount(filter);
     if (!users) {
-      throw AppError.NoContent('findUsers No Content');
+      throw AppError.NoContent('findUsersByQuery No Content');
     }
-    return [serializeUsers(users), count];
+    return {users: serializeUsers(users), count};
   }
 
   async getUserContacts(userId: UserId) {
@@ -112,7 +112,7 @@ class UsersUseCases {
       throw AppError.NoContent('Contacts is not found');
     }
 
-    return contacts;
+    return serializeUsers(contacts);
   }
 
   // async updateUser(userId: UserId, fields: Partial<User>) {

@@ -1,102 +1,65 @@
-import {Comment, CommentExt, CommentStatus} from '../@types/comment';
 import logger from '../utils/logger';
 import knexdb from '../config/database';
 
-import {COMMENTS_TABLE} from './constants';
+import {TABLES} from './constants';
+import {parseSort} from './utils';
+
+const DEFAULT_COMMENT_SELECT = [
+  `${TABLES.COMMENTS}.commentId as commentId`,
+  `${TABLES.COMMENTS}.postId as postId`,
+  `${TABLES.COMMENTS}.userId as userId`,
+  `${TABLES.COMMENTS}.text as text`,
+  `${TABLES.COMMENTS}.status as status`,
+  `${TABLES.COMMENTS}.createdAt as createdAt`,
+  `${TABLES.COMMENTS}.updatedAt as updatedAt`,
+];
 
 class CommentsRepository {
-  async findCommentsByPostId(postId: number) {
-    try {
-      const comments: CommentExt[] = await knexdb(COMMENTS_TABLE)
-        .select(
-          `${COMMENTS_TABLE}.userId as userId`,
-          `users.username as username`,
-          `um.filepath as profilePic`,
-
-          `${COMMENTS_TABLE}.postId as postId`,
-          `${COMMENTS_TABLE}.commentId as commentId`,
-          `${COMMENTS_TABLE}.text as text`,
-          `${COMMENTS_TABLE}.status as status`,
-          `media.filepath as media`, // TODO: update when multiple medias
-
-          `${COMMENTS_TABLE}.createdAt as createdAt`,
-          `${COMMENTS_TABLE}.updatedAt as updatedAt`,
-        )
-        .join('users', 'users.userId', '=', `${COMMENTS_TABLE}.userId`)
-        .leftJoin('media as um', 'um.mediaId', '=', 'users.profilePic')
-        .leftJoin(
-          'media',
-          'media.commentId',
-          '=',
-          `${COMMENTS_TABLE}.commentId`,
-        )
-        .where(`${COMMENTS_TABLE}.postId`, postId);
-
-      return comments;
-    } catch (error) {
-      logger.error(error, 'DB Error');
-      throw error;
-    }
-  }
-
-  async findCommentsByPostIds(postsIds: number[]) {
-    try {
-      const comments: CommentExt[] = await knexdb(COMMENTS_TABLE)
-        .select(
-          `${COMMENTS_TABLE}.userId as userId`,
-          `users.username as username`,
-          `um.filepath as profilePic`,
-
-          `${COMMENTS_TABLE}.commentId as commentId`,
-          `${COMMENTS_TABLE}.postId as postId`,
-          `${COMMENTS_TABLE}.text as text`,
-          `${COMMENTS_TABLE}.status as status`,
-          `media.filepath as media`, // TODO: update when multiple medias
-
-          `${COMMENTS_TABLE}.createdAt`,
-          `${COMMENTS_TABLE}.updatedAt`,
-        )
-        .join('users', 'users.userId', '=', `${COMMENTS_TABLE}.userId`)
-        .leftJoin('media as um', 'um.mediaId', '=', 'users.profilePic')
-        .leftJoin(
-          'media',
-          'media.commentId',
-          '=',
-          `${COMMENTS_TABLE}.commentId`,
-        )
-        .whereIn(`${COMMENTS_TABLE}.postId`, postsIds);
-      return comments;
-    } catch (error) {
-      logger.error(error, 'DB Error');
-      throw error;
-    }
+  async findComments({
+    sort,
+    page,
+    filter,
+  }: {
+    include?: Include;
+    fields?: Fields;
+    sort?: Sort;
+    page?: Page;
+    filter?: Filter<Comment>;
+  }) {
+    const comments: Comment[] = await knexdb(TABLES.COMMENTS)
+      .select(DEFAULT_COMMENT_SELECT)
+      .orderBy('createdAt', 'asc', 'last')
+      .modify(function (queryBuilder) {
+        if (sort) {
+          queryBuilder.clear('order');
+          queryBuilder.orderBy(parseSort(sort));
+        }
+        queryBuilder.limit(Number(page?.limit ?? 100));
+        if (page?.offset) {
+          queryBuilder.offset(+page.offset);
+        }
+        if (filter) {
+          if (filter instanceof Array) {
+            filter.forEach((el) => {
+              queryBuilder.orWhere(el.columnName, el.operator, el.value);
+            });
+          } else {
+            queryBuilder.where(filter);
+          }
+        }
+      });
+    return comments;
   }
 
   async createComment(
-    fields: Omit<Comment, 'createdAt' | 'updatedAt' | 'status'>,
+    fields: Omit<Comment, 'commentId' | 'createdAt' | 'updatedAt'>,
   ) {
     try {
-      const result = await knexdb(COMMENTS_TABLE).insert(fields).returning('*');
-
-      return result[0];
-    } catch (error) {
-      logger.error(error, 'DB Error');
-      throw error;
-    }
-  }
-
-  async updateComment(commentId: number, fieldstoUpdate: Partial<Comment>) {
-    try {
-      const result = await knexdb(COMMENTS_TABLE)
-        .update({
-          ...fieldstoUpdate,
-          status: CommentStatus.edited,
-          updatedAt: new Date(),
-        })
-        .where({commentId})
+      const result = await knexdb(TABLES.COMMENTS)
+        .insert(fields)
         .returning('*');
 
-      return result;
+      return result[0];
     } catch (error) {
       logger.error(error, 'DB Error');
       throw error;

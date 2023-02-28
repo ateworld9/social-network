@@ -1,0 +1,30 @@
+.user {
+  display: grid;
+  grid-template-columns: min-content auto;
+}
+.link {
+  text-decoration: none;
+  cursor: pointer;
+  align-self: center;
+}
+.avatar {
+  border: 1px solid lightgrey;
+  border-radius: 50%;
+  margin-right: 0.5em;
+}
+.username {
+  font-weight: 700;
+  color: var(--textColor);
+
+  align-self: center;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+}
+.container .link {
+  align-self: start;
+}
+.container .username {
+  align-self: start;
+}

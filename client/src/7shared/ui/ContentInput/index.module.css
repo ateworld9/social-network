@@ -1,0 +1,19 @@
+.container {
+  background-color: var(--bg);
+}
+
+.formContainer {
+  gap: 8px;
+
+  display: flex;
+  align-items: flex-end;
+}
+.formContainer div label {
+  color: var(--textColorSoft) !important;
+}
+.formContainer div div textarea {
+  color: var(--textColor) !important;
+}
+.formContainer div div fieldset {
+  border-color: var(--textColorSoft) !important;
+}

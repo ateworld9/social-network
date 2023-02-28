@@ -15,7 +15,9 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "plugins": [{ "name": "typescript-plugin-css-modules" }]
+    "plugins": [{ "name": "typescript-plugin-css-modules" }],
+    "types": ["node", "react", "react-redux", "redux", "axios"]
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": [".eslintrc.js"]
 }

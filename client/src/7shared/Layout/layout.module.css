@@ -1,0 +1,13 @@
+.container {
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
+
+.main {
+  background-color: var(--bgSoft);
+  overflow-y: auto;
+}
+/* 
+.main::-webkit-scrollbar {
+  display: none;
+} */

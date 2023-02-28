@@ -18,7 +18,7 @@ const ErrorMiddleware = async (
       console.log(
         '==========================\n===========EXIT===========\n==========================\n',
       );
-      // process.exit(1);
+      process.exit(1);
       //process exit // terriablly wrong with flow need restart
       return res.status(500).json({message: err.message});
     }

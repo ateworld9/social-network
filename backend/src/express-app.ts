@@ -4,13 +4,17 @@ import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 
+import {CLIENT_URL} from './config';
 import logger from './utils/logger';
 import ErrorMiddleware from './middleware/error';
+
 import mediaRouter from './PresentationLayer/media/route';
 import authRouter from './PresentationLayer/auth/route';
 import userRouter from './PresentationLayer/users/route';
 import postRouter from './PresentationLayer/posts/route';
-import {CLIENT_URL} from './config';
+import commentRouter from './PresentationLayer/comments/route';
+import chatsRouter from './PresentationLayer/chats/route';
+import knexdb from './config/database';
 
 export default async (app: Application) => {
   app.use(
@@ -25,12 +29,16 @@ export default async (app: Application) => {
   app.use(cookieParser());
   app.use(cors({credentials: true, origin: CLIENT_URL}));
 
+  knexdb('tokens').del();
+
   // TODO: Health Check
 
   mediaRouter(app);
   authRouter(app);
   userRouter(app);
   postRouter(app);
+  commentRouter(app);
+  chatsRouter(app);
 
   // error handling
   app.use(ErrorMiddleware);

@@ -1,0 +1,67 @@
+.container {
+  padding: 16px;
+}
+.container:hover {
+  background-color: var(--substrate);
+  cursor: pointer;
+}
+
+.container:not(:last-child) {
+  border-bottom: 1px solid var(--borderColor);
+}
+
+.container:last-child {
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.conf {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+
+  gap: 16px;
+}
+
+.avatar {
+  justify-self: start;
+  width: 4em;
+  height: 4em;
+  border-radius: 50%;
+  background-color: var(--bgSoft);
+}
+.avatar img {
+  /* width: 4em;
+  height: 4em;
+  border-radius: 50%;
+  object-fit: cover; */
+}
+.chatInfo {
+}
+
+.fullname {
+  text-transform: capitalize;
+  font-weight: 700;
+}
+.username {
+  font-weight: 700;
+}
+
+.lastMessage {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.lastMessage .text {
+  color: var(--textColorSoft);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  padding-left: 8px;
+  padding-right: 8px;
+  margin-top: 8px;
+}
+.date {
+  font-size: 0.8em;
+  text-align: right;
+}

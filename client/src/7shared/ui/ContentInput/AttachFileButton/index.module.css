@@ -1,0 +1,7 @@
+.icon {
+  color: var(--textColorSoft) !important;
+}
+
+.input {
+  display: none;
+}

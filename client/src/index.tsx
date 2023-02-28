@@ -1,11 +1,19 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
-import App from "./App";
-import store from "./app/store";
+
+import * as dayjs from "dayjs";
+import calendar from "dayjs/plugin/calendar";
+import relativeTime from "dayjs/plugin/relativeTime";
+
+import App from "./1app/App";
+import { store } from "./1app/store";
 import reportWebVitals from "./reportWebVitals";
 
 import "./index.css";
+
+dayjs.extend(calendar);
+dayjs.extend(relativeTime);
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,

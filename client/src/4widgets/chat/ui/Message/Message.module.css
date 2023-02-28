@@ -1,0 +1,57 @@
+.message {
+  display: flex;
+  margin-bottom: 10px;
+  max-width: 70%;
+}
+
+.message:last-child {
+  margin-bottom: 0;
+}
+
+.message.self {
+  flex-direction: row-reverse;
+  margin-left: auto;
+}
+.messageAvatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin: 0;
+  margin-right: 10px;
+  padding: 0;
+  overflow: hidden;
+  cursor: pointer;
+}
+.message.self .messageAvatar {
+  margin-left: 10px;
+  margin-right: 0px;
+}
+.messageTextSmall {
+  /* width: 20cqw; */
+  min-width: 20%;
+  border-radius: 5px;
+}
+.messageTextSmall a {
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--textColorSoft);
+  cursor: pointer;
+}
+.message.self .messageTextSmall {
+  margin-left: auto;
+  text-align: end;
+}
+.messageTextLarge {
+  width: 70%;
+  margin-top: 5px;
+  border-radius: 5px;
+  padding: 8px;
+  border-radius: 16px;
+  color: var(--textColor);
+  background-color: var(--substrate);
+
+  overflow-wrap: anywhere;
+}
+.message.self .messageTextLarge {
+  margin-left: auto;
+}

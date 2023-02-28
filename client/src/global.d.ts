@@ -1,5 +1,16 @@
+import { ResponseError } from "./7shared/config/api/http";
+import type { AppDispatch, AppState } from "./1app/store";
+
 declare module "*.module.css";
 declare module "*.module.scss";
+
+declare module "@reduxjs/toolkit" {
+  type AsyncThunkConfig = {
+    state: AppState;
+    dispatch?: AppDispatch;
+    rejectValue?: ResponseError;
+  };
+}
 
 // add an element to the end of a tuple
 type Push<L extends any[], T> = ((r: any, ...x: L) => void) extends (

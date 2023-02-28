@@ -1,0 +1,4 @@
+.messagesContainer {
+  overflow-y: auto;
+  padding: 16px;
+}

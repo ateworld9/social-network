@@ -1,0 +1,102 @@
+.rightBar {
+  display: none;
+  /* container-type: size; */
+}
+
+.rightBar::-webkit-scrollbar {
+  display: none;
+}
+
+.container {
+  display: grid;
+  padding: 1cqw;
+}
+.item {
+  /* height: 30vh; */
+  container-type: inline-size;
+  padding: 1vw;
+  background-color: var(--bg);
+  margin-bottom: 1vh;
+  -webkit-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09);
+  -moz-box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09);
+  box-shadow: 0px 0px 15px 1px rgba(0, 0, 0, 0.09);
+  font-size: 0.6cqw;
+}
+.item span {
+  color: grey;
+}
+.user {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 1cqh 0;
+}
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 2cqw;
+  position: relative;
+}
+.userInfo img {
+  /* width: 8cqw;
+  height: 8cqw;
+  border-radius: 50%;
+  border: 1px solid lightgrey;
+  object-fit: cover; */
+}
+.userInfo .online {
+  width: 2.3cqw;
+  height: 2.3cqw;
+  border-radius: 50%;
+  background-color: limegreen;
+  position: absolute;
+  top: 0;
+  left: 6cqw;
+}
+.userInfo p {
+  color: var(--textColorSoft);
+}
+.userInfo span {
+  font-weight: 500;
+  color: var(--textColor);
+}
+
+.time {
+  font-size: 3cqw;
+  white-space: nowrap;
+}
+.user .buttons {
+  display: flex;
+  align-items: center;
+  gap: 2cqw;
+}
+.user .buttons button {
+  width: 12cqw;
+  font-size: 3cqw;
+  border: none;
+  padding: 1cqw;
+  color: white;
+  cursor: pointer;
+}
+.user .buttons .follow {
+  background-color: #5271ff;
+}
+.user .buttons .dismiss {
+  background-color: #f0544f;
+}
+
+@media (min-width: 1080px) {
+  .rightBar {
+    /* container-type: size; */
+    display: block;
+    position: sticky;
+    top: 5vh;
+    height: 96vh;
+    overflow: scroll;
+    width: 20vw;
+    padding-right: 10vw;
+
+    color: var(--textColor);
+    background-color: var(--bgSoft);
+  }
+}

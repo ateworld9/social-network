@@ -3,8 +3,9 @@ import {
   createContext,
   useEffect,
   useState,
-  FC,
+  useMemo,
 } from "react";
+import { UnionToTuple } from "../global";
 
 interface Theme {
   textColor: string;
@@ -55,7 +56,7 @@ type ThemeContextType = { theme: ThemeEnum; toggleTheme?: () => void };
 export const ThemeContext = createContext<ThemeContextType>({
   theme: ThemeEnum.light,
 });
-export const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
+export const ThemeProvider = ({ children }: PropsWithChildren) => {
   const [theme, setTheme] = useState<ThemeEnum>(
     (localStorage.getItem("theme") as ThemeEnum) ?? ThemeEnum.light,
   );
@@ -65,14 +66,14 @@ export const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
     setCSSVariables(themes[theme]);
   }, [theme]);
 
-  const toggleTheme = () => {
-    setTheme(theme === ThemeEnum.light ? ThemeEnum.dark : ThemeEnum.light);
-  };
+  const context = useMemo(() => {
+    const toggleTheme = () => {
+      setTheme(theme === ThemeEnum.light ? ThemeEnum.dark : ThemeEnum.light);
+    };
+    return { theme, toggleTheme };
+  }, [theme]);
 
   return (
-    // eslint-disable-next-line react/jsx-no-constructed-context-values
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      {children}
-    </ThemeContext.Provider>
+    <ThemeContext.Provider value={context}>{children}</ThemeContext.Provider>
   );
 };

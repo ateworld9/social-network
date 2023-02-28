@@ -1,15 +1,12 @@
 import knexdb from '../config/database';
 import logger from '../utils/logger';
 
-import {Token} from '../@types/token';
-import {UserId} from '../@types/user';
-
-import {TOKENS_TABLE} from './constants';
+import {TABLES} from './constants';
 
 class TokenRepository {
   async createToken(fields: Token) {
     try {
-      const tokens = await knexdb(TOKENS_TABLE).insert(fields).returning('*');
+      const tokens = await knexdb(TABLES.TOKENS).insert(fields).returning('*');
       return tokens[0];
     } catch (e) {
       logger.error(e);
@@ -19,7 +16,7 @@ class TokenRepository {
 
   async updateToken(userId: UserId, refreshToken: string) {
     try {
-      const tokens = await knexdb(TOKENS_TABLE)
+      const tokens = await knexdb(TABLES.TOKENS)
         .where({userId})
         .update({refreshToken})
         .returning('*');
@@ -33,7 +30,7 @@ class TokenRepository {
 
   async findTokenByUserId(userId: UserId) {
     try {
-      const tokens = await knexdb(TOKENS_TABLE).where({userId});
+      const tokens = await knexdb(TABLES.TOKENS).where({userId});
       return tokens[0];
     } catch (e) {
       logger.error(e);
@@ -43,9 +40,7 @@ class TokenRepository {
 
   async findTokenByRefreshToken(refreshToken: string) {
     try {
-      const tokens = await knexdb(TOKENS_TABLE).where({refreshToken});
-      console.log('>>>>>>>>>>>>>>>>>>>>TOKENs', tokens);
-
+      const tokens = await knexdb(TABLES.TOKENS).where({refreshToken});
       return tokens[0];
     } catch (e) {
       logger.error(e);
@@ -55,11 +50,7 @@ class TokenRepository {
 
   async deleteToken(refreshToken: string) {
     try {
-      const response = await knexdb(TOKENS_TABLE).where({refreshToken}).del();
-      console.log(
-        'DELETE TOKEN RESPONSE==========================================',
-        response,
-      );
+      const response = await knexdb(TABLES.TOKENS).where({refreshToken}).del();
     } catch (e) {
       logger.error(e);
       throw e;

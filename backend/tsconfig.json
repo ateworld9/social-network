@@ -5,8 +5,9 @@
   "compilerOptions": {
     "outDir": "./build",
     "lib": ["es2022"],
-    "module": "commonjs",
     "target": "es2022",
+
+    "module": "CommonJS",
     "moduleResolution": "node",
 
     "sourceMap": true,
@@ -20,9 +21,9 @@
     "noImplicitReturns": false, //cause of error handling
     "noImplicitThis": true,
     "noImplicitAny": true,
-    "baseUrl": ".",
+    "baseUrl": "./src",
     "typeRoots": ["./src/@types", "./node_modules/@types"]
   },
-  "include": ["src", "db"],
-  "exclude": ["node_modules", "build"]
+  "include": ["src"],
+  "exclude": ["./node_modules", "./build"]
 }

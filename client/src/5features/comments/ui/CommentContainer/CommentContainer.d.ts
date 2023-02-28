@@ -1,0 +1,1 @@
+type CommentContainerProps = { commentId: CommentId };

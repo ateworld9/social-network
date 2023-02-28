@@ -1,6 +1,4 @@
-import {UserId} from './user';
-
-export interface Token {
+declare interface Token {
   userId: UserId;
   refreshToken: string;
 }

@@ -1,30 +1,18 @@
-import {UserId} from './user';
-
-export type ChatId = number;
-
-export interface Member {
-  chatId: ChatId;
-  role: string;
-  user: User;
-}
-
-export enum ChatType {
-  dialog = 'dialog',
-  conference = 'conference',
-}
-export interface Chat {
-  chatId: ChatId;
+declare interface Chat {
+  chatId: number;
   chatName: string;
-  type: ChatType;
+  type: 'dialog' | 'conference';
 
-  members: Array<Member>;
+  lastMessage: Message; // TODO: Make it messageId
 
   createdAt: Date | string;
   updatedAt: Date | string;
 }
-// export enum ChatMemberRole {}
-export interface ChatMember {
+
+declare type ChatId = Chat['chatId'];
+
+declare interface Member {
   chatId: ChatId;
   userId: UserId;
-  role: string;
+  role: string | 'admin' | 'member';
 }

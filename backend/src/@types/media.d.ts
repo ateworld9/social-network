@@ -1,6 +1,4 @@
-export type MediaId = number;
-
-export interface Media {
+declare interface Media {
   mediaId: MediaId;
   filename: string;
   filepath: string;
@@ -11,3 +9,5 @@ export interface Media {
   commentId?: number | null;
   messageId?: number | null;
 }
+
+declare type MediaId = Media['mediaId'];

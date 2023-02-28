@@ -1,6 +1,4 @@
 import type {NextFunction, Request, Response} from 'express';
-import type {Page} from '../../@types/types';
-import type {User} from '../../@types/user';
 
 import {validationResult} from 'express-validator';
 import {AppError} from '../../utils/app-errors';
@@ -33,9 +31,9 @@ class UsersController {
     }
     try {
       const page = req.query.page as unknown as Page;
-      const filter = req.query.filter as unknown as Partial<User> | undefined;
+      const filter = req.query.filter as unknown as Filter;
 
-      const [users, count] = await usersUseCases.findUsersByQuery({
+      const {users, count} = await usersUseCases.findUsersByQuery({
         filter,
         page,
       });

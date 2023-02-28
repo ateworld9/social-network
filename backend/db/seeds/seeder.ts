@@ -19,6 +19,7 @@ export async function seed(knex: Knex): Promise<void> {
   await knex('comments').del();
   await knex('posts').del();
   await knex('tokens').del();
+
   await knex('users').del();
 
   // Inserts seed entries
@@ -100,8 +101,23 @@ export async function seed(knex: Knex): Promise<void> {
     },
   ]);
 
-  await knex('chats').insert([{type: 'dialog'}]);
+  await knex('chats').insert([
+    {type: 'dialog'},
+    {type: 'dialog'},
+    {type: 'dialog'},
+    {type: 'dialog'},
+  ]);
   await knex('chats2users').insert([
+    {
+      chatId: 4,
+      userId: 1,
+      role: 'admin',
+    },
+    {
+      chatId: 4,
+      userId: 4,
+      role: 'admin',
+    },
     {
       chatId: 1,
       userId: 1,
@@ -110,6 +126,27 @@ export async function seed(knex: Knex): Promise<void> {
     {
       chatId: 1,
       userId: 2,
+      role: 'member',
+    },
+    {
+      chatId: 2,
+      userId: 2,
+      role: 'member',
+    },
+    {
+      chatId: 2,
+      userId: 3,
+      role: 'member',
+    },
+
+    {
+      chatId: 3,
+      userId: 2,
+      role: 'member',
+    },
+    {
+      chatId: 3,
+      userId: 4,
       role: 'member',
     },
   ]);

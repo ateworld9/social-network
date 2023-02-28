@@ -1,0 +1,1 @@
+type ChatWidgetProps = { chatId: ChatId };

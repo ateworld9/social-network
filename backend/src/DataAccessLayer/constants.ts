@@ -1,8 +1,14 @@
-export const MEDIA_TABLE = 'media';
+export enum TABLES {
+  MEDIA = 'media',
+  USERS = 'users',
+  TOKENS = 'tokens',
 
-export const USERS_TABLE = 'users';
-export const TOKENS_TABLE = 'tokens';
-export const CONTACTS_TABLE = 'contacts';
+  POSTS = 'posts',
+  COMMENTS = 'comments',
 
-export const POSTS_TABLE = 'posts';
-export const COMMENTS_TABLE = 'comments';
+  CONTACTS = 'contacts',
+  CHATS = 'chats',
+  CHATS2USERS = 'chats2users',
+
+  MESSAGES = 'messages',
+}

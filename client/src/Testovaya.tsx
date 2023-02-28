@@ -1,10 +1,11 @@
 import React from "react";
-import ContentInput from "./features/ContentInput";
+import { User } from "./6entities/user";
 
 const Testovaya: React.FC = () => {
   return (
     <div style={{ backgroundColor: "grey", height: "100vh" }}>
-      <ContentInput onFormSubmit={() => {}} />
+      <User link userId={2} />
+      <User userId={1} />
     </div>
   );
 };

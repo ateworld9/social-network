@@ -1,29 +1,29 @@
-import {ChatId} from './chat';
-import {UserId} from './user';
-
-export type MessageId = number;
-
-export enum MessageStatus {
-  notSended = 'not-sended',
-  sended = 'sended',
-  readed = 'readed',
-  edited = 'edited',
-  invisible = 'invisible',
-  deleted = 'deleted',
-}
-
-export interface ForwardedMessage {
-  messageId: MessageId;
-  forwardedMessageId: MessageId;
-}
-export interface Message {
-  messageId: MessageId;
+declare interface Message {
+  messageId: number;
   chatId: ChatId;
   fromUserId: UserId;
   text: string | null;
-  status: MessageStatus;
+  status:
+    | 'not-sended'
+    | 'sended'
+    | 'readed'
+    | 'edited'
+    | 'invisible'
+    | 'deleted';
   createdAt: string;
   updatedAt: string;
 
   forwardedMessages?: ForwardedMessage[];
+}
+
+declare type CreateRequestMessage = Pick<
+  Message,
+  'chatId' | 'fromUserId' | 'text' | 'forwardedMessages' | 'status'
+>;
+
+declare type MessageId = Message['messageId'];
+
+declare interface ForwardedMessage {
+  messageId: MessageId;
+  forwardedMessageId: MessageId;
 }

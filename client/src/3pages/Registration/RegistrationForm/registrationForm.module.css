@@ -1,0 +1,57 @@
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form label {
+  color: #555555;
+}
+
+.form .input {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid lightgray;
+  padding: 20px 10px;
+  margin-bottom: 30px;
+}
+
+.input.inputError {
+  margin-bottom: 4px;
+}
+
+.error {
+  font-size: 0.8em;
+  color: red;
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+.error span {
+  height: 100%;
+  vertical-align: top;
+}
+
+.loading {
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+.button {
+  margin-bottom: 12px;
+
+  padding: 10px;
+  border: none;
+  background-color: #938eef;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.loginButton button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  background-color: rebeccapurple;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}

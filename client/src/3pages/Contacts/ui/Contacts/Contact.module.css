@@ -1,0 +1,35 @@
+.container {
+  display: grid;
+  grid-template-columns: auto 3fr auto;
+  gap: 16px;
+  padding-bottom: 8px;
+}
+k
+.container:not(:last-child) {
+  border-bottom: 1px solid var(--borderColor);
+}
+.link {
+  color: var(--textColor);
+  text-decoration: none;
+  cursor: pointer;
+}
+.avatar {
+  width: 4em;
+  height: 4em;
+  border-radius: 50%;
+  background-color: var(--bgSoft);
+}
+.avatar img {
+  width: 4em;
+  height: 4em;
+  border-radius: 50%;
+}
+.userInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.fullname {
+  text-transform: capitalize;
+  font-weight: 700;
+}

@@ -1,0 +1,19 @@
+.commentContainer {
+  margin: 16px;
+}
+.commentContainer img {
+  /* width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover; */
+}
+
+.date {
+  color: var(--textColorSoft);
+  font-size: 0.8em;
+  text-align: right;
+}
+.comment {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+}

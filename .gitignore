@@ -9,10 +9,10 @@
 **/yarn.lock
 **/pnpm-lock.yaml
 
-**/.env
+*/**/.env
 
-*/**/debug.log
-*/**/logger.log
+**/*.log
+**/logger.log
 
 /client2
 

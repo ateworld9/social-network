@@ -1,4 +1,5 @@
-const path = require("path");
+const path = require("node:path");
+console.log(path.resolve(__dirname, "./tsconfig.json"));
 
 module.exports = {
   env: {
@@ -34,9 +35,16 @@ module.exports = {
     "react/no-unescaped-entities": ["off"],
     "react/function-component-definition": ["off"],
     "@typescript-eslint/no-unused-vars": ["warn"],
-    "no-nested-ternary": ["warn"], // easier to develop "makets" of components logic
+    // "no-nested-ternary": ["warn"], // easier to develop "makets" of components logic
     "no-unused-vars": ["warn"], // really hard to develop
-    "no-param-reassign": ["off"], // because of Immer(ReduxToolkit)
-    "import/no-extraneous-dependencies": ["off"], // webwitals ??
+    // "import/no-extraneous-dependencies": ["off"], // webwitals ??
+    "import/prefer-default-export": ["off"],
+    "import/extensions": ["off"],
   },
+  overrides: [
+    {
+      files: ["src/**/*.slice.ts"],
+      rules: { "no-param-reassign": ["error", { props: false }] },
+    },
+  ],
 };

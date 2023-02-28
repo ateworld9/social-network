@@ -1,10 +1,8 @@
 import bcrypt from 'bcrypt';
 import {AppError} from '../utils/app-errors';
 
-import TokensUseCases from './tokens.use-cases';
-import {User} from '../@types/user';
-import {Token} from '../@types/token';
 import UsersUseCases from './users.use-cases';
+import TokensUseCases from './tokens.use-cases';
 
 const usersUseCases = new UsersUseCases();
 const tokensUseCases = new TokensUseCases();
@@ -58,6 +56,9 @@ class AuthUseCases {
       );
     }
 
+    if (!user.password) {
+      throw AppError.BadRequest('Incorrect password in the database');
+    }
     const isPassEquals = await bcrypt.compare(password, user.password);
     if (!isPassEquals) {
       throw AppError.BadRequest('Incorrect password');

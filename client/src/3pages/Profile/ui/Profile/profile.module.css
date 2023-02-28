@@ -1,0 +1,101 @@
+.images {
+  width: 100%;
+  height: max(20vh, 20vw);
+  position: relative;
+}
+
+.coverContainer {
+  width: 100%;
+  height: 100%;
+  background-color: var(--substrate);
+}
+.cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.avatarContainer {
+  width: max(13vh, 13vw);
+  height: max(13vh, 13vw);
+  background-color: var(--substrate);
+  border-radius: 50%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  top: max(13vh, 13vw);
+}
+.avatar {
+  width: max(13vh, 13vw);
+  height: max(13vh, 13vw);
+  border-radius: 50%;
+  object-fit: cover;
+}
+.profileContainer {
+  margin: 8px 32px;
+}
+.profileContainer .userInfo {
+  height: 30em;
+  padding: 16px;
+  margin-bottom: 8px;
+  border-radius: 20px;
+  color: var(--textColor);
+  background-color: var(--bg);
+  -webkit-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+  -moz-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+  box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.profileContainer .userInfo .left {
+  flex: 1;
+  display: flex;
+  gap: 4px;
+}
+.profileContainer .userInfo .left a {
+  color: var(--textColorSoft);
+}
+.icon {
+  font-size: 1em !important;
+}
+.profileContainer .userInfo .center {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.profileContainer .userInfo .center span {
+  font-weight: 500;
+}
+.profileContainer .userInfo .center .info {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.profileContainer .userInfo .center .info .item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--textColorSoft);
+}
+.profileContainer .userInfo .center .info .item span {
+  font-size: 0.9em;
+}
+.profileContainer .userInfo .center button {
+  border: none;
+  background-color: #5271ff;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.profileContainer .userInfo .right {
+  flex: 1;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  justify-content: flex-end;
+}

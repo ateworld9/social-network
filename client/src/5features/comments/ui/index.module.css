@@ -1,0 +1,8 @@
+.comments {
+  border-top: 4px solid var(--substrate);
+}
+
+.contentInput {
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
