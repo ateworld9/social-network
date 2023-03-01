@@ -1,23 +1,59 @@
 {
+  // https://www.typescriptlang.org/tsconfig
   "compilerOptions": {
-    "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
+    // Type Checking
     "strict": true,
-    "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitAny": false,
+    "strictNullChecks": true,
+
+    // Modules
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "isolatedModules": true,
+    "baseUrl": "./",
+    "rootDir": "./",
+    "paths": {
+      "@app/*": ["src/1app/*"],
+      "@processes/*": ["src/2processes/*"],
+      "@pages/*": ["src/3pages/*"],
+      "@widgets/*": ["src/4widgets/*"],
+      "@features/*": ["src/features/*"],
+      "@entitites/*": ["src/6entitites/*"],
+      "@shared/*": ["src/7shared/*"]
+    },
+
+    //Emit
     "noEmit": true,
-    "jsx": "react-jsx",
+    // "importsNotUsedAsValues": "preserve",
+    "outDir": "./build",
+    "sourceMap": true,
+
+    // JavaScript Support
+    "allowJs": true,
+
+    // Editor Support
     "plugins": [{ "name": "typescript-plugin-css-modules" }],
-    "types": ["node", "react", "react-redux", "redux", "axios"]
+
+    // Interop Constraints
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    // "isolatedModules": true,
+
+    // Language and Environment
+    "jsx": "react-jsx",
+    "target": "es2022",
+    "lib": ["dom", "dom.iterable", "ES2022"],
+
+    // Projects
+    "incremental": true,
+
+    // Completeness
+    "skipLibCheck": true
   },
   "include": ["src"],
-  "exclude": [".eslintrc.js"]
+  "exclude": ["**/node_modules", "**/.*/"]
 }

@@ -5,7 +5,6 @@ import {
   useState,
   useMemo,
 } from "react";
-import { UnionToTuple } from "../global";
 
 interface Theme {
   textColor: string;

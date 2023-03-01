@@ -33,9 +33,9 @@ const SendMessageButton = ({
       );
       dispatch(chatsModel.actions.upsertChat(res.data.data[0]));
       dispatch(userModel.actions.upsertUsers(res.data.relationships.users));
-      console.log("res.data", res.data);
       navigate(`/chat/${res.data.data[0].chatId}`);
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log("error while creating new dialog", error);
     }
   };

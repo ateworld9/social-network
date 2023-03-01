@@ -8,13 +8,18 @@ module.exports = {
     jest: true,
   },
   extends: [
-    "react-app",
-    "react-app/jest",
+    // "react-app",
+    // "react-app/jest",
     "airbnb",
     "airbnb-typescript",
     "plugin:import/typescript",
     "plugin:prettier/recommended",
   ],
+  settings: {
+    react: {
+      version: "18", // Tells eslint-plugin-react to automatically detect the version of React to use
+    },
+  },
   parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaFeatures: {
