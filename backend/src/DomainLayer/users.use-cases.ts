@@ -35,7 +35,13 @@ const serializeUsers = (users: Array<User & Media>) => {
 };
 
 class UsersUseCases {
-  async createUser(email: string, password: string, username?: string) {
+  async createUser(
+    email: string,
+    password: string,
+    username?: string,
+    name?: string,
+    surname?: string,
+  ) {
     let checkUser: User | undefined = undefined;
     let errorMessage = '';
 
@@ -58,8 +64,8 @@ class UsersUseCases {
       password,
       username,
       phone: null,
-      name: null,
-      surname: null,
+      name: name ?? null,
+      surname: surname ?? null,
       profilePic: null,
       isActivated: false,
       activationLink: '',
@@ -123,6 +129,10 @@ class UsersUseCases {
   // }
 
   async addUserToContacts(currentUserId: UserId, addedUserId: UserId) {
+    if (currentUserId === addedUserId) {
+      throw AppError.BadRequest(`ids is equal`);
+    }
+
     try {
       await userRepository.findUser({filter: {userId: currentUserId}});
     } catch (error) {
@@ -147,7 +157,7 @@ class UsersUseCases {
 
     try {
       const contacts = await userRepository.findContactsByUserId(currentUserId);
-      return contacts;
+      return serializeUsers(contacts);
     } catch (error) {
       throw AppError.BadRequest('Error while insert contact to database');
     }

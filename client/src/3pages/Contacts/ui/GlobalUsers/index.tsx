@@ -14,6 +14,7 @@ const GlobalUsers = () => {
   const dispatch = useAppDispatch();
 
   const filtredUsersIds = useTypedSelector(selectFiltredUsersIds);
+  console.log(filtredUsersIds);
 
   const currentUserId = useTypedSelector(selectAuthUserId) as number;
   const handleAddToContacts = (addedUserId: number) => {

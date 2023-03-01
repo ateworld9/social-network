@@ -10,6 +10,7 @@ const authController = new AuthController();
 
 router.post(
   '/registration',
+  body('username', 'Incorrect username').isLength({min: 4, max: 100}),
   body('email', 'Incorrect email').isEmail(),
   body('password').isLength({min: 8, max: 32}),
   authController.registration,

@@ -84,6 +84,7 @@ class UsersController {
       const userId = Number(req.params.userId);
 
       const contacts = await usersUseCases.getUserContacts(userId);
+
       return res.status(200).json({data: contacts, meta: {}});
     } catch (e) {
       next(e);
@@ -102,6 +103,8 @@ class UsersController {
         currentUserId,
         addedUserId,
       );
+
+      console.log(contacts);
 
       return res.status(200).json({data: contacts, meta: {}});
     } catch (e) {

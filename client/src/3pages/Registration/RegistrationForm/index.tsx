@@ -15,6 +15,7 @@ import s from "./registrationForm.module.css";
 interface IRegistrationForm {
   username: string;
   name: string;
+  surname: string;
   email: string;
   password: string;
 }
@@ -71,6 +72,22 @@ const RegistrationForm = () => {
       {errors.name && (
         <p role="alert" className={s.error}>
           {errors.name.message}
+        </p>
+      )}
+      <label htmlFor="surname">
+        <input
+          id="surname"
+          {...register("surname", {
+            required: "Surname is required",
+          })}
+          className={cn(s.input, errors.name && s.inputError)}
+          type="text"
+          placeholder="Surname"
+        />
+      </label>
+      {errors.surname && (
+        <p role="alert" className={s.error}>
+          {errors.surname.message}
         </p>
       )}
 

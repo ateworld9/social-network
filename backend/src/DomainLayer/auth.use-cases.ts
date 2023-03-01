@@ -8,12 +8,24 @@ const usersUseCases = new UsersUseCases();
 const tokensUseCases = new TokensUseCases();
 
 class AuthUseCases {
-  async registration(email: string, password: string, username?: string) {
+  async registration(
+    email: string,
+    password: string,
+    username?: string,
+    name?: string,
+    surname?: string,
+  ) {
     const hashPassword = await bcrypt.hash(password, 3);
 
     // const activationLink = uuid.v4()
 
-    const user = await usersUseCases.createUser(email, hashPassword, username);
+    const user = await usersUseCases.createUser(
+      email,
+      hashPassword,
+      username,
+      name,
+      surname,
+    );
 
     // await sendActivationMail(email, activationLink)
 

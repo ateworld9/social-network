@@ -1,6 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { fetchUserContacts, fetchUsersSearch } from "./thunks";
+import {
+  fetchAddToContacts,
+  fetchUserContacts,
+  fetchUsersSearch,
+} from "./thunks";
 
 type ContactsState = {
   contactsIds: UserId[];
@@ -55,22 +59,19 @@ const contactsSlice = createSlice({
       state.isUsersLoading = "failed";
     });
 
-    // builder.addCase(fetchAddToContacts.pending, (state) => {});
-    // builder.addCase(fetchAddToContacts.fulfilled, (state, action) => {
-    //   state.contacts = action.payload;
-    //   state.contactsError = "";
-    // });
-    // builder.addCase(fetchAddToContacts.rejected, (state, action) => {
-    //   if (action.payload) {
-    //     state.contactsError = action.payload.message;
-    //   }
-    // });
+    builder.addCase(fetchAddToContacts.pending, (state) => {
+      state.isContactsLoading = "loading";
+    });
+    builder.addCase(fetchAddToContacts.fulfilled, (state, action) => {
+      state.contactsIds = action.payload;
+      state.contactsError = "";
+    });
+    builder.addCase(fetchAddToContacts.rejected, (state, action) => {
+      if (action.payload) {
+        state.contactsError = action.payload.message;
+      }
+    });
   },
 });
 
 export const { reducer } = contactsSlice;
-
-export const selectContactsIds = (state: RootState) =>
-  state.contactsPage.contactsIds;
-export const selectFiltredUsersIds = (state: RootState) =>
-  state.contactsPage.contactsIds;

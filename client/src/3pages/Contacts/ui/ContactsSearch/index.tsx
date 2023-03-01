@@ -13,7 +13,21 @@ const ContactsSearch = () => {
   const onSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearch(event?.target.value);
 
-    dispatch(fetchUsersSearch({ fields: null, limit: 50 }));
+    const values = event?.target.value.split(" ");
+    const filters = values.flatMap((value) => [
+      {
+        columnName: "username",
+        operator: "like" as "like",
+        value: `%${value}%`,
+      },
+      { columnName: "name", operator: "like" as "like", value: `%${value}%` },
+      {
+        columnName: "surname",
+        operator: "like" as "like",
+        value: `%${value}%`,
+      },
+    ]);
+    dispatch(fetchUsersSearch({ filter: filters, page: { limit: 50 } }));
   };
   return (
     <section className={s.container}>

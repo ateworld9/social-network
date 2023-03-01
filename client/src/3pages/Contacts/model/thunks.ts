@@ -5,12 +5,6 @@ import type { AxiosError } from "axios";
 import { userModel } from "@entities/user";
 import { UserService } from "@shared/services/user";
 
-type FetchPropsArgs = {
-  fields: Partial<User> | null;
-  limit?: number;
-  offset?: number;
-};
-
 export const fetchUserContacts = createAsyncThunk<
   UserId[],
   { userId: UserId },
@@ -31,13 +25,20 @@ export const fetchUserContacts = createAsyncThunk<
 
 export const fetchUsersSearch = createAsyncThunk<
   UserId[],
-  FetchPropsArgs,
+  RequestQuery<User>,
   { rejectValue: ResponseError }
->("contacts/fetchUsersSearch", async ({ fields, limit, offset }, thunkAPI) => {
+>("contacts/fetchUsersSearch", async ({ filter, page }, thunkAPI) => {
   try {
-    const response = await UserService.fetchUsers(fields, limit, offset);
+    const response = await UserService.fetchUsers(
+      filter,
+      page?.limit ?? 100,
+      page?.offset ?? 0,
+    );
+
     thunkAPI.dispatch(userModel.actions.upsertUsers(response.data.data));
-    return response.data.data.map((user) => user.userId);
+
+    const userIds = response.data.data.map((user) => user.userId);
+    return userIds;
   } catch (err) {
     const error: AxiosError<ResponseError> = err as AxiosError<ResponseError>;
     if (!error.response) {
@@ -48,7 +49,7 @@ export const fetchUsersSearch = createAsyncThunk<
 });
 
 export const fetchAddToContacts = createAsyncThunk<
-  User[],
+  UserId[],
   { currentUserId: number; addedUserId: number },
   { rejectValue: ResponseError }
 >(
@@ -59,7 +60,10 @@ export const fetchAddToContacts = createAsyncThunk<
         currentUserId,
         addedUserId,
       );
-      return response.data.data;
+      thunkAPI.dispatch(userModel.actions.upsertUsers(response.data.data));
+
+      const userIds = response.data.data.map((user) => user.userId);
+      return userIds;
     } catch (err) {
       const error: AxiosError<ResponseError> = err as AxiosError<ResponseError>;
       if (!error.response) {

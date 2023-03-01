@@ -15,8 +15,14 @@ class AuthController {
       return next(AppError.BadRequest('Ошибка при валидации', errors));
     }
     try {
-      const {email, password} = req.body;
-      const user = await authUseCases.registration(email, password);
+      const {username, email, password, name, surname} = req.body;
+      const user = await authUseCases.registration(
+        email,
+        password,
+        username,
+        name,
+        surname,
+      );
       res.cookie('refreshToken', user.refreshToken, {
         maxAge: MAX_AGE,
         httpOnly: true,

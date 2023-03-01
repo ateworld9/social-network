@@ -31,15 +31,13 @@ const UserService = {
   },
 
   async fetchUsers(
-    fields: Partial<User> | null,
+    fields?: Filter<User>,
     limit: number = 10,
     offset: number = 0,
   ): Promise<AxiosResponse<FetchUsersResponse>> {
     return $api.get<FetchUsersResponse>(`/users`, {
       params: {
-        filter: {
-          fields,
-        },
+        filter: fields,
         page: {
           limit,
           offset,
