@@ -63,8 +63,6 @@ export default async (httpServer: Server) => {
   >(httpServer, {
     cors: {
       origin: function (origin, cb) {
-        console.log('(>>>>>>>>>>>>>>>>>>>>>>>>>ORIGIN', origin);
-
         if (whitelist.indexOf(origin as string) !== -1) {
           cb(null, true);
         } else {

@@ -14,7 +14,7 @@ export default {
   mode: isProd ? "production" : "development",
   entry,
   output: {
-    path: path.join(__dirname, "../build"),
+    path: process.env.PATH_TO_BUILD ?? path.join(__dirname, "../build"),
     clean: true, //clean build
     // Add /* filename */ comments to generated require()s in the output.
     pathinfo: isDevServer,

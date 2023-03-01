@@ -1,5 +1,4 @@
 const path = require("node:path");
-console.log(path.resolve(__dirname, "./tsconfig.json"));
 
 module.exports = {
   env: {
