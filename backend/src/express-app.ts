@@ -1,4 +1,4 @@
-import {Application} from 'express';
+import {Application, static as expressStatic} from 'express';
 import expressPinoLogger from 'express-pino-logger';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
@@ -13,6 +13,7 @@ import userRouter from './PresentationLayer/users/route';
 import postRouter from './PresentationLayer/posts/route';
 import commentRouter from './PresentationLayer/comments/route';
 import chatsRouter from './PresentationLayer/chats/route';
+import path from 'path';
 
 export default async (app: Application) => {
   app.use(
@@ -61,4 +62,6 @@ export default async (app: Application) => {
 
   // error handling
   app.use(ErrorMiddleware);
+
+  // app.use('/', expressStatic(path.resolve('../client/build/')));
 };
