@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import { useAppDispatch, useTypedSelector } from "../../../../7shared/hooks";
-import { selectAuthUserId } from "../../../../6entities/auth";
+import { useAppDispatch, useTypedSelector } from "@shared/hooks";
+import { selectAuthUserId } from "@entities/auth";
 
 import { fetchUserContacts, selectContactsIds } from "../../model";
 import Contact from "./Contact";

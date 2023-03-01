@@ -1,5 +1,5 @@
-import { useTypedSelector } from "../../../../7shared/hooks";
-import { User, userModel } from "../../../../6entities/user";
+import { useTypedSelector } from "@shared/hooks";
+import { User, userModel } from "@entities/user";
 
 import s from "./User.module.css";
 

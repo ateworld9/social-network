@@ -1,9 +1,9 @@
 import { memo, useCallback } from "react";
 
-import { useAppDispatch, useTypedSelector } from "../../../7shared/hooks";
-import { ContentInput } from "../../../7shared/ui/ContentInput";
+import { useAppDispatch, useTypedSelector } from "@shared/hooks";
+import { ContentInput } from "@shared/ui/ContentInput";
 
-import { selectAuthUserId } from "../../../6entities/auth";
+import { selectAuthUserId } from "@entities/auth";
 
 import { sendComment } from "../model/thunks";
 

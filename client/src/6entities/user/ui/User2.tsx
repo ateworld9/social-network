@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useTypedSelector } from "../../../7shared/hooks";
+import { useTypedSelector } from "@shared/hooks";
 
 import { selectById } from "../model";
 

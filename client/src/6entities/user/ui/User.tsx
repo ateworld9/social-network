@@ -1,6 +1,7 @@
 import { Avatar } from "@mui/material";
+import { API_BASE } from "@shared/config";
 import { Link } from "react-router-dom";
-import { useTypedSelector } from "../../../7shared/hooks";
+import { useTypedSelector } from "@shared/hooks";
 
 import { selectById } from "../model";
 
@@ -20,7 +21,9 @@ export const User = ({ userId, link, children }: UserProps) => {
       <div className={s.user}>
         <Link to={`/profile/${userId}`}>
           <Avatar
-            src={user?.profilePic?.filepath ?? "/assets/noAvatar.png"}
+            src={`${API_BASE}/public/images/${
+              user?.profilePic?.filename ?? "/public/assets/noAvatar.png"
+            }`}
             alt="avatar"
             className={s.avatar}
             sx={{ height: "2em !important", width: "2em !important" }}
@@ -53,7 +56,9 @@ export const User = ({ userId, link, children }: UserProps) => {
   return (
     <div className={s.user}>
       <Avatar
-        src={user?.profilePic?.filepath ?? "/assets/noAvatar.png"}
+        src={`${API_BASE}/public/images/${
+          user?.profilePic?.filename ?? "/public/assets/noAvatar.png"
+        }`}
         alt="avatar"
         className={s.avatar}
         sx={{ height: "2em !important", width: "2em !important" }}

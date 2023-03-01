@@ -3,9 +3,10 @@ import axios from "axios";
 
 import type { AxiosError } from "axios";
 
-import { AuthService, AuthResponse } from "../../../7shared/services/auth";
+import { AuthService, AuthResponse } from "@shared/services/auth";
+import { API_BASE } from "@shared/config/constants";
+
 import { userModel } from "../../user";
-import { API_BASE } from "../../../7shared/config/constants";
 
 export const fetchLogin = createAsyncThunk<
   AuthResponse,

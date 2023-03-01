@@ -1,15 +1,14 @@
 import { createBrowserRouter, Link } from "react-router-dom";
-import { ProtectedRoute, UnProtectedRoute } from "../../6entities/auth/guards";
-import Login from "../../3pages/Login";
-import Registration from "../../3pages/Registration";
+import Layout from "@shared/Layout";
+import { ProtectedRoute, UnProtectedRoute } from "@entities/auth/guards";
 
-import Layout from "../../7shared/Layout";
-
-import Home from "../../3pages/Home";
-import { ProfilePage } from "../../3pages/Profile";
-import { ContactsPage } from "../../3pages/Contacts";
-import ChatsPage from "../../3pages/Chats";
-import ChatPage from "../../3pages/Chat";
+import Login from "@pages/Login";
+import Registration from "@pages/Registration";
+import Home from "@pages/Home";
+import { ProfilePage } from "@pages/Profile";
+import { ContactsPage } from "@pages/Contacts";
+import ChatsPage from "@pages/Chats";
+import ChatPage from "@pages/Chat";
 
 import Testovaya from "../../Testovaya";
 

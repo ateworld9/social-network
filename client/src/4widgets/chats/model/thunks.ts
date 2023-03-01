@@ -2,10 +2,10 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import type { AxiosError } from "axios";
 
-import { ChatService } from "../../../7shared/services/chat";
+import { ChatService } from "@shared/services/chat";
 
-import { userModel } from "../../../6entities/user";
-import { chatsModel } from "../../../6entities/chat";
+import { userModel } from "@entities/user";
+import { chatsModel } from "@entities/chat";
 
 export const fetchChats = createAsyncThunk<
   {},

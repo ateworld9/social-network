@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 
-import { ChatWidget } from "../../4widgets/chat";
+import { ChatWidget } from "@widgets/chat";
 
 const ChatPage = () => {
   const chatId = useParams().chatId as string;

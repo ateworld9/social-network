@@ -2,12 +2,12 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import type { AxiosError } from "axios";
 
-import { PostService } from "../../7shared/services/post";
+import { PostService } from "@shared/services/post";
 
-import { userModel } from "../../6entities/user";
-import { postModel } from "../../6entities/post";
-import { mediaModel } from "../../6entities/media";
-import { commentModel } from "../../6entities/comment";
+import { userModel } from "@entities/user";
+import { postModel } from "@entities/post";
+import { mediaModel } from "@entities/media";
+import { commentModel } from "@entities/comment";
 
 type FetchPropsArgs = {
   filter?: Partial<Post>;

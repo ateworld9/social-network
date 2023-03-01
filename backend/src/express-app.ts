@@ -4,7 +4,6 @@ import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 
-import {CLIENT_URL} from './config';
 import logger from './utils/logger';
 import ErrorMiddleware from './middleware/error';
 
@@ -26,18 +25,44 @@ export default async (app: Application) => {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({extended: true}));
   app.use(cookieParser());
-  app.use(cors({credentials: true, origin: CLIENT_URL}));
+
+  const whitelist = [
+    undefined,
+    'http://localhost:3000',
+    'http://localhost:3001',
+    'http://ateworld.site',
+    'http://www.ateworld.site',
+    'https://ateworld.site',
+    'https://www.ateworld.site',
+  ];
+  app.use(
+    cors({
+      credentials: true,
+      origin: function (origin, cb) {
+        console.log(
+          'ORIGIN>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>',
+          origin,
+        );
+
+        if (whitelist.indexOf(origin as string) !== -1) {
+          cb(null, true);
+        } else {
+          cb(new Error('Not allowed by CORS'));
+        }
+      },
+    }),
+  );
 
   // knexdb('tokens').del();
 
   // TODO: Health Check
 
-  mediaRouter(app);
-  authRouter(app);
-  userRouter(app);
-  postRouter(app);
-  commentRouter(app);
-  chatsRouter(app);
+  app.use(mediaRouter);
+  app.use(authRouter);
+  app.use(userRouter);
+  app.use(postRouter);
+  app.use(commentRouter);
+  app.use(chatsRouter);
 
   // error handling
   app.use(ErrorMiddleware);

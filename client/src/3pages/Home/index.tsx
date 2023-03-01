@@ -1,7 +1,7 @@
 import { useEffect } from "react";
-import { useAppDispatch } from "../../7shared/hooks";
+import { useAppDispatch } from "@shared/hooks";
 
-import { Posts } from "../../4widgets/post";
+import { Posts } from "@widgets/post";
 import { fetchPosts } from "./homeThunks";
 
 const Home = () => {

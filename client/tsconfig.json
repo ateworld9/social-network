@@ -20,8 +20,8 @@
       "@processes/*": ["src/2processes/*"],
       "@pages/*": ["src/3pages/*"],
       "@widgets/*": ["src/4widgets/*"],
-      "@features/*": ["src/features/*"],
-      "@entitites/*": ["src/6entitites/*"],
+      "@features/*": ["src/5features/*"],
+      "@entities/*": ["src/6entities/*"],
       "@shared/*": ["src/7shared/*"]
     },
 

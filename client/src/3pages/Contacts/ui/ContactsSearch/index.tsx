@@ -2,7 +2,7 @@ import { useState, ChangeEvent } from "react";
 
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 
-import { useAppDispatch } from "../../../../7shared/hooks";
+import { useAppDispatch } from "@shared/hooks";
 import { fetchUsersSearch } from "../../model";
 
 import s from "./ContactsSearch.module.css";

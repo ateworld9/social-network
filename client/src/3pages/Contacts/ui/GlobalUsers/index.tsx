@@ -1,4 +1,4 @@
-import { useAppDispatch, useTypedSelector } from "../../../../7shared/hooks";
+import { useAppDispatch, useTypedSelector } from "@shared/hooks";
 
 import { UserRow } from "./User";
 

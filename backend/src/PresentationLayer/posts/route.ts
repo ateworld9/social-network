@@ -1,12 +1,13 @@
-import {Application} from 'express';
+import {Router} from 'express';
 
 import PostController from './controller';
 
-export default (app: Application) => {
-  const postController = new PostController();
+const router = Router();
+const postController = new PostController();
 
-  // TODO: курсорная пагинация ?page[published_at=1538332156]     - число дата с которой нужно подгружать, крч иди читай
-  app.get('/posts', postController.getPosts);
+// TODO: курсорная пагинация ?page[published_at=1538332156]     - число дата с которой нужно подгружать, крч иди читай
+router.get('/api/posts', postController.getPosts);
 
-  app.post('/posts', postController.createPost);
-};
+router.post('/api/posts', postController.createPost);
+
+export default router;

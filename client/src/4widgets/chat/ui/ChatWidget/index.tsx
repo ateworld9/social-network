@@ -1,12 +1,12 @@
 import { useEffect, memo } from "react";
 
-import { useAppDispatch, useTypedSelector } from "../../../../7shared/hooks";
-import { ContentInput } from "../../../../7shared/ui/ContentInput";
-import socket from "../../../../7shared/config/api/socket";
+import { useAppDispatch, useTypedSelector } from "@shared/hooks";
+import { ContentInput } from "@shared/ui/ContentInput";
+import socket from "@shared/config/api/socket";
 
-import { selectAuthUserId } from "../../../../6entities/auth";
-import { messageModel } from "../../../../6entities/message";
-import { mediaModel } from "../../../../6entities/media";
+import { selectAuthUserId } from "@entities/auth";
+import { messageModel } from "@entities/message";
+import { mediaModel } from "@entities/media";
 
 import ChatHeader from "../ChatHeader";
 import s from "./index.module.css";

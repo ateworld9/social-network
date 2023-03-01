@@ -4,9 +4,9 @@ import { Avatar, IconButton } from "@mui/material";
 import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 
-import { useTypedSelector } from "../../../../7shared/hooks";
-import { userModel } from "../../../../6entities/user";
-import { chatsModel } from "../../../../6entities/chat";
+import { useTypedSelector } from "@shared/hooks";
+import { userModel } from "@entities/user";
+import { chatsModel } from "@entities/chat";
 
 import s from "./ChatHeader.module.css";
 

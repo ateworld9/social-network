@@ -1,12 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import type { AxiosError } from "axios";
 
-import { UserService } from "../../../7shared/services/user";
-import { PostService } from "../../../7shared/services/post";
+import { UserService } from "@shared/services/user";
+import { PostService } from "@shared/services/post";
 
-import { postModel } from "../../../6entities/post";
-import { userModel } from "../../../6entities/user";
-import { mediaModel } from "../../../6entities/media";
+import { postModel } from "@entities/post";
+import { userModel } from "@entities/user";
+import { mediaModel } from "@entities/media";
 
 export const fetchUserProfile = createAsyncThunk<
   User,

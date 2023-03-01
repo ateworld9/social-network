@@ -1,12 +1,12 @@
 import { AxiosError } from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-import CommentService from "../../../7shared/services/comment";
+import CommentService from "@shared/services/comment";
 
-import { commentModel } from "../../../6entities/comment";
-import { userModel } from "../../../6entities/user";
-import { mediaModel } from "../../../6entities/media";
-import { postModel } from "../../../6entities/post";
+import { commentModel } from "@entities/comment";
+import { userModel } from "@entities/user";
+import { mediaModel } from "@entities/media";
+import { postModel } from "@entities/post";
 
 export const sendComment = createAsyncThunk<
   any,

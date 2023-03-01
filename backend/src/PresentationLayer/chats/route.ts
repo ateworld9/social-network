@@ -1,25 +1,27 @@
-import {Application} from 'express';
+import {Router} from 'express';
 import {body, param} from 'express-validator';
 import AuthMiddleware from '../../middleware/auth';
 
 import ChatsController from './controller';
 
-export default (app: Application) => {
-  const chatsController = new ChatsController();
+const router = Router();
 
-  app.post(
-    '/chats',
-    AuthMiddleware,
-    // TODO: validate body
-    body('chatAttrs', 'chatAttrs must be Object').isObject(),
-    body('members', 'chatAttrs must be Array of members').isArray(),
-    chatsController.createChat,
-  );
+const chatsController = new ChatsController();
 
-  app.get(
-    '/chats/:userId',
-    AuthMiddleware,
-    param('userId', 'chatId must be numeric').isNumeric(),
-    chatsController.getChatsForUserId,
-  );
-};
+router.post(
+  '/api/chats',
+  AuthMiddleware,
+  // TODO: validate body
+  body('chatAttrs', 'chatAttrs must be Object').isObject(),
+  body('members', 'chatAttrs must be Array of members').isArray(),
+  chatsController.createChat,
+);
+
+router.get(
+  '/api/chats/:userId',
+  AuthMiddleware,
+  param('userId', 'chatId must be numeric').isNumeric(),
+  chatsController.getChatsForUserId,
+);
+
+export default router;

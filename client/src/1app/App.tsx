@@ -1,13 +1,13 @@
 import { useEffect } from "react";
 import { RouterProvider } from "react-router-dom";
 
+import socket from "@shared/config/api/socket";
+import { useAppDispatch, useTypedSelector } from "@shared/hooks";
+
+import { fetchCheckAuth } from "@entities/auth";
+
 import { router } from "./router";
-
-import socket from "../7shared/config/api/socket";
-import { useAppDispatch, useTypedSelector } from "../7shared/hooks";
-import { ThemeProvider } from "../hooks/themeContext";
-
-import { fetchCheckAuth } from "../6entities/auth";
+import { ThemeProvider } from "../7shared/hooks/themeContext";
 
 function App() {
   const dispatch = useAppDispatch();

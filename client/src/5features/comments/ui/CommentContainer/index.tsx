@@ -1,9 +1,9 @@
 import { memo } from "react";
-import { Comment, commentModel } from "../../../../6entities/comment";
+import { Comment, commentModel } from "@entities/comment";
 
-import { User } from "../../../../6entities/user";
+import { User } from "@entities/user";
 
-import { useTypedSelector } from "../../../../7shared/hooks";
+import { useTypedSelector } from "@shared/hooks";
 
 import s from "./index.module.css";
 
@@ -13,7 +13,7 @@ const CommentContainer = ({ commentId }: CommentContainerProps) => {
   );
   return comment ? (
     <article className={s.commentContainer}>
-      <User userId={comment.userId}>
+      <User userId={comment.userId} link>
         <Comment text={comment.text} createdAt={comment.createdAt} />
       </User>
     </article>

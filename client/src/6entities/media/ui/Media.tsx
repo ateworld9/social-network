@@ -1,7 +1,7 @@
 import { memo, ComponentPropsWithoutRef } from "react";
 
-import { API_BASE } from "../../../7shared/config/constants";
-import { useTypedSelector } from "../../../7shared/hooks";
+import { API_BASE } from "@shared/config/constants";
+import { useTypedSelector } from "@shared/hooks";
 
 import { selectById } from "../model";
 

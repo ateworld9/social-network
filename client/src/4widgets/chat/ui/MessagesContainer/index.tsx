@@ -1,12 +1,13 @@
 import { useLayoutEffect, useRef } from "react";
-import { useTypedSelector } from "../../../../7shared/hooks";
+import { useTypedSelector } from "@shared/hooks";
+
+import { messageModel } from "@entities/message";
+import { selectAuthUserId } from "@entities/auth";
 
 import MessagesSkeleton from "../MessagesSkeleton";
 import { MemoMessage } from "../Message";
 
 import s from "./MessagesContainer.module.css";
-import { messageModel } from "../../../../6entities/message";
-import { selectAuthUserId } from "../../../../6entities/auth";
 
 // type MessagesContainerProps = {};
 

@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 
 import { Button } from "@mui/material";
 
-import { useTypedSelector, useAppDispatch } from "../../../7shared/hooks";
-import { ChatService } from "../../../7shared/services/chat";
+import { useTypedSelector, useAppDispatch } from "@shared/hooks";
+import { ChatService } from "@shared/services/chat";
 
-import { selectAuthUserId } from "../../../6entities/auth";
-import { chatsModel } from "../../../6entities/chat";
-import { userModel } from "../../../6entities/user";
+import { selectAuthUserId } from "@entities/auth";
+import { chatsModel } from "@entities/chat";
+import { userModel } from "@entities/user";
 
 const SendMessageButton = ({
   // fromUserId,

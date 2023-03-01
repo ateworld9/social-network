@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
-import { useTypedSelector } from "../../hooks";
-import { User } from "../../../6entities/user";
-import s from "./leftbar.module.css";
 
-import { selectAuthUserId } from "../../../6entities/auth";
+import { User } from "@entities/user";
+import { selectAuthUserId } from "@entities/auth";
+
+import { useTypedSelector } from "@shared/hooks";
+
+import s from "./leftbar.module.css";
 
 const Menu = (): JSX.Element => {
   const userId = useTypedSelector(selectAuthUserId) as number;

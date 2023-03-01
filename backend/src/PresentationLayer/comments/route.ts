@@ -1,9 +1,11 @@
-import {Application} from 'express';
+import {Router} from 'express';
 
 import CommentController from './controller';
 
-export default (app: Application) => {
-  const commentController = new CommentController();
+const router = Router();
 
-  app.post('/comments', commentController.createComment);
-};
+const commentController = new CommentController();
+
+router.post('/api/comments', commentController.createComment);
+
+export default router;
