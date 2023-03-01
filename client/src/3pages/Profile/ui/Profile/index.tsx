@@ -11,6 +11,7 @@ import PinterestIcon from "@mui/icons-material/Pinterest";
 import PlaceIcon from "@mui/icons-material/Place";
 import TwitterIcon from "@mui/icons-material/Twitter";
 
+import { API_PREFIX } from "@shared/config";
 // import Posts from "@components/Posts";
 
 import s from "./profile.module.css";
@@ -30,7 +31,9 @@ const Profile: FC<ProfileProps> = ({ profilePic, name, surname, username }) => {
         </div>
         <div className={s.avatarContainer}>
           <img
-            src={profilePic?.filepath || "/assets/noAvatar.png"}
+            src={`${API_PREFIX}/public/images/${
+              profilePic?.filename ?? "noAvatar.png"
+            }`}
             alt="avatar"
             className={s.avatar}
           />

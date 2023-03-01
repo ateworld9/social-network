@@ -4,7 +4,7 @@ import axios from "axios";
 import type { AxiosError } from "axios";
 
 import { AuthService, AuthResponse } from "@shared/services/auth";
-import { API_BASE } from "@shared/config/constants";
+import { API_PREFIX } from "@shared/config/constants";
 
 import { userModel } from "../../user";
 
@@ -81,7 +81,7 @@ export const fetchCheckAuth = createAsyncThunk<
   { rejectValue: ResponseError }
 >("auth/refresh", async (_, thunkAPI) => {
   try {
-    const response = await axios.get<AuthResponse>(`${API_BASE}/refresh`, {
+    const response = await axios.get<AuthResponse>(`${API_PREFIX}/refresh`, {
       withCredentials: true,
     });
     localStorage.setItem("token", response.data.accessToken);

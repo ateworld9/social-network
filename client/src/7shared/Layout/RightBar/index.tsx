@@ -8,7 +8,7 @@ const RightBar = () => {
           <span>Suggestions For You</span>
           <div className={s.user}>
             <div className={s.userInfo}>
-              <img src="/assets/noAvatar.png" alt="noAvatar" />
+              <img src="/public/images/noAvatar.png" alt="noAvatar" />
               <span>Jane Doe</span>
             </div>
             <div className={s.buttons}>

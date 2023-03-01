@@ -32,12 +32,12 @@ const upload = multer({
 
 const mediaController = new MediaController();
 
-router.use('/api/public', expressStatic(PATH_TO_PUBLIC));
+router.use('/public', expressStatic(PATH_TO_PUBLIC));
 
-router.post('/api/image', upload, mediaController.postImage);
+router.post('/image', upload, mediaController.postImage);
 
 router.get(
-  '/api/images/:filename',
+  '/images/:filename',
   param('filename').isString(),
   mediaController.getImageByFilename,
 );

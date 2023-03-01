@@ -1,6 +1,6 @@
 import { memo, ComponentPropsWithoutRef } from "react";
 
-import { API_BASE } from "@shared/config/constants";
+import { API_PREFIX } from "@shared/config/constants";
 import { useTypedSelector } from "@shared/hooks";
 
 import { selectById } from "../model";
@@ -15,7 +15,7 @@ const Media = ({ mediaId, alt, ...args }: MediaProps) => {
 
   return (
     <img
-      src={`${API_BASE}/public/images/${media?.filename}`}
+      src={`${API_PREFIX}/public/images/${media?.filename}`}
       alt={alt}
       {...args}
     />

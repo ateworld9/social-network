@@ -20,8 +20,10 @@ if (fs.existsSync(path.resolve(process.cwd(), '.env'))) {
 
 export const PORT = Number(process.env.PORT || '8000');
 
-export const PATH_TO_PUBLIC = path.join(process.cwd(), '/public');
-export const PATH_TO_IMAGES = path.join(PATH_TO_PUBLIC, '/images');
+export const PATH_TO_PUBLIC =
+  process.env.PATH_TO_PUBLIC ?? path.join(process.cwd(), '/public');
+export const PATH_TO_IMAGES =
+  process.env.PATH_TO_IMAGES ?? path.join(PATH_TO_PUBLIC, '/images');
 
 export const CLIENT_URL = process.env['CLIENT_URL'];
 if (!CLIENT_URL) {

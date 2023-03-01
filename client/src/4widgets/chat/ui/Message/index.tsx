@@ -2,6 +2,7 @@ import cn from "classnames";
 import { memo } from "react";
 import { Link } from "react-router-dom";
 
+import { API_PREFIX } from "@shared/config";
 import { useTypedSelector } from "@shared/hooks";
 
 import { MemoMessageLayout, messageModel } from "@entities/message";
@@ -31,7 +32,9 @@ const Message = ({ messageId, authUserId }: MessageProps) => {
     >
       <Link to={`/profile/${user?.userId}`}>
         <img
-          src={user?.profilePic?.filepath ?? "/assets/noAvatar.png"}
+          src={`${API_PREFIX}/public/images/${
+            user?.profilePic?.filename ?? "noAvatar.png"
+          }`}
           alt="avatar"
           className={s.messageAvatar}
         />

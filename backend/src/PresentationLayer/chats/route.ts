@@ -9,7 +9,7 @@ const router = Router();
 const chatsController = new ChatsController();
 
 router.post(
-  '/api/chats',
+  '/chats',
   AuthMiddleware,
   // TODO: validate body
   body('chatAttrs', 'chatAttrs must be Object').isObject(),
@@ -18,7 +18,7 @@ router.post(
 );
 
 router.get(
-  '/api/chats/:userId',
+  '/chats/:userId',
   AuthMiddleware,
   param('userId', 'chatId must be numeric').isNumeric(),
   chatsController.getChatsForUserId,

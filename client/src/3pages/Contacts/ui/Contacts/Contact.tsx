@@ -1,7 +1,7 @@
 import cn from "classnames";
 import { Link } from "react-router-dom";
 
-import { API_BASE } from "@shared/config";
+import { API_PREFIX } from "@shared/config";
 import { useTypedSelector } from "@shared/hooks";
 
 import { userModel } from "@entities/user";
@@ -17,13 +17,11 @@ const Contact = ({ userId }: ContactProps) => {
     userModel.selectById(state, userId),
   );
 
-  console.log(contact);
-
   return contact ? (
     <div className={s.container}>
       <Link className={cn(s.avatar, s.link)} to={`/profile/${userId}`}>
         <img
-          src={`${API_BASE}/public/images/${
+          src={`${API_PREFIX}/public/images/${
             contact?.profilePic?.filename ?? "noAvatar.png"
           }`}
           alt="avatar"

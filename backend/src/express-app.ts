@@ -39,11 +39,6 @@ export default async (app: Application) => {
     cors({
       credentials: true,
       origin: function (origin, cb) {
-        console.log(
-          'ORIGIN>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>',
-          origin,
-        );
-
         if (whitelist.indexOf(origin as string) !== -1) {
           cb(null, true);
         } else {
@@ -57,12 +52,12 @@ export default async (app: Application) => {
 
   // TODO: Health Check
 
-  app.use(mediaRouter);
-  app.use(authRouter);
-  app.use(userRouter);
-  app.use(postRouter);
-  app.use(commentRouter);
-  app.use(chatsRouter);
+  app.use('/api', mediaRouter);
+  app.use('/api', authRouter);
+  app.use('/api', userRouter);
+  app.use('/api', postRouter);
+  app.use('/api', commentRouter);
+  app.use('/api', chatsRouter);
 
   // error handling
   app.use(ErrorMiddleware);

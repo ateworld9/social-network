@@ -6,6 +6,6 @@ const router = Router();
 
 const commentController = new CommentController();
 
-router.post('/api/comments', commentController.createComment);
+router.post('/comments', commentController.createComment);
 
 export default router;

@@ -9,13 +9,13 @@ const router = Router();
 const authController = new AuthController();
 
 router.post(
-  '/api/registration',
+  '/registration',
   body('email', 'Incorrect email').isEmail(),
   body('password').isLength({min: 8, max: 32}),
   authController.registration,
 );
 router.post(
-  '/api/login',
+  '/login',
   oneOf([
     body('email', 'Incorrect email').isEmail(),
     body('username', 'Incorrect username').isLength({min: 1}),
@@ -24,9 +24,9 @@ router.post(
   body('password').isLength({min: 8, max: 32}),
   authController.login,
 );
-router.post('/api/logout', AuthMiddleware, authController.logout);
-router.get('/api/refresh', authController.refresh);
-// router.get('/api/activate/:link', authController);
-// router.post('/api/recover-password', authController)
+router.post('/logout', AuthMiddleware, authController.logout);
+router.get('/refresh', authController.refresh);
+// router.get('/activate/:link', authController);
+// router.post('/recover-password', authController)
 
 export default router;
