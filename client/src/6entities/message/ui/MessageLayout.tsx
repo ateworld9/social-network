@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import { memo } from "react";
 
-import { Media } from "../../media";
+import { Media } from "@entities/media";
 import s from "./MessageLayout.module.css";
 
 type MessageLayoutProps = {

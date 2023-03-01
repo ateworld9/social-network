@@ -5,9 +5,9 @@ import { useForm } from "react-hook-form";
 import LinearProgress from "@mui/material/LinearProgress";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 
-import { useAppDispatch, useTypedSelector } from "../../../7shared/hooks";
+import { useAppDispatch, useTypedSelector } from "@shared/hooks";
 
-import { fetchLogin } from "../../../6entities/auth";
+import { fetchLogin } from "@entities/auth";
 
 import s from "./loginForm.module.css";
 

@@ -1,6 +1,12 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useAppDispatch, useTypedSelector } from "../../../../7shared/hooks";
+
+import { useAppDispatch, useTypedSelector } from "@shared/hooks";
+import { MemoContentInput } from "@shared/ui/ContentInput";
+
+import { selectAuthUserId } from "@entities/auth";
+
+import { Posts } from "@widgets/post";
 
 import {
   fetchUserPosts,
@@ -10,12 +16,6 @@ import {
   selectProfileLoading,
 } from "../../model";
 import Profile from "../Profile";
-
-import { Posts } from "../../../../4widgets/post";
-
-import { selectAuthUserId } from "../../../../6entities/auth";
-
-import { MemoContentInput } from "../../../../7shared/ui/ContentInput";
 
 import s from "./index.module.css";
 

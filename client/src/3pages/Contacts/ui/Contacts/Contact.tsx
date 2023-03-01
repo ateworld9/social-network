@@ -1,11 +1,12 @@
 import cn from "classnames";
 import { Link } from "react-router-dom";
 
-import { useTypedSelector } from "../../../../7shared/hooks";
+import { API_PREFIX } from "@shared/config";
+import { useTypedSelector } from "@shared/hooks";
 
-import { userModel } from "../../../../6entities/user";
+import { userModel } from "@entities/user";
 
-import { SendMessageButton } from "../../../../5features/send-message-to-user";
+import { SendMessageButton } from "@features/send-message-to-user";
 
 import s from "./Contact.module.css";
 
@@ -20,7 +21,9 @@ const Contact = ({ userId }: ContactProps) => {
     <div className={s.container}>
       <Link className={cn(s.avatar, s.link)} to={`/profile/${userId}`}>
         <img
-          src={contact.profilePic?.filepath ?? "/assets/noAvatar.png"}
+          src={`${API_PREFIX}/public/images/${
+            contact?.profilePic?.filename ?? "noAvatar.png"
+          }`}
           alt="avatar"
         />
       </Link>

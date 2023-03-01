@@ -1,16 +1,16 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 
-import home from "../../3pages/Home/home.slice";
-import { profilePageModel } from "../../3pages/Profile";
-import { contactsPageModel } from "../../3pages/Contacts";
+import home from "@pages/Home/home.slice";
+import { profilePageModel } from "@pages/Profile";
+import { contactsPageModel } from "@pages/Contacts";
 
-import auth from "../../6entities/auth/model/auth.slice";
-import { userModel } from "../../6entities/user";
-import { mediaModel } from "../../6entities/media";
-import { postModel } from "../../6entities/post";
-import { commentModel } from "../../6entities/comment";
-import { chatsModel } from "../../6entities/chat";
-import { messageModel } from "../../6entities/message";
+import auth from "@entities/auth/model/auth.slice";
+import { userModel } from "@entities/user";
+import { mediaModel } from "@entities/media";
+import { postModel } from "@entities/post";
+import { commentModel } from "@entities/comment";
+import { chatsModel } from "@entities/chat";
+import { messageModel } from "@entities/message";
 
 const rootReducer = combineReducers({
   home,

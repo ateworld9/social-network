@@ -9,13 +9,12 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import WbSunnyOutlinedIcon from "@mui/icons-material/WbSunnyOutlined";
 import LogoutIcon from "@mui/icons-material/LogoutSharp";
 
+import { fetchLogout } from "@entities/auth";
+import { User } from "@entities/user";
+
+import { useAppDispatch, useTypedSelector } from "@shared/hooks";
+import { ThemeContext, ThemeEnum } from "@shared/hooks/themeContext";
 import s from "./navbar.module.css";
-
-import { useAppDispatch, useTypedSelector } from "../../hooks";
-import { ThemeContext, ThemeEnum } from "../../../hooks/themeContext";
-
-import { fetchLogout } from "../../../6entities/auth";
-import { User } from "../../../6entities/user";
 
 const selectAuthUser = (state: RootState) => state.auth.user?.userId;
 

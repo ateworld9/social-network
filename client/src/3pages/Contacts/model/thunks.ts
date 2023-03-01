@@ -2,8 +2,8 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import type { AxiosError } from "axios";
 
-import { userModel } from "../../../6entities/user";
-import { UserService } from "../../../7shared/services/user";
+import { userModel } from "@entities/user";
+import { UserService } from "@shared/services/user";
 
 type FetchPropsArgs = {
   fields: Partial<User> | null;

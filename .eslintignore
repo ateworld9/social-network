@@ -3,3 +3,5 @@
 **/dist
 
 **/.eslintrc.js
+**/webpack.config.babel.js
+*/webpack

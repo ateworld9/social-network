@@ -46,6 +46,15 @@ const chatUseCases = new ChatsUseCases();
 const messagesUseCases = new MessagesUseCases();
 
 export default async (httpServer: Server) => {
+  const whitelist = [
+    undefined,
+    'http://localhost:3000',
+    'http://localhost:3001',
+    'http://ateworld.site',
+    'http://www.ateworld.site',
+    'https://ateworld.site',
+    'https://www.ateworld.site',
+  ];
   const io = new IoServer<
     ClientToServerEvents,
     ServerToClientEvents,
@@ -53,7 +62,15 @@ export default async (httpServer: Server) => {
     SocketData
   >(httpServer, {
     cors: {
-      origin: CLIENT_URL,
+      origin: function (origin, cb) {
+        console.log('(>>>>>>>>>>>>>>>>>>>>>>>>>ORIGIN', origin);
+
+        if (whitelist.indexOf(origin as string) !== -1) {
+          cb(null, true);
+        } else {
+          cb(new Error('Not allowed by CORS'));
+        }
+      },
     },
   });
 

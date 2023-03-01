@@ -1,4 +1,4 @@
-import {static as expressStatic, Application, Request} from 'express';
+import {static as expressStatic, Router, Request} from 'express';
 import multer, {FileFilterCallback} from 'multer';
 
 import {param} from 'express-validator';
@@ -6,6 +6,8 @@ import {param} from 'express-validator';
 import {PATH_TO_IMAGES, PATH_TO_PUBLIC} from '../../config';
 
 import MediaController from './controller';
+
+const router = Router();
 
 const fileLimit = {
   fileSize: 1024 * 1024 * 10, // limits the file size to 10MB
@@ -28,16 +30,16 @@ const upload = multer({
   fileFilter,
 }).single('image');
 
-export default (app: Application) => {
-  const mediaController = new MediaController();
+const mediaController = new MediaController();
 
-  app.use('/public', expressStatic(PATH_TO_PUBLIC));
+router.use('/public', expressStatic(PATH_TO_PUBLIC));
 
-  app.post('/image', upload, mediaController.postImage);
+router.post('/image', upload, mediaController.postImage);
 
-  app.get(
-    '/images/:filename',
-    param('filename').isString(),
-    mediaController.getImageByFilename,
-  );
-};
+router.get(
+  '/images/:filename',
+  param('filename').isString(),
+  mediaController.getImageByFilename,
+);
+
+export default router;

@@ -3,13 +3,13 @@ import dayjs from "dayjs";
 import { memo } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { useTypedSelector } from "../../../../7shared/hooks";
+import { useTypedSelector } from "@shared/hooks";
 
-import { selectAuthUserId } from "../../../../6entities/auth";
-import { User, userModel } from "../../../../6entities/user";
+import { selectAuthUserId } from "@entities/auth";
+import { User, userModel } from "@entities/user";
+import { chatsModel } from "@entities/chat";
 
 import s from "./chat.module.css";
-import { chatsModel } from "../../../../6entities/chat";
 
 type ChatProps = {} & Chat;
 

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import type { AuthResponse } from "../../../7shared/services/auth";
+import type { AuthResponse } from "@shared/services/auth";
 
 import {
   fetchLogin,

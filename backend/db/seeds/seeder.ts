@@ -186,7 +186,7 @@ export async function seed(knex: Knex): Promise<void> {
   await knex('media').insert([
     {
       filepath: 'http://localhost:3001/public/images/2000x2000.jpg',
-      filename: '1a',
+      filename: '2000x2000.jpg',
       mimetype: 'image/*',
     },
     {

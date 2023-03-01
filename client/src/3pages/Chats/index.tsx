@@ -1,7 +1,7 @@
-import { InputBase } from "@mui/material";
+import InputBase from "@mui/material/InputBase";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 
-import { Chats } from "../../4widgets/chats";
+import { Chats } from "@widgets/chats";
 
 import s from "./ChatsPage.module.css";
 

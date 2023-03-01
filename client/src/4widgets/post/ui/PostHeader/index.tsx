@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import { memo } from "react";
 
-import { User } from "../../../../6entities/user";
+import { User } from "@entities/user";
 
 import s from "./index.module.css";
 

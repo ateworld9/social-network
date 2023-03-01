@@ -4,9 +4,11 @@ import { Avatar, IconButton } from "@mui/material";
 import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 
-import { useTypedSelector } from "../../../../7shared/hooks";
-import { userModel } from "../../../../6entities/user";
-import { chatsModel } from "../../../../6entities/chat";
+import { API_PREFIX } from "@shared/config";
+import { useTypedSelector } from "@shared/hooks";
+
+import { userModel } from "@entities/user";
+import { chatsModel } from "@entities/chat";
 
 import s from "./ChatHeader.module.css";
 
@@ -77,7 +79,9 @@ const ChatHeader = ({ chatId }: ChatHeaderProps) => {
         </div>
         <div className={s.control}>
           <Avatar
-            src={user?.profilePic?.filepath ?? "/assets/noAvatar.png"}
+            src={`${API_PREFIX}/public/images/${
+              user?.profilePic?.filename ?? "noAvatar.png"
+            }`}
             alt="avatar"
           />
         </div>

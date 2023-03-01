@@ -1,10 +1,10 @@
 import { useEffect, memo } from "react";
-import { useAppDispatch, useTypedSelector } from "../../../../7shared/hooks";
+import { useAppDispatch, useTypedSelector } from "@shared/hooks";
 
-import { chatsModel } from "../../../../6entities/chat";
-import { selectAuthUserId } from "../../../../6entities/auth";
+import { chatsModel } from "@entities/chat";
+import { selectAuthUserId } from "@entities/auth";
 
-import socket from "../../../../7shared/config/api/socket";
+import socket from "@shared/config/api/socket";
 
 import { Chat } from "../Chat";
 import { fetchChats } from "../../model/thunks";

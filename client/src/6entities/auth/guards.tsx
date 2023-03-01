@@ -1,6 +1,6 @@
 // import { useEffect } from "react";
 import { Navigate } from "react-router-dom";
-import { useTypedSelector } from "../../7shared/hooks";
+import { useTypedSelector } from "@shared/hooks";
 
 const selectIsAuth = (state: RootState) => state.auth.isAuth;
 

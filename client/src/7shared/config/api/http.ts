@@ -1,11 +1,11 @@
 import axios from "axios";
 
-import { API_BASE } from "../constants";
+import { API_PREFIX } from "../constants";
 import type { AuthResponse } from "../../services/auth";
 
 const $api = axios.create({
   withCredentials: true,
-  baseURL: API_BASE,
+  baseURL: API_PREFIX,
 });
 
 $api.interceptors.request.use(
@@ -36,9 +36,12 @@ $api.interceptors.response.use(
     ) {
       originalRequest.isRetry = true;
       try {
-        const response = await axios.get<AuthResponse>(`${API_BASE}/refresh`, {
-          withCredentials: true,
-        });
+        const response = await axios.get<AuthResponse>(
+          `${API_PREFIX}/refresh`,
+          {
+            withCredentials: true,
+          },
+        );
         localStorage.setItem("token", response.data.accessToken);
         return await $api.request(originalRequest);
       } catch (err) {

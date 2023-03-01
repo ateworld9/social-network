@@ -1,8 +1,8 @@
 import { memo } from "react";
 
-import { useTypedSelector } from "../../../../7shared/hooks";
+import { useTypedSelector } from "@shared/hooks";
 
-import { postModel } from "../../../../6entities/post";
+import { postModel } from "@entities/post";
 
 import { PostCard } from "../PostCard";
 

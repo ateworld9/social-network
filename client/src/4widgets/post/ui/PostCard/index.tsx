@@ -1,11 +1,11 @@
 import { memo, useState, useMemo } from "react";
 
-import { useTypedSelector } from "../../../../7shared/hooks";
+import { useTypedSelector } from "@shared/hooks";
 
-import { postModel } from "../../../../6entities/post";
-import { Media } from "../../../../6entities/media";
+import { postModel } from "@entities/post";
+import { Media } from "@entities/media";
 
-import { MemoComments } from "../../../../5features/comments";
+import { MemoComments } from "@features/comments";
 
 import { MemoPostHeader } from "../PostHeader";
 import { MemoPostFooter } from "../PostFooter";

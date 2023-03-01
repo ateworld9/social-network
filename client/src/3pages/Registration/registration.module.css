@@ -26,27 +26,3 @@
 .left h1 {
   color: #555555;
 }
-
-.right {
-  flex: 1;
-  background: linear-gradient(rgba(39, 11, 96, 0.5), rgba(39, 11, 96, 0.5)),
-    url("./woodcuts_2.jpg") center;
-  background-size: cover;
-  padding: 50px;
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-  color: white;
-}
-
-.right span {
-  font-size: 0.8em;
-}
-.right button {
-  padding: 10px;
-  border: none;
-  background-color: white;
-  color: rebeccapurple;
-  font-weight: bold;
-  cursor: pointer;
-}

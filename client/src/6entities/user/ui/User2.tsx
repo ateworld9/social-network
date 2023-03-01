@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
-import { useTypedSelector } from "../../../7shared/hooks";
+
+import { API_PREFIX } from "@shared/config";
+import { useTypedSelector } from "@shared/hooks";
 
 import { selectById } from "../model";
 
@@ -17,7 +19,9 @@ const Avatar = ({ userId, link }: AvatarProps) => {
     return (
       <Link to={`/profile/${userId}`}>
         <img
-          src={user?.profilePic?.filepath ?? "/assets/noAvatar.png"}
+          src={`${API_PREFIX}/public/images/${
+            user.profilePic?.filename ?? "noAvatar.png"
+          }`}
           alt="avatar"
           className={s.avatar}
         />
@@ -27,7 +31,9 @@ const Avatar = ({ userId, link }: AvatarProps) => {
 
   return (
     <img
-      src={user?.profilePic?.filepath ?? "/assets/noAvatar.png"}
+      src={`${API_PREFIX}/public/images/${
+        user.profilePic?.filename ?? "noAvatar.png"
+      }`}
       alt="avatar"
       className={s.avatar}
     />

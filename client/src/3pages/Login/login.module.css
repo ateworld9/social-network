@@ -15,34 +15,6 @@
   overflow: hidden;
 }
 
-.left {
-  flex: 1;
-  background: linear-gradient(rgba(39, 11, 96, 0.5), rgba(39, 11, 96, 0.5)),
-    url("./woodcuts_1.jpg") center;
-  background-size: cover;
-  padding: 50px;
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-  color: white;
-}
-.left h1 {
-  font-size: 100px;
-}
-
-.left span {
-  font-size: 14px;
-}
-.left button {
-  width: 50%;
-  padding: 10px;
-  border: none;
-  background-color: white;
-  color: rebeccapurple;
-  font-weight: bold;
-  cursor: pointer;
-}
-
 .right {
   flex: 1;
   padding: 50px;
