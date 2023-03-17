@@ -10,10 +10,9 @@ import { selectAuthUserId } from "@entities/auth";
 import { chatsModel } from "@entities/chat";
 import { userModel } from "@entities/user";
 
-const SendMessageButton = ({
-  // fromUserId,
-  toUserId,
-}: SendMessageButtonProps) => {
+import s from "./index.module.css";
+
+const SendMessageButton = ({ toUserId }: SendMessageButtonProps) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -31,16 +30,25 @@ const SendMessageButton = ({
           { userId: toUserId, role: "member" },
         ],
       );
-      dispatch(chatsModel.actions.upsertChat(res.data.data[0]));
-      dispatch(userModel.actions.upsertUsers(res.data.relationships.users));
+      dispatch(chatsModel.actions.addChat(res.data.data[0]));
+      dispatch(userModel.actions.addUsers(res.data.relationships.users));
       navigate(`/chat/${res.data.data[0].chatId}`);
     } catch (error) {
-      // eslint-disable-next-line no-console
       console.log("error while creating new dialog", error);
     }
   };
 
-  return <Button onClick={handleOnClick}>Send Message</Button>;
+  return (
+    <Button
+      size="small"
+      type="button"
+      color="primary"
+      onClick={handleOnClick}
+      className={s.button}
+    >
+      Send Message
+    </Button>
+  );
 };
 
 const MemoSendMessageButton = memo(SendMessageButton);

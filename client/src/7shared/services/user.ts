@@ -46,6 +46,21 @@ const UserService = {
     });
   },
 
+  async fetchUserUpdate(
+    userId: UserId,
+    authUserId: UserId,
+    user?: Partial<User>,
+    avatar?: MediaId,
+    cover?: MediaId,
+  ): Promise<AxiosResponse<User>> {
+    return $api.patch<User>(`/users/${userId}`, {
+      authUserId,
+      user,
+      avatar,
+      cover,
+    });
+  },
+
   async fetchUserContacts(
     userId: UserId,
     limit: number = 10,

@@ -3,6 +3,7 @@ declare interface Message {
   chatId: ChatId;
   fromUserId: UserId;
   text: string | null;
+  postId: PostId | null;
   status:
     | 'not-sended'
     | 'sended'
@@ -18,7 +19,7 @@ declare interface Message {
 
 declare type CreateRequestMessage = Pick<
   Message,
-  'chatId' | 'fromUserId' | 'text' | 'forwardedMessages' | 'status'
+  'chatId' | 'fromUserId' | 'postId' | 'text' | 'forwardedMessages' | 'status'
 >;
 
 declare type MessageId = Message['messageId'];

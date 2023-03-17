@@ -1,14 +1,16 @@
 declare type Post = {
   postId: number | string;
-  userId: UserId | null;
+  userId: UserId;
   text: string;
   status: "created" | "edited" | "invisible" | "deleted";
 
   comments?: CommentId[];
-  medias?: MediaId[];
+  medias?: Media["filename"][];
+  likes: Like[];
+  liked: boolean;
 
   username: string;
-  profilePic?: string;
+  avatar?: string;
 
   createdAt: string;
   updatedAt: string;

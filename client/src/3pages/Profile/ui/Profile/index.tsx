@@ -1,86 +1,94 @@
-import { FC } from "react";
+import { useNavigate } from "react-router-dom";
 
-// import {useAppSelector} from '@hooks/redux';
+import { Button } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
-import FacebookTwoToneIcon from "@mui/icons-material/FacebookTwoTone";
-import InstagramIcon from "@mui/icons-material/Instagram";
-import LanguageIcon from "@mui/icons-material/Language";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import PinterestIcon from "@mui/icons-material/Pinterest";
-import PlaceIcon from "@mui/icons-material/Place";
-import TwitterIcon from "@mui/icons-material/Twitter";
+import LocalPhoneOutlinedIcon from "@mui/icons-material/LocalPhoneOutlined";
 
 import { API_PREFIX } from "@shared/config";
-// import Posts from "@components/Posts";
+import { useTypedSelector } from "@shared/hooks";
+
+import { selectAuthUserRole } from "@entities/auth";
+import { UserAvatar, Username } from "@entities/user";
 
 import s from "./profile.module.css";
 
-type ProfileProps = Pick<User, "profilePic" | "name" | "surname" | "username">;
+type ProfileProps = {
+  userId: UserId;
+  username: User["username"];
+  email: User["email"];
+  phone: User["phone"];
 
-const Profile: FC<ProfileProps> = ({ profilePic, name, surname, username }) => {
+  name: User["name"];
+  surname: User["surname"];
+  avatar: User["avatar"];
+  cover: User["cover"];
+  about: User["about"];
+
+  isAuthUser: boolean;
+};
+
+const Profile = ({
+  isAuthUser,
+  username,
+  email,
+  phone,
+  name,
+  surname,
+  avatar,
+  cover,
+  about,
+}: ProfileProps) => {
+  const navigate = useNavigate();
+  const authUserRole = useTypedSelector(selectAuthUserRole);
   return (
-    <section>
-      <div className={s.images}>
-        <div className={s.coverContainer}>
-          <img
-            src="https://picsum.photos/1500/1500"
-            alt="cover"
-            className={s.cover}
-          />
-        </div>
-        <div className={s.avatarContainer}>
-          <img
-            src={`${API_PREFIX}/public/images/${
-              profilePic?.filename ?? "noAvatar.png"
-            }`}
-            alt="avatar"
-            className={s.avatar}
-          />
-        </div>
+    <section className={s.profileContainer}>
+      <div className={s.coverContainer}>
+        <img
+          src={
+            cover
+              ? `${API_PREFIX}/public/images/${cover}`
+              : "https://picsum.photos/1920/768"
+          }
+          draggable="false"
+          alt="cover"
+          className={s.cover}
+        />
       </div>
-      <div className={s.profileContainer}>
+      <div className={s.avatarContainer}>
+        <UserAvatar filename={avatar} alt="avatar" className={s.avatar} />
+      </div>
+      <div className={s.userCard}>
+        <div />
         <div className={s.userInfo}>
-          <div className={s.left}>
-            <a href="http://facebook.com">
-              <FacebookTwoToneIcon className={s.icon} />
-            </a>
-            <a href="http://facebook.com">
-              <InstagramIcon className={s.icon} />
-            </a>
-            <a href="http://facebook.com">
-              <TwitterIcon className={s.icon} />
-            </a>
-            <a href="http://facebook.com">
-              <LinkedInIcon className={s.icon} />
-            </a>
-            <a href="http://facebook.com">
-              <PinterestIcon className={s.icon} />
-            </a>
-          </div>
-          <div className={s.center}>
-            {name && surname && (
-              <span className={s.fullname}>
-                {name} {surname}
-              </span>
+          <Username name={name} surname={surname} username={username} tag />
+          <span>{about}</span>
+          <ul className={s.userInfoList}>
+            {email && (
+              <li className={s.userInfoItem}>
+                <EmailOutlinedIcon />
+                <span>{email}</span>
+              </li>
             )}
-            <span className={s.username}>{username}</span>
-            <div className={s.info}>
-              <div className={s.item}>
-                <PlaceIcon />
-                <span>Russia</span>
-              </div>
-              <div className={s.item}>
-                <LanguageIcon />
-                <span />
-              </div>
-            </div>
-            <button type="button">follow</button>
-          </div>
-          <div className={s.right}>
-            <EmailOutlinedIcon />
-            <MoreVertIcon />
-          </div>
+            {phone && (
+              <li className={s.userInfoItem}>
+                <LocalPhoneOutlinedIcon />
+                <span>{phone}</span>
+              </li>
+            )}
+          </ul>
+        </div>
+        <div>
+          {(authUserRole === "admin" || isAuthUser) && (
+            <Button
+              size="small"
+              startIcon={<EditIcon />}
+              className={s.editButton}
+              onClick={() => navigate("/edit")}
+            >
+              Edit Profile
+            </Button>
+          )}
         </div>
       </div>
     </section>

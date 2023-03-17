@@ -19,13 +19,13 @@ declare type PostId = Post['postId'];
 
 declare type PostTempExt = Post & {
   username: string;
-  profilePic?: string | null; //TODO: make it mediaId
+  avatar?: string | null; //TODO: make it mediaId
   comments?: CommentExt[]; //TODO: make it commentId
 };
 
 declare type PostExt = Post & {
   username: string;
-  profilePic?: string | null; //TODO: make it mediaId
+  avatar?: string | null; //TODO: make it mediaId
   media?: Array<{
     mediaPath?: string;
     mediaName?: string;

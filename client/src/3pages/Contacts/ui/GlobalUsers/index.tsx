@@ -1,6 +1,7 @@
+import { useCallback } from "react";
 import { useAppDispatch, useTypedSelector } from "@shared/hooks";
 
-import { UserRow } from "./User";
+import { UserRow } from "./UserRow";
 
 import { selectFiltredUsersIds, fetchAddToContacts } from "../../model";
 
@@ -14,12 +15,13 @@ const GlobalUsers = () => {
   const dispatch = useAppDispatch();
 
   const filtredUsersIds = useTypedSelector(selectFiltredUsersIds);
-  console.log(filtredUsersIds);
-
   const currentUserId = useTypedSelector(selectAuthUserId) as number;
-  const handleAddToContacts = (addedUserId: number) => {
-    dispatch(fetchAddToContacts({ currentUserId, addedUserId }));
-  };
+  const handleAddToContacts = useCallback(
+    (addedUserId: number) => {
+      dispatch(fetchAddToContacts({ currentUserId, addedUserId }));
+    },
+    [dispatch, currentUserId],
+  );
 
   return (
     <section className={s.container}>

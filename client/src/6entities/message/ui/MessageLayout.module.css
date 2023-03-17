@@ -11,26 +11,15 @@
 }
 
 .content {
-  /* overflow-wrap: break-word; */
-  /* word-wrap: break-word; */
   word-break: break-word;
-  /* word-break: break-all; */
 }
 
-.imagesContainer {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(0, auto));
-  grid-auto-rows: minmax(0, auto);
-  grid-auto-flow: dense;
-  gap: 4px;
+.media {
+  margin-top: 8px;
 }
 
-.imgWrapper {
-}
-.image {
-  /* width: 100%;
-  height: 100%;
-  object-fit: fill; */
+.media:first-child {
+  margin-top: 0px;
 }
 
 .time {

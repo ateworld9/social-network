@@ -9,7 +9,13 @@ const postsAdapter = createEntityAdapter<Post>({
   sortComparer: (postA, postB) =>
     Date.parse(postB.createdAt) - Date.parse(postA.createdAt),
 });
-const initialState = postsAdapter.getInitialState<{}>({});
+const initialState = postsAdapter.getInitialState<{
+  loading: LoadingState;
+  error: any;
+}>({
+  loading: "idle",
+  error: null,
+});
 
 const postSlice = createSlice({
   name: "posts",
@@ -43,10 +49,25 @@ const postSlice = createSlice({
       }
     },
   },
-  // extraReducers: (builder) =>{}
+  extraReducers: (builder) => {
+    builder.addCase("posts/getPosts/pending", (state) => {
+      state.loading = "loading";
+    });
+    builder.addCase("posts/getPosts/fulfilled", (state) => {
+      state.loading = "succeeded";
+    });
+    builder.addCase("posts/getNextPosts/pending", (state) => {
+      state.loading = "lazy";
+    });
+    builder.addCase("posts/getNextPosts/fulfilled", (state) => {
+      state.loading = "succeeded";
+    });
+  },
 });
 
 export const { reducer, actions } = postSlice;
 
 export const { selectAll, selectById, selectEntities, selectIds, selectTotal } =
   postsAdapter.getSelectors<RootState>((state) => state.posts);
+
+export const selectPostsLoading = (state: RootState) => state.posts.loading;

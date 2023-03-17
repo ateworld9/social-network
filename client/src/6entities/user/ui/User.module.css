@@ -5,27 +5,22 @@
 .link {
   text-decoration: none;
   cursor: pointer;
-  align-self: center;
 }
+
 .avatar {
-  width: 1.5em;
-  height: 1.5em;
+  box-sizing: border-box;
   border: 1px solid lightgrey;
-  margin-right: 0.5em;
+  border-radius: 50%;
+  aspect-ratio: 1 / 1;
+}
+.avatarlink {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
 }
 .username {
-  font-weight: 700;
   color: var(--textColor);
-
-  align-self: center;
 }
-.container {
-  display: flex;
-  flex-direction: column;
-}
-.container .link {
-  align-self: start;
-}
-.container .username {
-  align-self: start;
+.username i {
+  color: var(--textColorSoft);
 }

@@ -1,23 +1,28 @@
-import { memo } from "react";
+import { memo, useEffect } from "react";
 
-import { useTypedSelector } from "@shared/hooks";
+import { useAppDispatch, useTypedSelector } from "@shared/hooks";
 
 import { postModel } from "@entities/post";
 
 import { PostCard } from "../PostCard";
 
+import { fetchPosts } from "../../model/thunks";
 import s from "./index.module.css";
 
-// type PostsProps = ;
+type PostsProps = {
+  fetchOptions: any;
+};
 
-const selectPostsLoading = (state: RootState) => state.home.isPostsLoading;
+const Posts = ({ fetchOptions }: PostsProps) => {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(fetchPosts(fetchOptions));
+  }, [dispatch, fetchOptions]);
 
-// TODO: upload more on scroll
-const Posts = () => {
-  const isPostsLoading = useTypedSelector(selectPostsLoading);
+  const isPostsLoading = useTypedSelector(postModel.selectPostsLoading);
   const postIds = useTypedSelector(postModel.selectIds);
 
-  if (isPostsLoading) return <div>posts loading skeleton</div>;
+  if (isPostsLoading === "loading") return <div>posts loading skeleton</div>;
 
   return (
     <section className={s.posts}>

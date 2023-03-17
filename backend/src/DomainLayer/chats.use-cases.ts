@@ -61,7 +61,7 @@ class ChatsUseCases {
 
     const {chats, members} = await chatsRepository.createChat(
       chatAttrs,
-      usersMembers.reverse(),
+      usersMembers,
     );
 
     const usersIds = new Set();

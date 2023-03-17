@@ -1,5 +1,5 @@
 .container {
-  margin: 8px 32px;
+  margin: 4px 8px;
   margin-bottom: 16px;
   padding: 16px;
   border-radius: 20px;
@@ -14,6 +14,12 @@
   gap: 16px;
   border: 1px solid var(--borderColor);
   border-radius: 20px;
+}
+
+@media (min-width: 721px) {
+  .container {
+    margin: 8px 32px;
+  }
 }
 
 .icon {

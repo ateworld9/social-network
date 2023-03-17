@@ -1,6 +1,4 @@
 .navbar {
-  position: sticky;
-  top: 0;
   grid-area: header;
 
   border-bottom: 1px solid lightgrey;
@@ -13,22 +11,28 @@
 
   display: grid;
   grid-template-columns:
-    fit-content(10%) minmax(0, auto) minmax(0, auto)
+    fit-content(10%) minmax(0, auto) 1fr
     minmax(0, auto) minmax(0, auto);
-  gap: 4px;
+  gap: 1em;
   align-items: center;
   justify-items: center;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1025px) {
   .navbar {
-    padding: 8px 16px;
+    padding: 8px 15vw 8px 10vw;
 
     grid-template-columns:
       fit-content(10%) minmax(0, auto) minmax(0, auto)
       1fr minmax(0, auto) minmax(0, auto);
 
     gap: 1em;
+  }
+}
+
+@media (min-width: 1025px) {
+  .navbar {
+    padding: 8px 20vw 8px 15vw;
   }
 }
 
@@ -39,7 +43,7 @@
 .logo span {
   font-weight: 700;
 }
-@media (min-width: 1024px) {
+@media (min-width: 1025px) {
   .logo {
     font-size: 1.5em;
   }
@@ -49,19 +53,20 @@
   height: 100% !important;
   color: var(--textColor);
 }
-.icon svg {
+.icon button {
   font-size: 1.5em !important;
   height: 100% !important;
 }
 
 .themeIcon {
-  cursor: pointer;
+  justify-self: start;
 }
 .search {
   display: none;
+  box-sizing: border-box;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1025px) {
   .search {
     width: 100%;
 
@@ -80,6 +85,13 @@
 
     outline: none;
   }
+}
+
+.user {
+  display: grid;
+  grid-template-columns: 2.5em auto;
+  gap: 0.5em;
+  align-items: center;
 }
 
 .logout {

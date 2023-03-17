@@ -179,7 +179,7 @@ const ContentInput = ({
       }}
     >
       {isDragImage ? (
-        <div>Drop Files here</div>
+        <div className={s.dropArea}>Drop Files here</div>
       ) : (
         <>
           <form className={s.formContainer}>

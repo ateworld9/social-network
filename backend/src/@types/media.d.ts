@@ -5,9 +5,12 @@ declare interface Media {
   mimetype: string;
   size: bigint;
 
-  postId?: number | null;
-  commentId?: number | null;
-  messageId?: number | null;
+  avatar?: UserId | null;
+  cover?: UserId | null;
+
+  postId?: PostId | null;
+  commentId?: CommentId | null;
+  messageId?: MessageId | null;
 }
 
 declare type MediaId = Media['mediaId'];

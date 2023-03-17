@@ -35,7 +35,7 @@ class MessagesUseCases {
       }
     }
 
-    const savedMessages = await this.getMessagesByQuery({
+    const savedMessages = await this.getMessages({
       filter: {messageId: newMessage.messageId},
     });
     if (!savedMessages) {
@@ -45,7 +45,7 @@ class MessagesUseCases {
     return savedMessages;
   }
 
-  async getMessagesByQuery({
+  async getMessages({
     filter,
     page,
     sort,
@@ -73,10 +73,10 @@ class MessagesUseCases {
     const messageMedias = lodash.groupBy(media, 'messageId');
     const messagesWithRefs = messages.map((message) => ({
       ...message,
-      medias: messageMedias[message.messageId]?.map((media) => media.mediaId),
+      medias: messageMedias[message.messageId]?.map((media) => media.filename),
     }));
 
-    return {messages: messagesWithRefs, media};
+    return {messages: messagesWithRefs};
   }
 }
 

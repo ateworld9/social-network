@@ -1,15 +1,8 @@
 .footer {
-  display: flex;
-  align-items: center;
-  gap: 8px;
 }
-.item {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  cursor: pointer;
+.details {
+  margin-top: 8px;
 }
-.item.disabled {
-  color: grey;
-  cursor: not-allowed;
+.details > summary {
+  list-style-type: none;
 }

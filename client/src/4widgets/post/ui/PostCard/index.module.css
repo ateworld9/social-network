@@ -8,29 +8,16 @@
 
   padding: 16px;
 }
-.details {
-  margin-top: 8px;
-}
-.details > summary {
-  list-style-type: none;
-}
 
 .content {
   margin: 8px 0px;
   padding: 4px;
 }
 
-.images {
+.media {
   margin-top: 8px;
-
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(0, auto));
-  grid-auto-rows: minmax(0, auto);
-  gap: 4px;
-  border-radius: 16px;
 }
-.images img {
-  /* width: 100%;
-  max-height: 500px;
-  object-fit: cover; */
+
+.media:first-child {
+  margin-top: 0px;
 }

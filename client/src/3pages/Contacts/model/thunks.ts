@@ -12,7 +12,7 @@ export const fetchUserContacts = createAsyncThunk<
 >("contacts/fetchContacts", async ({ userId }, thunkAPI) => {
   try {
     const response = await UserService.fetchUserContacts(userId);
-    thunkAPI.dispatch(userModel.actions.upsertUsers(response.data.data));
+    thunkAPI.dispatch(userModel.actions.addUsers(response.data.data));
     return response.data.data.map((user) => user.userId);
   } catch (err) {
     const error: AxiosError<ResponseError> = err as AxiosError<ResponseError>;
@@ -35,7 +35,7 @@ export const fetchUsersSearch = createAsyncThunk<
       page?.offset ?? 0,
     );
 
-    thunkAPI.dispatch(userModel.actions.upsertUsers(response.data.data));
+    thunkAPI.dispatch(userModel.actions.addUsers(response.data.data));
 
     const userIds = response.data.data.map((user) => user.userId);
     return userIds;
@@ -60,7 +60,7 @@ export const fetchAddToContacts = createAsyncThunk<
         currentUserId,
         addedUserId,
       );
-      thunkAPI.dispatch(userModel.actions.upsertUsers(response.data.data));
+      thunkAPI.dispatch(userModel.actions.addUsers(response.data.data));
 
       const userIds = response.data.data.map((user) => user.userId);
       return userIds;

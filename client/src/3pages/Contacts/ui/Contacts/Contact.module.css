@@ -1,35 +1,25 @@
 .container {
   display: grid;
-  grid-template-columns: auto 3fr auto;
+  grid-template-columns: 4em 1fr auto;
   gap: 16px;
   padding-bottom: 8px;
 }
-k
+.container:first-child {
+  margin-top: 8px;
+}
 .container:not(:last-child) {
   border-bottom: 1px solid var(--borderColor);
 }
-.link {
-  color: var(--textColor);
-  text-decoration: none;
-  cursor: pointer;
-}
+
 .avatar {
-  width: 4em;
-  height: 4em;
-  border-radius: 50%;
-  background-color: var(--bgSoft);
+  align-self: start;
 }
-.avatar img {
-  width: 4em;
-  height: 4em;
-  border-radius: 50%;
-}
-.userInfo {
+.main {
   display: flex;
   flex-direction: column;
+  gap: 0.5em;
 }
-
-.fullname {
-  text-transform: capitalize;
-  font-weight: 700;
+.controllers {
+  display: flex;
+  align-items: center;
 }

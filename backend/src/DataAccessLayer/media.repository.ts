@@ -74,14 +74,14 @@ class MediaRepository {
     return medias;
   }
 
-  async updateMessageMedias(messageId: MessageId, mediaIds: MediaId[]) {
-    const media: Media[] = await knexdb(TABLES.MEDIA)
-      .whereIn('mediaId', mediaIds)
-      .update({messageId})
-      .returning('*');
+  // async updateMessageMedias(messageId: MessageId, mediaIds: MediaId[]) {
+  //   const media: Media[] = await knexdb(TABLES.MEDIA)
+  //     .whereIn('mediaId', mediaIds)
+  //     .update({messageId})
+  //     .returning('*');
 
-    return media;
-  }
+  //   return media;
+  // }
 
   async updateEntityMedias(update: any, mediaIds: MediaId[]) {
     const media: Media[] = await knexdb(TABLES.MEDIA)

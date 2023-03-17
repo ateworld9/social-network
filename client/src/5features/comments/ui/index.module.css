@@ -1,8 +1,12 @@
 .comments {
-  border-top: 4px solid var(--substrate);
+  border-top: 2px solid var(--substrate);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
 }
 
 .contentInput {
+  margin-top: 16px;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
 }

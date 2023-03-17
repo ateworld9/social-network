@@ -6,6 +6,12 @@ module.exports = {
     es2021: true,
     jest: true,
   },
+  plugins: [
+    "react",
+    "eslint-plugin-react-hooks",
+    "@typescript-eslint",
+    "prettier",
+  ],
   extends: [
     // "react-app",
     // "react-app/jest",
@@ -13,6 +19,8 @@ module.exports = {
     "airbnb-typescript",
     "plugin:import/typescript",
     "plugin:prettier/recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
   ],
   settings: {
     react: {
@@ -28,7 +36,6 @@ module.exports = {
     sourceType: "module",
     project: path.resolve(__dirname, "./tsconfig.json"),
   },
-  plugins: ["react", "@typescript-eslint", "prettier"],
   rules: {
     "react/prop-types": "off", // does it works with typescript correctly?
     "react/no-unused-prop-types": ["off"], // ts

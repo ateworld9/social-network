@@ -1,0 +1,16 @@
+.user {
+  display: grid;
+  grid-template-columns: 3em 1fr auto;
+  gap: 0.5em;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.date {
+  color: var(--textColorSoft);
+  font-size: 0.9em;
+}

@@ -6,26 +6,26 @@ import {parseSort} from './utils';
 
 const DEFAULT_USER_SELECT = [
   `${TABLES.USERS}.userId as userId `,
+  `${TABLES.USERS}.username as username `,
+  `${TABLES.USERS}.role as role `,
+
   `${TABLES.USERS}.email as email `,
   `${TABLES.USERS}.phone as phone `,
+
   `${TABLES.USERS}.name as name `,
   `${TABLES.USERS}.surname as surname `,
-  `${TABLES.USERS}.username as username `,
+  `avatars.filename as avatar `,
+  `covers.filename as cover `,
+  `${TABLES.USERS}.about as about `,
+  `${TABLES.USERS}.city as city `,
+  `${TABLES.USERS}.birthday as birthday `,
+
   `${TABLES.USERS}.createdAt as createdAt `,
   `${TABLES.USERS}.updatedAt as updatedAt `,
-  // TODO: DELETE IT
-  `${TABLES.MEDIA}.mediaId as mediaId `,
-  `${TABLES.MEDIA}.filepath as filepath `,
-  `${TABLES.MEDIA}.filename as filename `,
-  `${TABLES.MEDIA}.mimetype as mimetype `,
-  `${TABLES.MEDIA}.size as size `,
-  `${TABLES.MEDIA}.postId as postId `,
-  `${TABLES.MEDIA}.commentId as commentId `,
-  `${TABLES.MEDIA}.messageId as messageId `,
 ];
 
 class UsersRepository {
-  async createUser(fields: Omit<User, 'userId' | 'createdAt' | 'updatedAt'>) {
+  async createUser(fields: Partial<User>) {
     const result = await knexdb(TABLES.USERS).insert(fields).returning('*');
     return result[0];
   }
@@ -43,10 +43,28 @@ class UsersRepository {
     const user: User & Media = await knexdb(TABLES.USERS)
       .first(DEFAULT_USER_SELECT)
       .leftJoin(
-        TABLES.MEDIA,
-        `${TABLES.USERS}.profilePic`,
-        '=',
-        `${TABLES.MEDIA}.mediaId`,
+        knexdb(TABLES.MEDIA)
+          .distinctOn('avatar')
+          .select('*')
+          .orderBy([
+            {column: `${TABLES.MEDIA}.avatar`},
+            {column: `${TABLES.MEDIA}.createdAt`, order: 'desc'},
+          ])
+          .as('avatars'),
+        `${TABLES.USERS}.userId`,
+        `avatars.avatar`,
+      )
+      .leftJoin(
+        knexdb(TABLES.MEDIA)
+          .distinctOn('cover')
+          .select('*')
+          .orderBy([
+            {column: `${TABLES.MEDIA}.cover`},
+            {column: `${TABLES.MEDIA}.createdAt`, order: 'desc'},
+          ])
+          .as('covers'),
+        `${TABLES.USERS}.userId`,
+        `covers.cover`,
       )
       .modify(function (queryBuilder) {
         if (filter) {
@@ -71,10 +89,28 @@ class UsersRepository {
     const users: Array<User & Media> = await knexdb(TABLES.USERS)
       .select(DEFAULT_USER_SELECT)
       .leftJoin(
-        TABLES.MEDIA,
-        `${TABLES.USERS}.profilePic`,
-        '=',
-        `${TABLES.MEDIA}.mediaId`,
+        knexdb(TABLES.MEDIA)
+          .distinctOn('avatar')
+          .select('*')
+          .orderBy([
+            {column: `${TABLES.MEDIA}.avatar`},
+            {column: `${TABLES.MEDIA}.createdAt`, order: 'desc'},
+          ])
+          .as('avatars'),
+        `${TABLES.USERS}.userId`,
+        `avatars.avatar`,
+      )
+      .leftJoin(
+        knexdb(TABLES.MEDIA)
+          .distinctOn('cover')
+          .select('*')
+          .orderBy([
+            {column: `${TABLES.MEDIA}.cover`},
+            {column: `${TABLES.MEDIA}.createdAt`, order: 'desc'},
+          ])
+          .as('covers'),
+        `${TABLES.USERS}.userId`,
+        `covers.cover`,
       )
       .modify(function (queryBuilder) {
         if (sort) {
@@ -117,70 +153,77 @@ class UsersRepository {
     return count;
   }
 
-  // TODO: users.repository.updateUser
-  async updateUser(
-    userId: UserId,
-    fields: Partial<Omit<User, 'userId' | 'createdAt'>>,
-  ) {
-    try {
-      const result = await knexdb(TABLES.USERS)
-        .where({userId})
-        .update({...fields, updatedAt: new Date()})
-        .returning('*');
-      logger.info(JSON.stringify(result[0]));
+  async updateUser(userId: UserId, fields: Partial<User>) {
+    const result = await knexdb(TABLES.USERS)
+      .where({userId})
+      .update({...fields, updatedAt: new Date()})
+      .returning('*');
 
-      const updatedUser = await knexdb(TABLES.USERS)
-        .select(
-          'users.userId',
-          'users.email',
-          'users.password',
-          'users.phone',
-          'users.name',
-          'users.surname',
-          'media.filepath as profilePic',
-          'users.username',
-          'users.createdAt',
-          'users.updatedAt',
-        )
-        .leftJoin('media', 'users.profilePic', '=', 'media.mediaId')
-        .where({userId});
-      return updatedUser[0];
-    } catch (error) {
-      logger.error(error, 'DB ERROR');
-      throw error;
-    }
+    const updatedUser = await knexdb(TABLES.USERS)
+      .select(DEFAULT_USER_SELECT)
+      .leftJoin(
+        knexdb(TABLES.MEDIA)
+          .distinctOn('avatar')
+          .select('*')
+          .orderBy([
+            {column: `${TABLES.MEDIA}.avatar`},
+            {column: `${TABLES.MEDIA}.createdAt`, order: 'desc'},
+          ])
+          .as('avatars'),
+        `${TABLES.USERS}.userId`,
+        `avatars.avatar`,
+      )
+      .leftJoin(
+        knexdb(TABLES.MEDIA)
+          .distinctOn('cover')
+          .select('*')
+          .orderBy([
+            {column: `${TABLES.MEDIA}.cover`},
+            {column: `${TABLES.MEDIA}.createdAt`, order: 'desc'},
+          ])
+          .as('covers'),
+        `${TABLES.USERS}.userId`,
+        `covers.cover`,
+      )
+      .where({userId});
+    return updatedUser[0];
   }
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   async findContactsByUserId(userId: UserId) {
     const contacts: Array<User & Media> = await knexdb(TABLES.CONTACTS)
-      .select(
-        'users.userId',
-        'users.email',
-        'users.password',
-        'users.phone',
-        'users.name',
-        'users.surname',
-        'users.username',
-        'users.createdAt',
-        'users.updatedAt',
-        `${TABLES.MEDIA}.mediaId as mediaId `,
-        `${TABLES.MEDIA}.filepath as filepath `,
-        `${TABLES.MEDIA}.filename as filename `,
-        `${TABLES.MEDIA}.mimetype as mimetype `,
-        `${TABLES.MEDIA}.size as size `,
-        `${TABLES.MEDIA}.postId as postId `,
-        `${TABLES.MEDIA}.commentId as commentId `,
-        `${TABLES.MEDIA}.messageId as messageId `,
-      )
+      .select(DEFAULT_USER_SELECT)
       .leftJoin(
         TABLES.USERS,
         `${TABLES.USERS}.userId`,
         '=',
         `${TABLES.CONTACTS}.userId2`,
       )
-      .leftJoin('media', `${TABLES.USERS}.profilePic`, '=', 'media.mediaId')
+      .leftJoin(
+        knexdb(TABLES.MEDIA)
+          .distinctOn('avatar')
+          .select('*')
+          .orderBy([
+            {column: `${TABLES.MEDIA}.avatar`},
+            {column: `${TABLES.MEDIA}.createdAt`, order: 'desc'},
+          ])
+          .as('avatars'),
+        `${TABLES.USERS}.userId`,
+        `avatars.avatar`,
+      )
+      .leftJoin(
+        knexdb(TABLES.MEDIA)
+          .distinctOn('cover')
+          .select('*')
+          .orderBy([
+            {column: `${TABLES.MEDIA}.cover`},
+            {column: `${TABLES.MEDIA}.createdAt`, order: 'desc'},
+          ])
+          .as('covers'),
+        `${TABLES.USERS}.userId`,
+        `covers.cover`,
+      )
       .where({userId1: String(userId)});
 
     return contacts;

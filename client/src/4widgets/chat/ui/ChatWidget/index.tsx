@@ -6,7 +6,6 @@ import socket from "@shared/config/api/socket";
 
 import { selectAuthUserId } from "@entities/auth";
 import { messageModel } from "@entities/message";
-import { mediaModel } from "@entities/media";
 
 import ChatHeader from "../ChatHeader";
 import s from "./index.module.css";
@@ -34,15 +33,11 @@ const ChatWidget = ({ chatId }: ChatWidgetProps) => {
 
     const getMessagesListener = ({
       data,
-      relationships,
     }: {
       data: Message[];
       relationships?: { media: Media[] };
     }) => {
       dispatch(messageModel.actions.setAllMessages(data));
-      if (relationships?.media && relationships.media?.length > 0) {
-        dispatch(mediaModel.actions.upsertMedias(relationships.media));
-      }
       dispatch(messageModel.actions.setLoading("succeeded"));
     };
 
@@ -50,7 +45,6 @@ const ChatWidget = ({ chatId }: ChatWidgetProps) => {
 
     const recieveMessageListner = ({
       data,
-      relationships,
     }: {
       data: Message[];
       relationships?: { media: Media[] };
@@ -58,9 +52,6 @@ const ChatWidget = ({ chatId }: ChatWidgetProps) => {
       // TODO: play notification sound
       if (data[0].chatId === +chatId) {
         dispatch(messageModel.actions.addMessage(data[0]));
-      }
-      if (relationships?.media && relationships.media?.length > 0) {
-        dispatch(mediaModel.actions.upsertMedias(relationships.media));
       }
     };
 

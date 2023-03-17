@@ -1,84 +1,54 @@
-import { Avatar } from "@mui/material";
-import { API_PREFIX } from "@shared/config";
+import classNames from "classnames";
 import { Link } from "react-router-dom";
-import { useTypedSelector } from "@shared/hooks";
 
-import { selectById } from "../model";
+import { API_PREFIX } from "@shared/config";
 
 import s from "./User.module.css";
 
-type UserProps = {
-  userId: UserId;
-  link?: boolean;
-  children?: React.ReactNode;
-};
-
-export const User = ({ userId, link, children }: UserProps) => {
-  const user = useTypedSelector((state) => selectById(state, userId)) as User;
-
-  if (link) {
-    return (
-      <div className={s.user}>
-        <Link to={`/profile/${userId}`}>
-          <Avatar
-            src={`${API_PREFIX}/public/images/${
-              user?.profilePic?.filename ?? "noAvatar.png"
-            }`}
-            alt="avatar"
-            className={s.avatar}
-            sx={{ height: "2em !important", width: "2em !important" }}
-          />
-        </Link>
-        {children ? (
-          <div className={s.container}>
-            <Link to={`/profile/${userId}`} className={s.link}>
-              <span className={s.username}>
-                {user.name && user.surname
-                  ? `${user.name} ${user.surname}`
-                  : user.username}
-              </span>
-            </Link>
-            {children}
-          </div>
-        ) : (
-          <Link to={`/profile/${userId}`} className={s.link}>
-            <span className={s.username}>
-              {user.name && user.surname
-                ? `${user.name} ${user.surname}`
-                : user.username}
-            </span>
-          </Link>
-        )}
-      </div>
-    );
-  }
-
+const Username = ({
+  name,
+  surname,
+  username,
+  tag,
+  className,
+}: UsernameProps) => {
   return (
-    <div className={s.user}>
-      <Avatar
-        src={`${API_PREFIX}/public/images/${
-          user?.profilePic?.filename ?? "noAvatar.png"
-        }`}
-        alt="avatar"
-        className={s.avatar}
-        sx={{ height: "2em !important", width: "2em !important" }}
-      />
-      {children ? (
-        <div className={s.container}>
-          <span className={s.username}>
-            {user.name && user.surname
-              ? `${user.name} ${user.surname}`
-              : user.username}
-          </span>
-          {children}
-        </div>
+    <span className={classNames(s.username, className)}>
+      {name && surname ? (
+        <b>{`${name} ${surname} `}</b>
       ) : (
-        <span className={s.username}>
-          {user.name && user.surname
-            ? `${user.name} ${user.surname}`
-            : user.username}
-        </span>
+        !tag && <b>@{username}</b>
       )}
-    </div>
+      {tag && <i>@{username}</i>}
+    </span>
   );
 };
+
+const UsernameLink = ({ userId, ...args }: UsernameLinkProps) => {
+  return (
+    <Link to={`/profile/${userId}`} className={s.link}>
+      <Username {...args} />
+    </Link>
+  );
+};
+
+const UserAvatar = ({ filename, className }: UserAvatarProps) => {
+  return (
+    <img
+      src={`${API_PREFIX}/public/images/${filename ?? "noAvatar.png"}`}
+      draggable="false"
+      alt="avatar"
+      className={classNames(s.avatar, className)}
+    />
+  );
+};
+
+const UserAvatarLink = ({ userId, ...args }: UserAvatarLinkProps) => {
+  return (
+    <Link to={`/profile/${userId}`} className={s.avatarlink}>
+      <UserAvatar {...args} />
+    </Link>
+  );
+};
+
+export { Username, UsernameLink, UserAvatar, UserAvatarLink };

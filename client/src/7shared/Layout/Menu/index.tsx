@@ -1,28 +1,36 @@
+import classNames from "classnames";
 import { Link } from "react-router-dom";
 
 import { API_PREFIX } from "@shared/config";
 import { useTypedSelector } from "@shared/hooks";
 
-import { User } from "@entities/user";
-import { selectAuthUserId } from "@entities/auth";
+import { selectAuthUser } from "@entities/auth";
+import { UserAvatarLink } from "@entities/user";
 
-import s from "./leftbar.module.css";
+import s from "./index.module.css";
 
 const Menu = (): JSX.Element => {
-  const userId = useTypedSelector(selectAuthUserId) as number;
+  const user = useTypedSelector(selectAuthUser) as User;
+
   return (
-    <aside className={s.leftBar}>
-      <div className={s.menu}>
-        <User userId={userId} link />
-        <Link className={s.item} to="/contacts">
-          <img src={`${API_PREFIX}/public/images/1.png`} alt="Contacts Icon" />
-          <span>Contacts</span>
-        </Link>
-        <Link className={s.item} to="/chats">
-          <img src={`${API_PREFIX}/public/images/10.png`} alt="Messages Icon" />
-          <span>Messages</span>
+    <aside className={s.menu}>
+      <div className={s.user}>
+        <UserAvatarLink userId={user.userId} filename={user.avatar} />
+        <Link
+          to={`/profile/${user.userId}`}
+          className={classNames(s.text, s.link)}
+        >
+          My Profile
         </Link>
       </div>
+      <Link className={s.item} to="/contacts">
+        <img src={`${API_PREFIX}/public/images/1.png`} alt="Contacts Icon" />
+        <span className={s.text}>Contacts</span>
+      </Link>
+      <Link className={s.item} to="/chats">
+        <img src={`${API_PREFIX}/public/images/10.png`} alt="Messages Icon" />
+        <span className={s.text}>Messages</span>
+      </Link>
     </aside>
   );
 };

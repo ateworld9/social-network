@@ -1,7 +1,6 @@
 import {Server} from 'http';
 import {Server as IoServer, Socket} from 'socket.io';
 
-import {CLIENT_URL} from './config';
 import ChatsUseCases from './DomainLayer/chats.use-cases';
 import TokenUseCases from './DomainLayer/tokens.use-cases';
 
@@ -15,11 +14,8 @@ interface ServerToClientEvents {
   userConnected: (userId: UserId) => void;
   GET_CHATS_ON_CONNECTION: (res: any) => void;
   GET_NEW_CHATS_PAGE: (res: any) => void;
-  GET_CHAT_MESSAGES: (res: {
-    data: Message[];
-    relationships: {media: Media[]};
-  }) => void;
-  ON_MESSAGE: (res: {data: Message[]; relationships: {media: Media[]}}) => void;
+  GET_CHAT_MESSAGES: (res: {data: Message[]}) => void;
+  ON_MESSAGE: (res: {data: Message[]}) => void;
 }
 
 interface ClientToServerEvents {
@@ -118,30 +114,24 @@ export default async (httpServer: Server) => {
       chatsIds.forEach((chatId: number) => socket.join(String(chatId)));
 
       socket.on('GET_CHAT_MESSAGES', async (chatId, page) => {
-        const {messages, media} = await messagesUseCases.getMessagesByQuery({
+        const {messages} = await messagesUseCases.getMessages({
           filter: {chatId},
           page: page ?? {limit: 100, offset: 0},
         });
         const response = {
           data: messages,
-          relationships: {
-            media,
-          },
         };
         socket.emit('GET_CHAT_MESSAGES', response);
       });
 
       socket.on('ON_MESSAGE', async (reqMessage, mediaIds) => {
         //TODO: validate messssage
-        const {messages, media} = await messagesUseCases.createMessage(
+        const {messages} = await messagesUseCases.createMessage(
           reqMessage,
           mediaIds,
         );
         const res = {
           data: messages,
-          relationships: {
-            media,
-          },
         };
         socket.to(String(reqMessage.chatId)).emit('ON_MESSAGE', res);
         socket.emit('ON_MESSAGE', res);

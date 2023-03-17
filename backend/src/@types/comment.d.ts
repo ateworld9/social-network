@@ -11,6 +11,6 @@ declare type CommentId = Comment['commentId'];
 
 declare type CommentExt = Comment & {
   username: string;
-  profilePic: string | null; //make it MediaId
+  avatar: string | null; //make it MediaId
   media: string | null; //make it MediaId[]
 };

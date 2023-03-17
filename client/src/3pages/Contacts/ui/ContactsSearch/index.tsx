@@ -17,13 +17,13 @@ const ContactsSearch = () => {
     const filters = values.flatMap((value) => [
       {
         columnName: "username",
-        operator: "like" as "like",
+        operator: "ilike" as "ilike",
         value: `%${value}%`,
       },
-      { columnName: "name", operator: "like" as "like", value: `%${value}%` },
+      { columnName: "name", operator: "ilike" as "ilike", value: `%${value}%` },
       {
         columnName: "surname",
-        operator: "like" as "like",
+        operator: "ilike" as "ilike",
         value: `%${value}%`,
       },
     ]);

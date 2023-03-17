@@ -8,6 +8,7 @@ const DEFAULT_MESSAGES_SELECT = [
   `${TABLES.MESSAGES}.chatId as chatId `,
   `${TABLES.MESSAGES}.fromUserId as fromUserId `,
   `${TABLES.MESSAGES}.text as text `,
+  `${TABLES.MESSAGES}.postId as postId `,
   `${TABLES.MESSAGES}.status as status `,
   `${TABLES.MESSAGES}.createdAt as createdAt `,
   `${TABLES.MESSAGES}.updatedAt as updatedAt `,
@@ -15,6 +16,8 @@ const DEFAULT_MESSAGES_SELECT = [
 
 class MessagesRepository {
   async createMessage(message: CreateRequestMessage) {
+    console.log(message);
+
     const newMessage: Message[] = await knexdb(TABLES.MESSAGES)
       .insert(message)
       .returning(DEFAULT_MESSAGES_SELECT);

@@ -5,7 +5,6 @@ import CommentService from "@shared/services/comment";
 
 import { commentModel } from "@entities/comment";
 import { userModel } from "@entities/user";
-import { mediaModel } from "@entities/media";
 import { postModel } from "@entities/post";
 
 export const sendComment = createAsyncThunk<
@@ -19,10 +18,7 @@ export const sendComment = createAsyncThunk<
 
     dispatch(commentModel.actions.addComment(data.comments[0]));
     if (data.relationships.users) {
-      dispatch(userModel.actions.upsertUsers(data.relationships.users));
-    }
-    if (data.relationships.media) {
-      dispatch(mediaModel.actions.upsertMedias(data.relationships.media));
+      dispatch(userModel.actions.addUsers(data.relationships.users));
     }
     // const state = getState()
 

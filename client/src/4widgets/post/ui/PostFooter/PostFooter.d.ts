@@ -1,4 +1,6 @@
 declare type PostFooterProps = {
-  setCommentOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  commentsCount: number;
+  postId: PostId;
+  likesCount: number;
+  liked: Post["liked"];
+  comments: Post["comments"];
 };

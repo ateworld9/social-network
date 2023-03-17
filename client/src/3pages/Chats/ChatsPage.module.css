@@ -1,11 +1,16 @@
 .container {
-  margin: 8px 32px;
+  margin: 4px 8px;
   border-radius: 20px;
   color: var(--textColor);
   background-color: var(--bg);
   -webkit-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
   -moz-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
   box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+}
+@media (min-width: 721px) {
+  .container {
+    margin: 8px 32px;
+  }
 }
 
 .search {

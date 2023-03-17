@@ -47,20 +47,29 @@ class UsersController {
     }
   }
   // TODO:
-  // async patchUser(req: Request, res: Response, next: NextFunction) {
-  //   const errors = validationResult(req);
-  //   if (!errors.isEmpty()) {
-  //     return next(AppError.BadRequest('Bad Request: ValidationError', errors));
-  //   }
-  //   try {
-  //     const userId = Number(req.params.userId);
-  //     const newFields = req.body
-  //     const patchedUser = await usersUseCases.updateUser(userId, newFields);
-  //     return patchedUser;
-  //   } catch (e) {
-  //     next(e);
-  //   }
-  // }
+  async patchUser(req: Request, res: Response, next: NextFunction) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return next(AppError.BadRequest('Bad Request: ValidationError', errors));
+    }
+    try {
+      const userId = Number(req.params.userId);
+
+      const {authUserId, user, avatar, cover} = req.body;
+
+      const patchedUser = await usersUseCases.updateUser(
+        userId,
+        authUserId,
+        user,
+        avatar,
+        cover,
+      );
+
+      return res.status(200).json(patchedUser);
+    } catch (e) {
+      next(e);
+    }
+  }
   // async deleteUser(req: Request, res: Response, next: NextFunction) {
   //     const errors = validationResult(req);
   //     if (!errors.isEmpty()) {

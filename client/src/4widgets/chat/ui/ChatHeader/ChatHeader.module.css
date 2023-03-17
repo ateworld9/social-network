@@ -1,12 +1,12 @@
 .header {
-  display: flex;
-  justify-content: space-between;
   padding: 16px;
   border-bottom: 4px solid var(--substrate);
-}
 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 .back {
-  align-self: center;
 }
 .info {
   display: flex;
@@ -14,34 +14,23 @@
   text-align: center;
   justify-content: space-between;
 }
-.info .name {
+.name {
   font-weight: 700;
 }
-
-.info a {
-  text-decoration: none;
-}
-.info a .fullname {
-  cursor: pointer;
-  font-weight: 700;
-  color: var(--textColor);
-}
-.info a .username {
-  cursor: pointer;
-  font-weight: 700;
-  color: var(--textColor);
-}
-.info .lastOnline {
+.lastOnline {
   font-size: 0.9em;
   color: var(--textColorSoft);
 }
-
 .controls {
   display: flex;
-  flex-direction: row;
-  align-self: center;
+  align-items: center;
+  gap: 1em;
 }
-
-.control:not(:last-child) {
-  margin-right: 8px;
+.control {
+  display: flex;
+  align-items: center;
+}
+.userAvatar {
+  width: 3em;
+  height: 3em;
 }

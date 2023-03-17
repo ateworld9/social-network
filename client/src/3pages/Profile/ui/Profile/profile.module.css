@@ -1,101 +1,90 @@
-.images {
-  width: 100%;
-  height: max(20vh, 20vw);
-  position: relative;
-}
-
-.coverContainer {
-  width: 100%;
-  height: 100%;
-  background-color: var(--substrate);
-}
-.cover {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.avatarContainer {
-  width: max(13vh, 13vw);
-  height: max(13vh, 13vw);
-  background-color: var(--substrate);
-  border-radius: 50%;
-  position: absolute;
-  left: 0;
-  right: 0;
-  margin: auto;
-  top: max(13vh, 13vw);
-}
-.avatar {
-  width: max(13vh, 13vw);
-  height: max(13vh, 13vw);
-  border-radius: 50%;
-  object-fit: cover;
-}
 .profileContainer {
-  margin: 8px 32px;
-}
-.profileContainer .userInfo {
-  height: 30em;
-  padding: 16px;
-  margin-bottom: 8px;
+  margin: 4px 8px;
+  position: relative;
+
   border-radius: 20px;
   color: var(--textColor);
   background-color: var(--bg);
   -webkit-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
   -moz-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
   box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+
+  display: grid;
+  grid-template-rows: min(20vh, 20vw) auto;
 }
-.profileContainer .userInfo .left {
-  flex: 1;
-  display: flex;
-  gap: 4px;
+@media (min-width: 721px) {
+  .profileContainer {
+    margin: 8px 32px;
+  }
 }
-.profileContainer .userInfo .left a {
-  color: var(--textColorSoft);
+
+.coverContainer {
+  border-top-right-radius: 16px;
+  border-top-left-radius: 16px;
+  background-color: var(--substrate);
 }
-.icon {
-  font-size: 1em !important;
+.cover {
+  border-top-right-radius: 16px;
+  border-top-left-radius: 16px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  aspect-ratio: 2.5 / 1;
 }
-.profileContainer .userInfo .center {
-  flex: 1;
+.avatarContainer {
+  width: min(10vh, 10vw);
+  height: min(10vh, 10vw);
+  background-color: var(--substrate);
+  border-radius: 50%;
+  position: absolute;
+  left: 16px;
+  right: 0;
+  top: min(13vh, 13vw);
+}
+.avatar {
+  box-sizing: border-box;
+  border-color: var(--bg);
+  border-width: 4px;
+  width: min(10vh, 10vw);
+  height: min(10vh, 10vw);
+}
+.userCard {
+  display: grid;
+  grid-template-columns: min(10vh, 10vw) 1fr auto;
+  gap: 16px;
+  padding: 24px;
+  border-radius: 16px;
+  margin-top: -16px;
+  background-color: var(--bg);
+}
+.userInfo {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 4px;
+  align-items: flex-start;
 }
-.profileContainer .userInfo .center span {
-  font-weight: 500;
+
+.userInfoList {
+  margin-top: 0.5em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25em;
 }
-.profileContainer .userInfo .center .info {
-  width: 100%;
+
+.userInfoItem {
   display: flex;
   align-items: center;
-  justify-content: space-around;
-}
-.profileContainer .userInfo .center .info .item {
-  display: flex;
-  align-items: center;
-  gap: 4px;
   color: var(--textColorSoft);
 }
-.profileContainer .userInfo .center .info .item span {
+.userInfoItem svg {
+  font-size: 1.3em;
+
+  margin-right: 0.5em;
+}
+
+.userInfoItem span {
   font-size: 0.9em;
 }
-.profileContainer .userInfo .center button {
-  border: none;
-  background-color: #5271ff;
-  color: white;
-  padding: 4px 8px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-.profileContainer .userInfo .right {
-  flex: 1;
-  display: flex;
-  gap: 4px;
-  align-items: center;
-  justify-content: flex-end;
+
+.editButton {
+  text-transform: none;
 }

@@ -12,7 +12,7 @@ declare interface Page {
 }
 declare interface FilterWithOperatorObject {
   columnName: string;
-  operator: "=" | "<" | ">" | "<>" | "in" | "like";
+  operator: "=" | "<" | ">" | "<>" | "in" | "like" | "ilike";
   value: any;
 }
 declare type Filter<T = any> = Partial<T> | FilterWithOperatorObject[];

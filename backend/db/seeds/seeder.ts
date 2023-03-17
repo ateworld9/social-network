@@ -7,15 +7,12 @@ import * as bcrypt from 'bcrypt';
 export async function seed(knex: Knex): Promise<void> {
   // Deletes ALL existing entries
   await knex('media').del();
-
   await knex('message2message').del();
   await knex('messages').del();
-
   await knex('chats2users').del();
   await knex('chats').del();
-
   await knex('contacts').del();
-
+  await knex('likes').del();
   await knex('comments').del();
   await knex('posts').del();
   await knex('tokens').del();
@@ -27,11 +24,12 @@ export async function seed(knex: Knex): Promise<void> {
   await knex('users').insert([
     {
       email: 'admin@gmail.com',
-      phone: '+79139762233',
+      phone: '+79139761111',
       password: await bcrypt.hash('administrator', 3),
       name: 'admin',
       surname: 'adminov',
       username: 'admin',
+      role: 'admin',
     },
     {
       email: 'vahrameev.work@gmail.com',
@@ -100,6 +98,8 @@ export async function seed(knex: Knex): Promise<void> {
       status: 'created',
     },
   ]);
+
+  await knex('likes').insert([{userId: 2, postId: 1}]);
 
   await knex('chats').insert([
     {type: 'dialog'},
@@ -188,6 +188,7 @@ export async function seed(knex: Knex): Promise<void> {
       filepath: 'http://localhost:3001/public/images/2000x2000.jpg',
       filename: '2000x2000.jpg',
       mimetype: 'image/*',
+      avatar: 1,
     },
     {
       filepath: 'https://picsum.photos/200/300',
@@ -244,8 +245,7 @@ export async function seed(knex: Knex): Promise<void> {
       filepath: 'http://localhost:3001/public/images/vahratar.jpg',
       filename: 'vahratar.jpg',
       mimetype: 'image/*',
+      avatar: 2,
     },
   ]);
-  await knex('users').where({userId: 1}).update({profilePic: 1});
-  await knex('users').where({userId: 2}).update({profilePic: 11});
 }

@@ -6,9 +6,12 @@ export enum TABLES {
   POSTS = 'posts',
   COMMENTS = 'comments',
 
+  LIKES = 'likes',
+
   CONTACTS = 'contacts',
   CHATS = 'chats',
   CHATS2USERS = 'chats2users',
 
   MESSAGES = 'messages',
+  POSTS2MESSAGE = 'posts2message',
 }

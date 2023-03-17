@@ -15,7 +15,7 @@ export default {
   entry,
   output: {
     path: process.env.PATH_TO_BUILD ?? path.join(__dirname, "../build"),
-    // clean: true, //clean build
+    clean: true, //clean build
     // Add /* filename */ comments to generated require()s in the output.
     pathinfo: isDevServer,
     publicPath: "/",
@@ -31,16 +31,16 @@ export default {
       rules.htmlRule,
       rules.imagesRule,
       rules.fontsRule,
-      rules.cssRule,
-      ...rules.lessRules,
-      ...rules.sassRules,
+      ...rules.cssRules,
+      // ...rules.lessRules,
+      // ...rules.sassRules,
       ...rules.svgRules,
     ]),
   },
   plugins: arrayFilterEmpty([
     plugins.htmlWebpackPlugin,
     plugins.InlineChunkHtml,
-    plugins.providePlugin,
+    // plugins.providePlugin,
     plugins.definePlugin,
     plugins.forkTsCheckerWebpackPlugin,
     plugins.esLintPlugin,

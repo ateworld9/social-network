@@ -1,7 +1,7 @@
-.commentContainer {
-  padding: 16px;
+.comment {
+  display: grid;
+  grid-template-columns: max-content auto;
 }
-
 .text {
   word-break: break-word;
 }
@@ -10,8 +10,4 @@
   color: var(--textColorSoft);
   font-size: 0.8em;
   text-align: right;
-}
-.comment {
-  display: grid;
-  grid-template-columns: auto auto;
 }

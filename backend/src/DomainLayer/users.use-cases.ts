@@ -3,36 +3,10 @@ import * as crypto from 'node:crypto';
 import {AppError} from '../utils/app-errors';
 
 import UsersRepository from '../DataAccessLayer/users.repository';
+import MediaUseCases from './media.use-cases';
 
 const userRepository = new UsersRepository();
-
-const serializeUser = ({
-  mediaId,
-  filepath,
-  filename,
-  mimetype,
-  size,
-  postId,
-  commentId,
-  messageId,
-  ...user
-}: User & Media): User => ({
-  ...user,
-  profilePic: {
-    mediaId,
-    filepath,
-    filename,
-    mimetype,
-    size,
-    postId,
-    commentId,
-    messageId,
-  },
-});
-
-const serializeUsers = (users: Array<User & Media>) => {
-  return users.map(serializeUser);
-};
+const mediaUseCases = new MediaUseCases();
 
 class UsersUseCases {
   async createUser(
@@ -63,12 +37,8 @@ class UsersUseCases {
       email,
       password,
       username,
-      phone: null,
       name: name ?? null,
       surname: surname ?? null,
-      profilePic: null,
-      isActivated: false,
-      activationLink: '',
     });
 
     if (!user) {
@@ -89,7 +59,7 @@ class UsersUseCases {
     if (!user) {
       throw AppError.NoContent('User is not found');
     }
-    return serializeUser(user);
+    return user;
   }
 
   async findUsersByQuery({
@@ -108,7 +78,57 @@ class UsersUseCases {
     if (!users) {
       throw AppError.NoContent('findUsersByQuery No Content');
     }
-    return {users: serializeUsers(users), count};
+    return {users, count};
+  }
+
+  async updateUser(
+    userId: UserId,
+    authUserId: UserId,
+    fields?: Partial<User>,
+    avatar?: MediaId,
+    cover?: MediaId,
+  ) {
+    if (userId !== authUserId) {
+      const authUser = await userRepository.findUser({
+        filter: {userId: authUserId},
+      });
+      if (authUser.role === 'admin') {
+      } else {
+        throw AppError.Forbidden('updateUser Forbidden');
+      }
+    }
+
+    if (fields) {
+      const user = await userRepository.updateUser(userId, fields);
+      if (!user) {
+        throw AppError.InternalError('User is not updated, USER Case Error');
+      }
+    }
+    if (avatar) {
+      const media = await mediaUseCases.updateEntityMedias({avatar: userId}, [
+        avatar,
+      ]);
+      if (!media) {
+        throw AppError.InternalError(
+          'can`t save message and medias relationships to database',
+        );
+      }
+    }
+    if (cover) {
+      const media = await mediaUseCases.updateEntityMedias({cover: userId}, [
+        cover,
+      ]);
+      if (!media) {
+        throw AppError.InternalError(
+          'can`t save message and medias relationships to database',
+        );
+      }
+    }
+
+    const user = await userRepository.findUser({
+      filter: {userId},
+    });
+    return user;
   }
 
   async getUserContacts(userId: UserId) {
@@ -118,15 +138,8 @@ class UsersUseCases {
       throw AppError.NoContent('Contacts is not found');
     }
 
-    return serializeUsers(contacts);
+    return contacts;
   }
-
-  // async updateUser(userId: UserId, fields: Partial<User>) {
-  //   const user = await userRepository.updateUser(userId, fields);
-  //   if (!user) {
-  //     throw AppError.InternalError('User is not updated, USER Case Error');
-  //   }
-  // }
 
   async addUserToContacts(currentUserId: UserId, addedUserId: UserId) {
     if (currentUserId === addedUserId) {
@@ -157,7 +170,7 @@ class UsersUseCases {
 
     try {
       const contacts = await userRepository.findContactsByUserId(currentUserId);
-      return serializeUsers(contacts);
+      return contacts;
     } catch (error) {
       throw AppError.BadRequest('Error while insert contact to database');
     }

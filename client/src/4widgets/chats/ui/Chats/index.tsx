@@ -7,7 +7,6 @@ import { selectAuthUserId } from "@entities/auth";
 import socket from "@shared/config/api/socket";
 
 import { Chat } from "../Chat";
-import { fetchChats } from "../../model/thunks";
 
 // interface ChatsProps {}
 
@@ -33,7 +32,7 @@ const Chats = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(fetchChats(userId));
+    dispatch(chatsModel.fetchChats(userId));
   }, [dispatch, userId]);
 
   const chats = useTypedSelector(chatsModel.selectAll);
@@ -44,7 +43,8 @@ const Chats = () => {
       {isChatsLoading === "loading" ? (
         <div>Скелетон чатов</div>
       ) : (
-        chats && chats.map((chat) => <Chat key={chat.chatId} {...chat} />)
+        chats &&
+        chats.map((chat) => <Chat key={chat.chatId} chatId={chat.chatId} />)
       )}
     </section>
   );

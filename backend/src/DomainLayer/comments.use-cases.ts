@@ -19,11 +19,13 @@ class CommentsUseCases {
     text: string,
     mediaIds?: number[],
   ) {
-    const {posts} = await PostsUseCases.getPostsByQuery({filter: {postId}});
-    if (!posts[0]) AppError.BadRequest('BadRequest: no post with this id');
+    const {posts} = await PostsUseCases.getPosts({filter: {postId}});
+    if (!posts[0])
+      throw AppError.BadRequest('BadRequest: no post with this id');
 
     const user = await usersUseCases.findUserByQuery({filter: {userId}});
-    if (!user) AppError.UnAuthorized('UnAuthorized: no user with this id');
+    if (!user)
+      throw AppError.UnAuthorized('UnAuthorized: no user with this id');
 
     const comment = await commentsRepository.createComment({
       postId,
@@ -106,7 +108,7 @@ class CommentsUseCases {
       ...comment,
       medias: commentMedias[comment.commentId]?.map((media) => media.mediaId),
     }));
-    return {comments: commentsWithMedia, relationships: {media, users}};
+    return {comments: commentsWithMedia, relationships: {users}};
   }
 }
 

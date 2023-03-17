@@ -8,7 +8,7 @@ declare type CommentT = {
   updatedAt: Date | string;
 
   username: string;
-  profilePic: string | null;
+  avatar: string | null;
   media: string | null;
 };
 

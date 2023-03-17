@@ -1,13 +1,13 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-import { Avatar, IconButton } from "@mui/material";
+import { IconButton } from "@mui/material";
 import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 
 import { API_PREFIX } from "@shared/config";
 import { useTypedSelector } from "@shared/hooks";
 
-import { userModel } from "@entities/user";
+import { UserAvatarLink, userModel, UsernameLink } from "@entities/user";
 import { chatsModel } from "@entities/chat";
 
 import s from "./ChatHeader.module.css";
@@ -21,22 +21,19 @@ const ChatInfo = ({ chatName }: { chatName: string }) => {
 };
 type UserInfoProps = {
   userId: number;
-  username?: string;
-  name?: string | null;
-  surname?: string | null;
+  username: string;
+  name: string | null;
+  surname: string | null;
 };
 const UserInfo = ({ userId, name, surname, username }: UserInfoProps) => {
   return (
     <div className={s.info}>
-      <Link to={`/profile/${userId}`}>
-        {name && surname ? (
-          <span className={s.fullname}>
-            {name} {surname}
-          </span>
-        ) : (
-          <span className={s.username}>{username}</span>
-        )}
-      </Link>
+      <UsernameLink
+        userId={userId}
+        name={name}
+        surname={surname}
+        username={username}
+      />
       <span className={s.lastOnline}>lastonline</span>
     </div>
   );
@@ -62,8 +59,8 @@ const ChatHeader = ({ chatId }: ChatHeaderProps) => {
       <IconButton className={s.back} onClick={() => navigate(-1)}>
         <ArrowBackOutlinedIcon />
       </IconButton>
-      {chat?.type === "conference" && <ChatInfo chatName={chat.chatName} />}
-      {chat?.type === "dialog" && user && (
+      {chat.type === "conference" && <ChatInfo chatName={chat.chatName} />}
+      {chat.type === "dialog" && user && (
         <UserInfo
           userId={user.userId}
           username={user.username}
@@ -78,12 +75,20 @@ const ChatHeader = ({ chatId }: ChatHeaderProps) => {
           </IconButton>
         </div>
         <div className={s.control}>
-          <Avatar
-            src={`${API_PREFIX}/public/images/${
-              user?.profilePic?.filename ?? "noAvatar.png"
-            }`}
-            alt="avatar"
-          />
+          {chat.type === "dialog" && user && (
+            <UserAvatarLink
+              userId={user.userId}
+              filename={user.avatar}
+              alt="avatar"
+              className={s.userAvatar}
+            />
+          )}
+          {chat.type === "conference" && (
+            <img
+              src={`${API_PREFIX}/api/public/images/meeting.png`}
+              alt="conference pic"
+            />
+          )}
         </div>
       </div>
     </header>

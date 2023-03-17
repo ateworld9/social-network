@@ -10,7 +10,7 @@ const MessagesSkeleton = () => {
         // eslint-disable-next-line react/no-array-index-key
         <div key={i} className={s.message}>
           <figure className={cn(s.messageAvatar, s.loading)} />
-          <div className={s.messageContent}>
+          <div>
             <div className={cn(s.messageTextSmall, s.loading)} />
             <div className={cn(s.messageTextLarge, s.loading)} />
           </div>

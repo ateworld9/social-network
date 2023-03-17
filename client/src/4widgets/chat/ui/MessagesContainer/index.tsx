@@ -5,7 +5,7 @@ import { messageModel } from "@entities/message";
 import { selectAuthUserId } from "@entities/auth";
 
 import MessagesSkeleton from "../MessagesSkeleton";
-import { MemoMessage } from "../Message";
+import { Message } from "../Message";
 
 import s from "./MessagesContainer.module.css";
 
@@ -28,7 +28,7 @@ const MessagesContainer = () => {
         <MessagesSkeleton />
       ) : (
         messageIds.map((messageId) => (
-          <MemoMessage
+          <Message
             key={messageId}
             messageId={messageId}
             authUserId={authUserId}

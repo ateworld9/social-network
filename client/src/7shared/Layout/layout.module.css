@@ -1,11 +1,18 @@
-.container {
-  display: grid;
-  grid-template-columns: auto 1fr;
+.main {
+  grid-area: content;
+  overflow-y: auto;
 }
 
-.main {
-  background-color: var(--bgSoft);
-  overflow-y: auto;
+@media (min-width: 1025px) {
+  .main {
+    margin-right: 15vw;
+  }
+}
+
+@media (min-width: 1441px) {
+  .main {
+    margin-right: 25vw;
+  }
 }
 /* 
 .main::-webkit-scrollbar {

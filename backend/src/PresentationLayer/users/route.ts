@@ -7,6 +7,7 @@ import UsersController from './controller';
 const router = Router();
 const usersController = new UsersController();
 
+// maybe //router.post('/users', userController.createUser)
 router.get(
   '/users/:userId',
   param('userId', 'userId must be numeric').isNumeric(),
@@ -19,10 +20,14 @@ router.get(
   usersController.getUsersByQuery,
 );
 
+router.patch(
+  '/users/:userId',
+  AuthMiddleware,
+  param('userId', 'userId must be numeric').isNumeric(),
+  usersController.patchUser,
+);
 // TODO:
-// router.patch('/users/:userId', AuthMiddleware, param('userId', 'userId must be numeric').isNumeric(), body('',''), userController.patchUser)
 // router.delete('/users/:userId', AuthMiddleware, param('userId', 'userId must be numeric').isNumeric(), userController.deleteUser);
-// maybe //router.post('/users', userController.createUser)
 
 router.get(
   '/contacts/:userId',

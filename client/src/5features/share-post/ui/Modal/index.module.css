@@ -1,0 +1,7 @@
+.modal {
+  min-width: 40ch;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}

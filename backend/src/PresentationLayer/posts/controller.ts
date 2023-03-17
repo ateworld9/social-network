@@ -12,7 +12,7 @@ class PostsController {
       const page = req.query.page as unknown as Page | undefined;
       const filter = req.query.filter as unknown as Filter | undefined;
 
-      const data = await PostsUseCases.getPostsByQuery({sort, page, filter});
+      const data = await PostsUseCases.getPosts({sort, page, filter});
 
       return res.status(200).json(data);
     } catch (e) {
@@ -34,6 +34,20 @@ class PostsController {
       }
 
       return res.status(201).json({posts: posts, relationships}); // STATUS CODE 201: CREATED
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  async deletePost(req: Request, res: Response, next: NextFunction) {
+    const {postId} = req.params;
+
+    const userId = req.query.userId as string;
+
+    try {
+      await PostsUseCases.deletePost(+postId, +userId);
+
+      res.status(200).json({});
     } catch (e) {
       next(e);
     }

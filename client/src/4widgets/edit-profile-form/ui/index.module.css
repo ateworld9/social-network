@@ -1,0 +1,28 @@
+.formSection {
+  margin: 4px 8px;
+  padding: 16px;
+
+  border-radius: 20px;
+  color: var(--textColor);
+  background-color: var(--bg);
+  -webkit-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+  -moz-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+  box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+}
+@media (min-width: 721px) {
+  .formSection {
+    margin: 8px 32px;
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75em;
+}
+.item {
+}
+.form .submit {
+  text-transform: none;
+  align-self: flex-end;
+}

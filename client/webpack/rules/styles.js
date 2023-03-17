@@ -13,8 +13,17 @@ import {
 /** css **/
 export const cssRule = {
   test: /\.css$/,
+  exclude: /\.module.css$/,
   use: [miniCssExtractLoader, cssLoader, postCssLoader],
 };
+
+export const cssModulesRule = {
+  test: /\.module.css$/,
+  use: arrayFilterEmpty([...cssModulesSupportLoaderItems, postCssLoader]),
+};
+
+export const cssRules = [cssModulesRule, cssRule];
+
 
 /** less **/
 export const lessModulesRule = {

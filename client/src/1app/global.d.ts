@@ -1,13 +1,5 @@
-declare module "*.module.css";
-declare module "*.module.scss";
-
-// declare module "@reduxjs/toolkit" {
-//   type AsyncThunkConfig = {
-//     state: AppState;
-//     dispatch?: AppDispatch;
-//     rejectValue?: ResolveError;
-//   };
-// }
+// declare module "*.module.css";
+// declare module "*.module.scss";
 
 // add an element to the end of a tuple
 type Push<L extends any[], T> = ((r: any, ...x: L) => void) extends (

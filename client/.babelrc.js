@@ -28,6 +28,24 @@ module.exports = (api) => {
       // "@babel/plugin-proposal-object-rest-spread",
       // Applies the react-refresh Babel plugin on non-production modes only
       mode !== "production" && "react-refresh/babel",
+      [
+        "babel-plugin-import",
+        {
+          libraryName: "@mui/material",
+          libraryDirectory: "",
+          camel2DashComponentName: false,
+        },
+        "core",
+      ],
+      [
+        "babel-plugin-import",
+        {
+          libraryName: "@mui/icons-material",
+          libraryDirectory: "",
+          camel2DashComponentName: false,
+        },
+        "icons",
+      ],
     ].filter(Boolean),
   };
 };

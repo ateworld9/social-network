@@ -1,0 +1,24 @@
+.actionBar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+button.item {
+  padding: 4px;
+  margin: 0;
+  letter-spacing: initial;
+}
+@media (min-width: 1025px) {
+  button.item {
+    padding: 6px 8px;
+  }
+}
+.item > span:first-child {
+  margin: 0;
+  margin-right: 0.25em;
+}
+
+.item.disabled {
+  color: grey;
+  cursor: not-allowed;
+}

@@ -1,7 +1,13 @@
 .message {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas: "avatar username ." "message message message";
   margin-bottom: 10px;
   max-width: 70%;
+
+  justify-content: start;
+  justify-items: start;
 }
 
 .message:last-child {
@@ -9,10 +15,15 @@
 }
 
 .message.self {
-  flex-direction: row-reverse;
+  grid-template-columns: 1fr auto auto;
+  grid-template-rows: auto 1fr;
+  grid-template-areas: " . username avatar" "message message message";
   margin-left: auto;
+  justify-content: end;
+  justify-items: end;
 }
 .messageAvatar {
+  grid-area: avatar;
   width: 30px;
   height: 30px;
   border-radius: 50%;
@@ -26,31 +37,22 @@
   margin-left: 10px;
   margin-right: 0px;
 }
-.messageTextSmall {
-  /* width: 20cqw; */
-  min-width: 20%;
+.messageUsername {
+  grid-area: username;
   border-radius: 5px;
 }
-.messageTextSmall a {
+.messageUsername a {
   font-weight: 700;
   text-decoration: none;
   color: var(--textColorSoft);
   cursor: pointer;
 }
-.message.self .messageTextSmall {
+.message.self .messageUsername {
   margin-left: auto;
   text-align: end;
 }
-.messageTextLarge {
-  width: 70%;
-  margin-top: 5px;
-  border-radius: 5px;
-  padding: 8px;
-  border-radius: 16px;
-  color: var(--textColor);
-  background-color: var(--substrate);
-
-  overflow-wrap: anywhere;
+.messageLayout {
+  grid-area: message;
 }
 .message.self .messageTextLarge {
   margin-left: auto;

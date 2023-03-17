@@ -6,12 +6,14 @@ import { useNavigate } from "react-router-dom";
 import { useTypedSelector } from "@shared/hooks";
 
 import { selectAuthUserId } from "@entities/auth";
-import { User, userModel } from "@entities/user";
+import { UsernameLink, UserAvatarLink, userModel } from "@entities/user";
 import { chatsModel } from "@entities/chat";
 
 import s from "./chat.module.css";
 
-type ChatProps = {} & Chat;
+type ChatProps = {
+  chatId: ChatId;
+};
 
 const Chat = ({ chatId }: ChatProps) => {
   const navigate = useNavigate();
@@ -34,14 +36,28 @@ const Chat = ({ chatId }: ChatProps) => {
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
     <section className={s.container} onClick={handleClick}>
       {chat.type === "dialog" && (
-        <User userId={user.userId}>
-          <div className={s.lastMessage}>
-            <span className={s.text}>{chat.lastMessage.text}</span>
-            <span className={s.date}>
-              {dayjs(chat.lastMessage.createdAt).calendar()}
-            </span>
+        <div className={s.user}>
+          <UserAvatarLink
+            userId={userId}
+            filename={user.avatar}
+            className={s.avatar}
+          />
+          <div className={s.userInfo}>
+            <UsernameLink
+              userId={userId}
+              name={user.name}
+              surname={user.surname}
+              tag
+              username={user.username}
+            />
+            <div className={s.lastMessage}>
+              <span className={s.text}>{chat.lastMessage.text}</span>
+              <span className={s.date}>
+                {dayjs(chat.lastMessage.createdAt).calendar()}
+              </span>
+            </div>
           </div>
-        </User>
+        </div>
       )}
       {chat.type === "conference" && (
         <div className={s.conf}>

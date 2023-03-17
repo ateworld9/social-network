@@ -11,6 +11,8 @@ export async function up(knex: Knex): Promise<void> {
     // table.integer('messageId');
     // table.integer('postId');
     // table.integer('commentId');
+    // table.integer('avatar');
+    // table.integer('cover');
 
     table.timestamps(false, true, true);
   });

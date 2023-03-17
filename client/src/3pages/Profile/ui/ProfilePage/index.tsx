@@ -2,19 +2,19 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import { useAppDispatch, useTypedSelector } from "@shared/hooks";
-import { MemoContentInput } from "@shared/ui/ContentInput";
+import { ContentInput } from "@shared/ui/ContentInput";
 
 import { selectAuthUserId } from "@entities/auth";
+
+import { sendPost } from "@features/send-post";
 
 import { Posts } from "@widgets/post";
 
 import {
-  fetchUserPosts,
   fetchUserProfile,
-  sendPost,
   selectProfile,
   selectProfileLoading,
-} from "../../model";
+} from "../../../../6entities/profile/model";
 import Profile from "../Profile";
 
 import s from "./index.module.css";
@@ -26,7 +26,6 @@ const ProfilePage = (): JSX.Element => {
 
   useEffect(() => {
     dispatch(fetchUserProfile(+userId));
-    dispatch(fetchUserPosts(+userId));
   }, [dispatch, userId]);
 
   const profile = useTypedSelector(selectProfile);
@@ -43,29 +42,35 @@ const ProfilePage = (): JSX.Element => {
   };
 
   return isLoading ? (
-    <div>profile skeleton</div>
+    <section>profile skeleton</section>
   ) : (
     <>
       {profile ? (
         <Profile
+          isAuthUser={+profile.userId === authedUserId}
+          userId={profile.userId}
           username={profile.username}
+          email={profile.email}
+          phone={profile.phone}
           name={profile.name}
           surname={profile.surname}
-          profilePic={profile?.profilePic}
+          avatar={profile?.avatar}
+          cover={profile?.cover}
+          about={profile.about}
         />
       ) : (
         <div>profile is not loaded</div>
       )}
 
       {+userId === authedUserId && (
-        <MemoContentInput
+        <ContentInput
           handler={handler}
           className={s.contentInput}
           label="Post"
           placeholder="Write here..."
         />
       )}
-      <Posts />
+      <Posts fetchOptions={{ filter: { userId } }} />
     </>
   );
 };

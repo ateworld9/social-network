@@ -5,6 +5,11 @@ export async function up(knex: Knex): Promise<void> {
     table.increments('messageId');
     table.integer('chatId').references('chats.chatId').onDelete('SET NULL');
     table.integer('fromUserId').references('users.userId').onDelete('SET NULL');
+    table
+      .integer('postId')
+      .references('posts.postId')
+      .onDelete('SET NULL')
+      .defaultTo(null);
     table.text('text');
     table
       .enu('status', [

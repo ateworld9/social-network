@@ -1,20 +1,17 @@
-import { memo, useState, useMemo } from "react";
+import classNames from "classnames";
+import { memo, useMemo } from "react";
 
 import { useTypedSelector } from "@shared/hooks";
 
 import { postModel } from "@entities/post";
 import { Media } from "@entities/media";
 
-import { MemoComments } from "@features/comments";
-
-import { MemoPostHeader } from "../PostHeader";
-import { MemoPostFooter } from "../PostFooter";
+import { PostHeader } from "../PostHeader";
+import { PostFooter } from "../PostFooter";
 
 import s from "./index.module.css";
 
 const PostCard = ({ postId }: PostCardProps) => {
-  const [commentOpen, setCommentOpen] = useState(false);
-
   const selectPost = useMemo(() => {
     return (state: RootState) => postModel.selectById(state, postId);
   }, [postId]);
@@ -23,25 +20,27 @@ const PostCard = ({ postId }: PostCardProps) => {
 
   return post ? (
     <article className={s.post}>
-      <MemoPostHeader userId={post.userId} createdAt={post.createdAt} />
-      <main className={s.content}>
-        <p>{post.text}</p>
-        <div className={s.images}>
-          {post.medias?.map((mediaId) => (
-            <Media key={mediaId} mediaId={mediaId} alt="comment media" />
-          ))}
-        </div>
-      </main>
-      <MemoPostFooter
-        setCommentOpen={setCommentOpen}
-        commentsCount={post.comments?.length ?? 0}
+      <PostHeader
+        postId={postId}
+        userId={post.userId}
+        createdAt={post.createdAt}
       />
-      {commentOpen && (
-        <details className={s.details} open>
-          <summary> </summary>
-          <MemoComments postId={postId} comments={post.comments} />
-        </details>
-      )}
+      <main className={s.content}>
+        {post.text && <p>{post.text}</p>}
+        {post.medias && (
+          <div className={classNames(s.media, "mediaContainer")}>
+            {post.medias.map((filename) => (
+              <Media key={filename} filename={filename} alt="comment media" />
+            ))}
+          </div>
+        )}
+      </main>
+      <PostFooter
+        postId={postId}
+        likesCount={post.likes.length ?? 0}
+        liked={post.liked}
+        comments={post.comments}
+      />
     </article>
   ) : (
     <article>post is not found</article>

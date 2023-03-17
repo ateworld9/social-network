@@ -1,10 +1,6 @@
-import cn from "classnames";
-import { Link } from "react-router-dom";
-
-import { API_PREFIX } from "@shared/config";
 import { useTypedSelector } from "@shared/hooks";
 
-import { userModel } from "@entities/user";
+import { UserAvatarLink, userModel, UsernameLink } from "@entities/user";
 
 import { SendMessageButton } from "@features/send-message-to-user";
 
@@ -18,28 +14,25 @@ const Contact = ({ userId }: ContactProps) => {
   );
 
   return contact ? (
-    <div className={s.container}>
-      <Link className={cn(s.avatar, s.link)} to={`/profile/${userId}`}>
-        <img
-          src={`${API_PREFIX}/public/images/${
-            contact?.profilePic?.filename ?? "noAvatar.png"
-          }`}
-          alt="avatar"
+    <article className={s.container}>
+      <UserAvatarLink
+        userId={userId}
+        filename={contact.avatar}
+        className={s.avatar}
+      />
+      <div className={s.main}>
+        <UsernameLink
+          userId={userId}
+          name={contact.name}
+          surname={contact.surname}
+          tag
+          username={contact.username}
         />
-      </Link>
-      <div className={s.userInfo}>
-        <Link className={cn(s.link)} to={`/profile/${userId}`}>
-          {contact.name && contact.surname ? (
-            <span className={s.fullname}>
-              {contact.name} {contact.surname}
-            </span>
-          ) : (
-            <span className={s.username}>{contact.username}</span>
-          )}
-        </Link>
-        <SendMessageButton toUserId={userId} />
+        <div className={s.controllers}>
+          <SendMessageButton toUserId={userId} />
+        </div>
       </div>
-    </div>
+    </article>
   ) : (
     <div>Contact is not loaded</div>
   );

@@ -3,6 +3,7 @@ declare interface Message {
   chatId: ChatId;
   fromUserId: UserId;
   text: string | null;
+  postId: PostId | null;
   status:
     | "not-sended"
     | "sended"
@@ -14,7 +15,7 @@ declare interface Message {
   updatedAt: string;
 
   forwardedMessages?: ForwardedMessage[];
-  medias?: MediaId[];
+  medias?: Media["filename"][];
 }
 
 declare type MessageId = Message["messageId"];

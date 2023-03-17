@@ -15,6 +15,7 @@ import mediaRouter from './PresentationLayer/media/route';
 import authRouter from './PresentationLayer/auth/route';
 import userRouter from './PresentationLayer/users/route';
 import postRouter from './PresentationLayer/posts/route';
+import likeRouter from './PresentationLayer/likes/route';
 import commentRouter from './PresentationLayer/comments/route';
 import chatsRouter from './PresentationLayer/chats/route';
 
@@ -60,6 +61,7 @@ export default async (app: Application) => {
   app.use('/api', authRouter);
   app.use('/api', userRouter);
   app.use('/api', postRouter);
+  app.use('/api', likeRouter);
   app.use('/api', commentRouter);
   app.use('/api', chatsRouter);
 

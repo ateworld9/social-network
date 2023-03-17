@@ -6,7 +6,6 @@ type FetchPostsResponse = {
   posts: Post[];
   relationships: {
     users: User[];
-    media: Media[];
     comments: CommentT[];
   };
 };
@@ -30,6 +29,12 @@ const PostService = {
     mediaIds?: number[];
   }): Promise<AxiosResponse<FetchPostsResponse>> {
     return $api.post<FetchPostsResponse>("/posts", FormData);
+  },
+
+  async deletePost(postId, userId): Promise<AxiosResponse<1 | 0>> {
+    return $api.delete<1 | 0>(`/posts/${postId}`, {
+      params: { userId },
+    });
   },
 };
 

@@ -1,17 +1,13 @@
 import { join } from "path";
 
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
+import getCSSModuleLocalIdent from "react-dev-utils/getCSSModuleLocalIdent";
 
 import { sassResourceItems } from "../config";
-import { isProd, rootDir, webpackDir } from "../utils/env";
+import { isDev, isProd, rootDir, webpackDir } from "../utils/env";
 
 export const cssLoader = {
   loader: "css-loader",
-  // importLoaders: 3,
-  // sourceMap: !isProd,
-  // modules: {
-  //   mode: 'icss',
-  // },
 };
 
 /**
@@ -115,8 +111,10 @@ export const cssModulesSupportLoaderItems = [
     options: {
       esModule: false,
       modules: {
-        exportLocalsConvention: "camelCaseOnly",
-        localIdentName: "[local]__[contenthash:base64:5]",
+        mode: "local",
+        getLocalIdent: getCSSModuleLocalIdent,
+        // exportLocalsConvention: "camelCaseOnly",
+        // localIdentName: "[local]__[contenthash:base64:5]",
       },
     },
   },

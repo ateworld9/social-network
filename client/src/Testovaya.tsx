@@ -1,11 +1,17 @@
 import React from "react";
-import { User } from "./6entities/user";
+import { Username } from "@entities/user";
+import { useTypedSelector } from "@shared/hooks";
+import { selectById } from "@entities/user/model";
 
 const Testovaya: React.FC = () => {
+  const user = useTypedSelector((state) => selectById(state, 2)) as User;
   return (
     <div style={{ backgroundColor: "grey", height: "100vh" }}>
-      <User link userId={2} />
-      <User userId={1} />
+      <Username
+        name={user.name}
+        surname={user.surname}
+        username={user.username}
+      />
     </div>
   );
 };
