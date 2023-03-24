@@ -58,6 +58,24 @@ class PostsRepository {
     return posts;
   }
 
+  async getCount(filter?: Filter<Post>) {
+    const count = knexdb(TABLES.POSTS)
+      .count('postId')
+      .modify(function (queryBuilder) {
+        if (filter) {
+          if (filter instanceof Array) {
+            filter.forEach((el) => {
+              queryBuilder.orWhere(el.columnName, el.operator, el.value);
+            });
+          } else {
+            queryBuilder.where(filter);
+          }
+        }
+      });
+
+    return count;
+  }
+
   // async updatePost(postId: UserId, fields: Partial<Post>) {
   //   const result = await knexdb(TABLES.POSTS)
   //     .where({postId})

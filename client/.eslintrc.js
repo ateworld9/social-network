@@ -45,6 +45,7 @@ module.exports = {
     "react/jsx-props-no-spreading": ["off"],
     "react/no-unescaped-entities": ["off"],
     "react/function-component-definition": ["off"],
+    "react/no-array-index-key": ["off"], //i can use index as key
     "@typescript-eslint/no-unused-vars": ["warn"],
     // "no-nested-ternary": ["warn"], // easier to develop "makets" of components logic
     "no-unused-vars": ["warn"], // really hard to develop

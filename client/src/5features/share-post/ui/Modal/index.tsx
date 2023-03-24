@@ -32,7 +32,7 @@ export const SharePostModal = ({ postId }: SharePostModalProps) => {
     socket.emit(
       "ON_MESSAGE",
       {
-        chatId: 1, // TODO:
+        chatId: chat.chatId,
         fromUserId: userId,
         text,
         postId,
@@ -41,15 +41,18 @@ export const SharePostModal = ({ postId }: SharePostModalProps) => {
     );
   };
 
+  // TODO: display user/chatname as option on select
+
   return (
     <div className={s.modal}>
       <Autocomplete
         size="small"
-        renderInput={(params) => <TextField {...params} label="Chat" />}
+        renderInput={(params) => {
+          return <TextField {...params} label="Select chat" />;
+        }}
         options={chats}
         renderOption={Chat}
-        getOptionLabel={(option) => String(option.members[0].userId)}
-        value={chat}
+        getOptionLabel={(option) => String(option.chatId)}
         onChange={(e, value) => {
           setChat(value);
         }}

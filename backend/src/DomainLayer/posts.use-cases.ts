@@ -26,6 +26,8 @@ class PostsUseCases {
   }) {
     const posts = await postsRepository.findPosts({filter, sort, page});
     if (!posts) throw AppError.NoContent('NoContent: no posts');
+    const count = await postsRepository.getCount(filter);
+
     const postIds = new Set<number>();
     const userIds = new Set<number>();
     const commentIds = new Set<number>();
@@ -77,6 +79,7 @@ class PostsUseCases {
         },
       ],
     });
+
     const postLikes = lodash.groupBy(likes, 'postId');
     const postMedias = lodash.groupBy(media, 'postId');
     const postComments = lodash.groupBy(commentsRes.comments, 'postId');
@@ -92,6 +95,9 @@ class PostsUseCases {
       relationships: {
         users: users.concat(commentsRes.relationships.users),
         comments: commentsRes.comments,
+      },
+      meta: {
+        count: +count[0].count,
       },
     };
   }
@@ -149,10 +155,6 @@ class PostsUseCases {
     }
 
     const res = await postsRepository.deletePost(postId);
-    console.log(
-      '?>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>',
-      res,
-    );
 
     return res;
   }

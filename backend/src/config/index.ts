@@ -25,12 +25,6 @@ export const PATH_TO_PUBLIC =
 export const PATH_TO_IMAGES =
   process.env.PATH_TO_IMAGES ?? path.join(PATH_TO_PUBLIC, '/images');
 
-export const CLIENT_URL = process.env['CLIENT_URL'];
-if (!CLIENT_URL) {
-  logger.error('No client url. Set CLIENT_URL env variable.');
-  process.exit(1);
-}
-
 export const ENVIRONMENT = process.env.NODE_ENV;
 export const isProd = ENVIRONMENT === 'production';
 export const APP_ACCESS_SECRET = process.env['APP_ACCESS_SECRET'];

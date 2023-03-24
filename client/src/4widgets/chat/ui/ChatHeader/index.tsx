@@ -85,7 +85,7 @@ const ChatHeader = ({ chatId }: ChatHeaderProps) => {
           )}
           {chat.type === "conference" && (
             <img
-              src={`${API_PREFIX}/api/public/images/meeting.png`}
+              src={`${API_PREFIX}/public/images/meeting.png`}
               alt="conference pic"
             />
           )}

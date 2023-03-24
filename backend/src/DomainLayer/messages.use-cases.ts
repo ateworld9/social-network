@@ -38,11 +38,12 @@ class MessagesUseCases {
     const savedMessages = await this.getMessages({
       filter: {messageId: newMessage.messageId},
     });
-    if (!savedMessages) {
+    if (!savedMessages.messages) {
       throw AppError.InternalError('Internal Error, cannot find saved message');
     }
+    const count = await messagesRepository.getCount({chatId: message.chatId});
 
-    return savedMessages;
+    return {messages: savedMessages.messages, count: count[0].count};
   }
 
   async getMessages({
@@ -64,19 +65,21 @@ class MessagesUseCases {
     if (!messages) {
       throw AppError.NoContent('No messages');
     }
+    const count = await messagesRepository.getCount(filter);
     const messageIds = messages.map((el) => el.messageId);
     const media = await mediaUseCases.getImages({
       filter: [
         {columnName: 'media.messageId', operator: 'in', value: messageIds},
       ],
     });
+
     const messageMedias = lodash.groupBy(media, 'messageId');
     const messagesWithRefs = messages.map((message) => ({
       ...message,
       medias: messageMedias[message.messageId]?.map((media) => media.filename),
     }));
 
-    return {messages: messagesWithRefs};
+    return {messages: messagesWithRefs, count: count[0].count};
   }
 }
 

@@ -46,7 +46,6 @@ class UsersController {
       next(e);
     }
   }
-  // TODO:
   async patchUser(req: Request, res: Response, next: NextFunction) {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -112,8 +111,6 @@ class UsersController {
         currentUserId,
         addedUserId,
       );
-
-      console.log(contacts);
 
       return res.status(200).json({data: contacts, meta: {}});
     } catch (e) {

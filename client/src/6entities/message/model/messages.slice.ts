@@ -6,12 +6,17 @@ import {
 
 const messagesAdapter = createEntityAdapter<Message>({
   selectId: (message) => message.messageId,
+  sortComparer: (a, b) => a.messageId - b.messageId,
 });
-const initialState = messagesAdapter.getInitialState<{ loading: LoadingState }>(
-  {
-    loading: "idle",
-  },
-);
+const initialState = messagesAdapter.getInitialState<{
+  loading: LoadingState;
+  count: number;
+  error: any;
+}>({
+  loading: "loading",
+  count: 0,
+  error: null,
+});
 
 const messageSlice = createSlice({
   name: "messages",
@@ -32,6 +37,9 @@ const messageSlice = createSlice({
     setLoading(state, action: PayloadAction<LoadingState>) {
       state.loading = action.payload;
     },
+    setCount(state, action: PayloadAction<number>) {
+      state.count = action.payload;
+    },
   },
   // extraReducers: (builder) =>{}
 });
@@ -39,6 +47,7 @@ const messageSlice = createSlice({
 export const { reducer, actions } = messageSlice;
 
 export const selectLoading = (state: RootState) => state.messages.loading;
+export const selectCount = (state: RootState) => state.messages.count;
 
 export const { selectAll, selectById, selectEntities, selectIds, selectTotal } =
   messagesAdapter.getSelectors<RootState>((state) => state.messages);

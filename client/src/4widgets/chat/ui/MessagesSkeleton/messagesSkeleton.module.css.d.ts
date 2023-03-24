@@ -7,6 +7,7 @@ declare namespace MessagesSkeletonModuleCssNamespace {
     messageAvatar: string;
     messageTextLarge: string;
     messageTextSmall: string;
+    wrapper: string;
   }
 }
 

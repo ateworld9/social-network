@@ -22,7 +22,7 @@ interface ClientToServerEvents {
   // hello: () => void;
   GET_MORE_CHATS: (limit: number, offset: number) => void;
   ON_MESSAGE: (message: CreateRequestMessage, mediaIds: number[]) => void;
-  GET_CHAT_MESSAGES: (chatId: number, page: Page) => void;
+  GET_CHAT_MESSAGES: ({filter, page}: ReqQuery<Message>) => void;
   DISCONNECT: () => void;
 }
 
@@ -38,7 +38,6 @@ interface SocketData {
 const tokensUseCases = new TokenUseCases();
 const chatUseCases = new ChatsUseCases();
 
-//TODO: turn to
 const messagesUseCases = new MessagesUseCases();
 
 export default async (httpServer: Server) => {
@@ -113,25 +112,28 @@ export default async (httpServer: Server) => {
 
       chatsIds.forEach((chatId: number) => socket.join(String(chatId)));
 
-      socket.on('GET_CHAT_MESSAGES', async (chatId, page) => {
-        const {messages} = await messagesUseCases.getMessages({
-          filter: {chatId},
+      socket.on('GET_CHAT_MESSAGES', async ({filter, page}) => {
+        const {messages, count} = await messagesUseCases.getMessages({
+          filter,
           page: page ?? {limit: 100, offset: 0},
         });
+
         const response = {
           data: messages,
+          meta: {count},
         };
         socket.emit('GET_CHAT_MESSAGES', response);
       });
 
       socket.on('ON_MESSAGE', async (reqMessage, mediaIds) => {
-        //TODO: validate messssage
-        const {messages} = await messagesUseCases.createMessage(
+        //TODO: validate message
+        const {messages, count} = await messagesUseCases.createMessage(
           reqMessage,
           mediaIds,
         );
         const res = {
           data: messages,
+          meta: {count},
         };
         socket.to(String(reqMessage.chatId)).emit('ON_MESSAGE', res);
         socket.emit('ON_MESSAGE', res);

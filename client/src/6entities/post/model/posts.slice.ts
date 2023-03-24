@@ -12,9 +12,11 @@ const postsAdapter = createEntityAdapter<Post>({
 const initialState = postsAdapter.getInitialState<{
   loading: LoadingState;
   error: any;
+  count: number;
 }>({
   loading: "idle",
   error: null,
+  count: 0,
 });
 
 const postSlice = createSlice({
@@ -34,6 +36,10 @@ const postSlice = createSlice({
     upsertPost: postsAdapter.upsertOne,
     upsertPosts: postsAdapter.upsertMany,
 
+    setPostsCount(state, action: PayloadAction<number>) {
+      state.count = action.payload;
+    },
+
     updatePostComments(
       state,
       action: PayloadAction<{ postId: PostId; commentId: CommentId }>,
@@ -50,6 +56,7 @@ const postSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    // TODO: WARNING
     builder.addCase("posts/getPosts/pending", (state) => {
       state.loading = "loading";
     });
@@ -70,4 +77,5 @@ export const { reducer, actions } = postSlice;
 export const { selectAll, selectById, selectEntities, selectIds, selectTotal } =
   postsAdapter.getSelectors<RootState>((state) => state.posts);
 
-export const selectPostsLoading = (state: RootState) => state.posts.loading;
+export const selectLoading = (state: RootState) => state.posts.loading;
+export const selectCount = (state: RootState) => state.posts.count;

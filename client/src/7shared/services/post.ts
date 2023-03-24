@@ -8,6 +8,9 @@ type FetchPostsResponse = {
     users: User[];
     comments: CommentT[];
   };
+  meta: {
+    count: number;
+  };
 };
 
 const PostService = {

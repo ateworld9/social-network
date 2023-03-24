@@ -8,7 +8,11 @@ import { UserAvatarLink, userModel, UsernameLink } from "@entities/user";
 
 import s from "./Message.module.css";
 
-type MessageProps = { messageId: MessageId; authUserId: UserId };
+type MessageProps = {
+  messageId: MessageId;
+  authUserId: UserId;
+  ref?: HTMLDivElement;
+};
 
 const Message = ({ messageId, authUserId }: MessageProps) => {
   const message = useTypedSelector((state) =>

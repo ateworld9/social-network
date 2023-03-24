@@ -135,7 +135,7 @@ class UsersRepository {
     return users;
   }
 
-  async getCount(filter?: Filter) {
+  async getCount(filter?: Filter<User>) {
     const count = knexdb(TABLES.USERS)
       .count('userId')
       .modify(function (queryBuilder) {

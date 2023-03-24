@@ -1,4 +1,16 @@
 .messagesContainer {
-  overflow-y: auto;
+  margin-top: auto;
+  height: min-content;
+
+  max-height: 100%;
   padding: 16px;
+
+  overflow-y: auto;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.last {
+  min-height: 10px;
 }

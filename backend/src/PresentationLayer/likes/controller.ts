@@ -7,8 +7,6 @@ import LikesUseCases from '../../DomainLayer/likes.use-cases';
 class LikesController {
   async postLike(req: Request, res: Response, next: NextFunction) {
     try {
-      console.log(req.body);
-
       const {like} = req?.body;
 
       const newLike = await LikesUseCases.createLike(like);

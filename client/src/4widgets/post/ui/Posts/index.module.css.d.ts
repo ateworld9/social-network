@@ -2,6 +2,7 @@
 // Please do not change this file!
 declare namespace IndexModuleCssNamespace {
   export interface IIndexModuleCss {
+    last: string;
     posts: string;
   }
 }

@@ -1,8 +1,10 @@
+declare type Include = string; // include=comments.author,ratings
+declare type Fields = string; // fields[articles]=title,body&fields[people]=name
+declare type Sort = string; // sort=-created,title                 -------------------------Partial<T> | `-${Partial<T>}`;
 declare interface Page {
   limit?: number;
   offset?: number;
 }
-
 declare interface FilterWithOperatorObject {
   columnName: string;
   operator: '=' | '<' | '>' | '<>' | 'in' | 'like' | 'ilike';
@@ -10,10 +12,13 @@ declare interface FilterWithOperatorObject {
 }
 declare type Filter<T = any> = Partial<T> | FilterWithOperatorObject[];
 
-declare type Sort = string; //sort=-created,title                 -------------------------Partial<T> | `-${Partial<T>}`;
-declare type Include = string; //include=comments.author,ratings
-
-declare type Fields = string; //fields[articles]=title,body&fields[people]=name
+declare type ReqQuery<T = any> = {
+  include?: Include;
+  fields?: Fields;
+  sort?: Sort;
+  page?: Page;
+  filter?: Filter<T>;
+};
 
 declare module 'knex/types/tables' {
   interface Tables {

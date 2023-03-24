@@ -19,8 +19,12 @@
   margin-left: 10px;
   margin-right: 0px;
 }
+
+.wrapper {
+  width: 80%;
+}
 .messageTextSmall {
-  width: 20cqw;
+  width: 20%;
   height: 40px;
   border-radius: 5px;
 }
@@ -28,7 +32,7 @@
   margin-left: auto;
 }
 .messageTextLarge {
-  width: 70cqw;
+  width: 70%;
   height: 74px;
   margin-top: 5px;
   border-radius: 5px;

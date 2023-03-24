@@ -1,4 +1,4 @@
-import { memo, useEffect } from "react";
+import { memo, useEffect, useState, useRef } from "react";
 
 import { useAppDispatch, useTypedSelector } from "@shared/hooks";
 
@@ -6,7 +6,7 @@ import { postModel } from "@entities/post";
 
 import { PostCard } from "../PostCard";
 
-import { fetchPosts } from "../../model/thunks";
+import { fetchMorePosts, fetchPosts } from "../../model/thunks";
 import s from "./index.module.css";
 
 type PostsProps = {
@@ -15,22 +15,47 @@ type PostsProps = {
 
 const Posts = ({ fetchOptions }: PostsProps) => {
   const dispatch = useAppDispatch();
+  const [page, setPage] = useState(1);
+
   useEffect(() => {
-    dispatch(fetchPosts(fetchOptions));
+    dispatch(fetchPosts({ ...fetchOptions, limit: 10 }));
   }, [dispatch, fetchOptions]);
 
-  const isPostsLoading = useTypedSelector(postModel.selectPostsLoading);
+  const count = useTypedSelector(postModel.selectCount);
+  const loading = useTypedSelector(postModel.selectLoading);
   const postIds = useTypedSelector(postModel.selectIds);
 
-  if (isPostsLoading === "loading") return <div>posts loading skeleton</div>;
+  const list = useRef(null);
+  const loader = useRef(null);
 
+  useEffect(() => {
+    const handleObserver = (entries) => {
+      const target = entries[0];
+      if (target.isIntersecting) {
+        if (page * 10 < count) {
+          dispatch(
+            fetchMorePosts({ ...fetchOptions, limit: 10, offset: page * 10 }),
+          );
+          setPage((prev) => prev + 1);
+        }
+      }
+    };
+    const option = {
+      root: null,
+      rootMargin: "",
+      threshold: 0.75,
+    };
+    const observer = new IntersectionObserver(handleObserver, option);
+    if (loader.current) observer.observe(loader.current);
+  }, [dispatch, fetchOptions, page, count]);
+
+  // if (isPostsLoading === "loading") return <div>posts loading skeleton</div>;
   return (
-    <section className={s.posts}>
-      {postIds?.length ? (
-        postIds.map((postId) => <PostCard key={postId} postId={postId} />)
-      ) : (
-        <article>no posts yet</article>
-      )}
+    <section ref={list} className={s.posts}>
+      {postIds?.length &&
+        postIds.map((postId) => <PostCard key={postId} postId={postId} />)}
+      {loading === "lazy" && <div>... Loading</div>}
+      {postIds?.length && <div ref={loader} className={s.last} />}
     </section>
   );
 };

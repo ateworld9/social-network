@@ -16,8 +16,6 @@ const DEFAULT_MESSAGES_SELECT = [
 
 class MessagesRepository {
   async createMessage(message: CreateRequestMessage) {
-    console.log(message);
-
     const newMessage: Message[] = await knexdb(TABLES.MESSAGES)
       .insert(message)
       .returning(DEFAULT_MESSAGES_SELECT);
@@ -54,7 +52,7 @@ class MessagesRepository {
   }) {
     const messages: Message[] = await knexdb(TABLES.MESSAGES)
       .select(DEFAULT_MESSAGES_SELECT)
-      .orderBy('createdAt', 'asc', 'last')
+      .orderBy('messageId', 'desc', 'last')
       .modify(function (queryBuilder) {
         if (sort) {
           queryBuilder.clear('order');
@@ -75,6 +73,23 @@ class MessagesRepository {
         }
       });
     return messages;
+  }
+  async getCount(filter?: Filter<Message>) {
+    const count = knexdb(TABLES.MESSAGES)
+      .count('messageId')
+      .modify(function (queryBuilder) {
+        if (filter) {
+          if (filter instanceof Array) {
+            filter.forEach((el) => {
+              queryBuilder.orWhere(el.columnName, el.operator, el.value);
+            });
+          } else {
+            queryBuilder.where(filter);
+          }
+        }
+      });
+
+    return count;
   }
 }
 
