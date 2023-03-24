@@ -47,7 +47,9 @@ const RegistrationForm = () => {
         <input
           id="username"
           className={cn(s.input, errors.username && s.inputError)}
-          {...register("username", { required: "Username is required" })}
+          {...register("username", {
+            minLength: { value: 4, message: "Minimum 4 symbols" },
+          })}
           type="text"
           placeholder="Username"
         />
@@ -58,12 +60,10 @@ const RegistrationForm = () => {
         </p>
       )}
 
-      <label htmlFor="name">
+      {/* <label htmlFor="name">
         <input
           id="name"
-          {...register("name", {
-            required: "Name is required",
-          })}
+          {...register("name")}
           className={cn(s.input, errors.name && s.inputError)}
           type="text"
           placeholder="Name"
@@ -77,9 +77,7 @@ const RegistrationForm = () => {
       <label htmlFor="surname">
         <input
           id="surname"
-          {...register("surname", {
-            required: "Surname is required",
-          })}
+          {...register("surname")}
           className={cn(s.input, errors.name && s.inputError)}
           type="text"
           placeholder="Surname"
@@ -89,14 +87,13 @@ const RegistrationForm = () => {
         <p role="alert" className={s.error}>
           {errors.surname.message}
         </p>
-      )}
+      )} */}
 
-      <label htmlFor="email">
+      {/* <label htmlFor="email">
         <input
           id="email"
           className={cn(s.input, errors.email && s.inputError)}
           {...register("email", {
-            required: "Email is required",
             pattern: {
               value:
                 /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/,
@@ -111,7 +108,7 @@ const RegistrationForm = () => {
         <p role="alert" className={s.error}>
           {errors.email.message}
         </p>
-      )}
+      )} */}
 
       <label htmlFor="password">
         <input

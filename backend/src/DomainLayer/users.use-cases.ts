@@ -10,23 +10,22 @@ const mediaUseCases = new MediaUseCases();
 
 class UsersUseCases {
   async createUser(
-    email: string,
+    username: string,
     password: string,
-    username?: string,
+    email?: string,
     name?: string,
     surname?: string,
   ) {
     let checkUser: User | undefined = undefined;
     let errorMessage = '';
 
-    checkUser = await userRepository.findUser({filter: {email}});
+    checkUser = await userRepository.findUser({filter: {username}});
 
-    if (checkUser) errorMessage = 'User with this email already exists!';
+    errorMessage = 'User with this username already exists!';
 
-    username = username ?? `user${crypto.randomBytes(8).toString('hex')}`;
     if (!errorMessage) {
-      checkUser = await userRepository.findUser({filter: {username}});
-      errorMessage = 'User with this username already exists!';
+      checkUser = await userRepository.findUser({filter: {email}});
+      if (checkUser) errorMessage = 'User with this email already exists!';
     }
 
     if (checkUser) {
@@ -34,9 +33,9 @@ class UsersUseCases {
     }
 
     const user = await userRepository.createUser({
-      email,
-      password,
       username,
+      password,
+      email: email ?? null,
       name: name ?? null,
       surname: surname ?? null,
     });

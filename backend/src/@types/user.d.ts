@@ -4,7 +4,7 @@ declare interface User {
   password?: string;
   role: 'user' | 'admin';
 
-  email: string;
+  email: string | null;
   phone: string | null;
 
   isActivated: boolean;

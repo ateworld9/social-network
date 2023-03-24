@@ -7,8 +7,10 @@
 .previewAvatar {
   border-radius: 50%;
   aspect-ratio: 1 / 1;
+  object-fit: cover;
 }
 
 .previewCover {
   aspect-ratio: 2.5 / 1;
+  object-fit: cover;
 }

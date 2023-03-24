@@ -17,9 +17,9 @@ class AuthController {
     try {
       const {username, email, password, name, surname} = req.body;
       const user = await authUseCases.registration(
-        email,
-        password,
         username,
+        password,
+        email,
         name,
         surname,
       );

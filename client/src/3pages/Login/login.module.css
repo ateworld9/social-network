@@ -8,19 +8,18 @@
 }
 .card {
   min-width: 60%;
-
   display: flex;
   background-color: white;
-  border-radius: 10px;
+  border-radius: 0.5em;
   overflow: hidden;
 }
 
 .right {
   flex: 1;
-  padding: 50px;
+  padding: 2em;
   display: flex;
   flex-direction: column;
-  gap: 50px;
+  gap: 2em;
   justify-content: center;
 }
 .right h1 {

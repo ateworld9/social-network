@@ -59,8 +59,6 @@ const MessagesContainer = ({ chatId }: MessagesContainerProps) => {
     };
   }, [dispatch, chatId, count, page]);
 
-  console.log("render", loading);
-
   return (
     <main ref={listRef} className={s.messagesContainer}>
       {loading === "loading" && <MessagesSkeleton />}

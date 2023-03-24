@@ -34,6 +34,7 @@ const SendMessageButton = ({ toUserId }: SendMessageButtonProps) => {
       dispatch(userModel.actions.addUsers(res.data.relationships.users));
       navigate(`/chat/${res.data.data[0].chatId}`);
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log("error while creating new dialog", error);
     }
   };

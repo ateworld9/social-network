@@ -1,5 +1,4 @@
 import knexdb from '../config/database';
-import logger from '../utils/logger';
 
 import {TABLES} from './constants';
 import {parseSort} from './utils';

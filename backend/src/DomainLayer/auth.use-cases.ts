@@ -9,9 +9,9 @@ const tokensUseCases = new TokensUseCases();
 
 class AuthUseCases {
   async registration(
-    email: string,
+    username: string,
     password: string,
-    username?: string,
+    email?: string,
     name?: string,
     surname?: string,
   ) {
@@ -20,9 +20,9 @@ class AuthUseCases {
     // const activationLink = uuid.v4()
 
     const user = await usersUseCases.createUser(
-      email,
-      hashPassword,
       username,
+      hashPassword,
+      email,
       name,
       surname,
     );

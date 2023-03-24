@@ -17,10 +17,10 @@
 }
 .left {
   flex: 1;
-  padding: 50px;
+  padding: 2em;
   display: flex;
   flex-direction: column;
-  gap: 50px;
+  gap: 2em;
   justify-content: center;
 }
 .left h1 {
