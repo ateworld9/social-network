@@ -63,13 +63,14 @@ const MessagesContainer = ({ chatId }: MessagesContainerProps) => {
     <main ref={listRef} className={s.messagesContainer}>
       {loading === "loading" && <MessagesSkeleton />}
       <div ref={loader} className={s.last} />
-      {messageIds.map((messageId) => (
-        <Message
-          key={messageId}
-          messageId={messageId}
-          authUserId={authUserId}
-        />
-      ))}
+      {!!messageIds.length &&
+        messageIds.map((messageId) => (
+          <Message
+            key={messageId}
+            messageId={messageId}
+            authUserId={authUserId}
+          />
+        ))}
     </main>
   );
 };

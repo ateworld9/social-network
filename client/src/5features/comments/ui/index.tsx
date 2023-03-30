@@ -28,7 +28,7 @@ const Comments = ({ postId, comments }: CommentsProps) => {
   return (
     <>
       <section className={s.comments}>
-        {comments?.length &&
+        {!!comments?.length &&
           comments.map((commentId) => (
             <CommentContainer key={commentId} commentId={commentId} />
           ))}

@@ -3,6 +3,7 @@
 declare namespace IndexModuleCssNamespace {
   export interface IIndexModuleCss {
     last: string;
+    noPosts: string;
     posts: string;
   }
 }

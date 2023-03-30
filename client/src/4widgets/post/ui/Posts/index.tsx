@@ -52,10 +52,11 @@ const Posts = ({ fetchOptions }: PostsProps) => {
   // if (isPostsLoading === "loading") return <div>posts loading skeleton</div>;
   return (
     <section ref={list} className={s.posts}>
-      {postIds?.length &&
+      {postIds?.length === 0 && <div className={s.noPosts}>no posts yet</div>}
+      {!!postIds?.length &&
         postIds.map((postId) => <PostCard key={postId} postId={postId} />)}
       {loading === "lazy" && <div>... Loading</div>}
-      {postIds?.length && <div ref={loader} className={s.last} />}
+      {!!postIds?.length && <div ref={loader} className={s.last} />}
     </section>
   );
 };

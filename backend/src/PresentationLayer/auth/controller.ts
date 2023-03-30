@@ -66,23 +66,24 @@ class AuthController {
       next(err);
     }
   }
+
   async refresh(req: Request, res: Response, next: NextFunction) {
     const {refreshToken} = req.cookies;
     if (!refreshToken) {
       next(AppError.UnAuthorized("no refreshToken, can't refresh"));
       return;
     }
-    let userData;
+
     try {
-      userData = await authUseCases.refresh(refreshToken);
+      const userData = await authUseCases.refresh(refreshToken);
+      res.cookie('refreshToken', userData.refreshToken, {
+        maxAge: MAX_AGE,
+        httpOnly: true,
+      });
+      res.status(200).json(userData);
     } catch (e) {
-      return next(e);
+      next(e);
     }
-    res.cookie('refreshToken', userData.refreshToken, {
-      maxAge: MAX_AGE,
-      httpOnly: true,
-    });
-    res.status(200).json(userData);
     return;
   }
 }
