@@ -1,11 +1,11 @@
 import express from 'express';
 import {createServer} from 'http';
-import {PORT} from './config';
+import config from './config';
 import {checkDatabaseConnection} from './config/database';
 import expressApp from './express-app';
 import socketIoApp from './socket-io-app';
 
-const port = PORT ?? 3000;
+const port = config.PORT;
 
 const StartServer = async () => {
   const app = express();

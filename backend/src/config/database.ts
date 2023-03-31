@@ -1,30 +1,23 @@
 import Knex from 'knex';
-import logger from '../utils/logger';
+import logger from '../logger';
 
-import {
-  user,
-  password,
-  host,
-  port,
-  database,
-  poolMin,
-  poolMax,
-  poolIdle,
-} from './index';
+import config from './index';
+
+const {DB_CONFIG} = config;
 
 const knexdb = Knex({
   client: 'pg',
   connection: {
-    user: user,
-    password: password,
-    host: host,
-    port: Number(port),
-    database: database,
+    user: DB_CONFIG.user,
+    password: DB_CONFIG.password,
+    host: DB_CONFIG.host,
+    port: Number(DB_CONFIG.port),
+    database: DB_CONFIG.database,
   },
   pool: {
-    min: Number(poolMin),
-    max: poolMax,
-    idleTimeoutMillis: poolIdle,
+    min: Number(DB_CONFIG.poolMin),
+    max: DB_CONFIG.poolMax,
+    idleTimeoutMillis: DB_CONFIG.poolIdle,
   },
   acquireConnectionTimeout: 2000,
 });

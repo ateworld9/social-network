@@ -10,9 +10,9 @@ declare interface FilterWithOperatorObject {
   operator: '=' | '<' | '>' | '<>' | 'in' | 'like' | 'ilike';
   value: any;
 }
-declare type Filter<T = any> = Partial<T> | FilterWithOperatorObject[];
+declare type Filter<T> = Partial<T> | FilterWithOperatorObject[];
 
-declare type ReqQuery<T = any> = {
+declare type ReqQuery<T> = {
   include?: Include;
   fields?: Fields;
   sort?: Sort;

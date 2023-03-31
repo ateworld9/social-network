@@ -1,11 +1,11 @@
 import {Server} from 'http';
 import {Server as IoServer, Socket} from 'socket.io';
 
-import ChatsUseCases from './DomainLayer/chats.use-cases';
-import TokenUseCases from './DomainLayer/tokens.use-cases';
+import ChatsUseCases from './modules/chats/use-cases';
+import TokenUseCases from './modules/auth/tokens.use-cases';
+import MessagesUseCases from './modules/messages/use-cases';
 
 import knexdb from './config/database';
-import MessagesUseCases from './DomainLayer/messages.use-cases';
 
 interface ServerToClientEvents {
   // noArg: () => void;

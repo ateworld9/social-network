@@ -1,6 +1,6 @@
 import {NextFunction, Request, Response} from 'express';
-import {AppError} from '../utils/app-errors';
-import logger from '../utils/logger';
+import {AppError} from '../app-errors';
+import logger from '../logger';
 
 const ErrorMiddleware = async (
   err: Error | AppError,

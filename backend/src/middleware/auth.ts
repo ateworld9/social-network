@@ -1,6 +1,6 @@
 import {NextFunction, Request, Response} from 'express-serve-static-core';
-import TokenUseCases from '../DomainLayer/tokens.use-cases';
-import {AppError} from '../utils/app-errors';
+import TokenUseCases from '../modules/auth/tokens.use-cases';
+import {AppError} from '../app-errors';
 
 const tokensUseCases = new TokenUseCases();
 

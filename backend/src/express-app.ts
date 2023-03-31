@@ -1,23 +1,20 @@
-import {
-  Application,
-  // , static as expressStatic
-} from 'express';
+import {Application} from 'express';
 // import path from 'path';
 import expressPinoLogger from 'express-pino-logger';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 
-import logger from './utils/logger';
+import logger from './logger';
 import ErrorMiddleware from './middleware/error';
 
-import mediaRouter from './PresentationLayer/media/route';
-import authRouter from './PresentationLayer/auth/route';
-import userRouter from './PresentationLayer/users/route';
-import postRouter from './PresentationLayer/posts/route';
-import likeRouter from './PresentationLayer/likes/route';
-import commentRouter from './PresentationLayer/comments/route';
-import chatsRouter from './PresentationLayer/chats/route';
+import mediaRouter from './modules/media/route';
+import authRouter from './modules/auth/route';
+import userRouter from './modules/users/route';
+import postRouter from './modules/posts/route';
+import likeRouter from './modules/likes/route';
+import commentRouter from './modules/comments/route';
+import chatsRouter from './modules/chats/route';
 
 export default async (app: Application) => {
   app.use(

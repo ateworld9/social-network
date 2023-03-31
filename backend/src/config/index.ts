@@ -1,4 +1,4 @@
-import logger from '../utils/logger';
+import logger from '../logger';
 import dotenv from 'dotenv';
 import fs from 'fs';
 import parseDbUrl from 'ts-parse-database-url';
@@ -18,82 +18,72 @@ if (fs.existsSync(path.resolve(process.cwd(), '.env'))) {
   logger.error('No .env file. Please create .env file');
 }
 
-export const PORT = Number(process.env.PORT || '8000');
-
-export const PATH_TO_PUBLIC =
+const PATH_TO_PUBLIC =
   process.env.PATH_TO_PUBLIC ?? path.join(process.cwd(), '/public');
-export const PATH_TO_IMAGES =
+const PATH_TO_IMAGES =
   process.env.PATH_TO_IMAGES ?? path.join(PATH_TO_PUBLIC, '/images');
 
-export const ENVIRONMENT = process.env.NODE_ENV;
-export const isProd = ENVIRONMENT === 'production';
-export const APP_ACCESS_SECRET = process.env['APP_ACCESS_SECRET'];
+const APP_ACCESS_SECRET = process.env['APP_ACCESS_SECRET'];
 if (!APP_ACCESS_SECRET) {
   logger.error('No client secret. Set APP_ACCESS_SECRET env variable.');
   process.exit(1);
 }
-export const APP_REFRESH_SECRET = process.env['APP_REFRESH_SECRET'];
+const APP_REFRESH_SECRET = process.env['APP_REFRESH_SECRET'];
 if (!APP_ACCESS_SECRET) {
   logger.error('No client secret. Set APP_REFRESH_SECRET env variable.');
   process.exit(1);
 }
-export const DATABASE_URL = process.env.DATABASE_URL;
+const DATABASE_URL = process.env.DATABASE_URL;
 if (!DATABASE_URL) {
   logger.error('No database connection string. Set DATABASE_URL env variable.');
   process.exit(1);
 }
-export const config = parseDbUrl(DATABASE_URL);
-export const {driver, user, password, host, port, database} = config;
+const dbConfig = parseDbUrl(DATABASE_URL);
+const {user, password, host, port, database} = dbConfig;
 
-export const poolMin = process.env.DATABASE_POOL_MIN || '0';
+const poolMin = process.env.DATABASE_POOL_MIN || '0';
 if (poolMin === undefined) {
   logger.info(
     'No database pool min string. DATABASE_POOL_MIN env variable is set to default = 0.',
   );
 }
-export const poolMax = Number(process.env.DATABASE_POOL_MAX || '10');
+const poolMax = Number(process.env.DATABASE_POOL_MAX || '10');
 if (!poolMax) {
   logger.info(
     'No database pool max string. DATABASE_POOL_MAX env variable is set to default = 10.',
   );
 }
-export const poolIdle = Number(process.env.DATABASE_POOL_IDLE || '10000');
+const poolIdle = Number(process.env.DATABASE_POOL_IDLE || '10000');
 if (!poolIdle) {
   logger.info(
     'No database pool idle string. DATABASE_POOL_IDLE env variable is set to default = 10000.',
   );
 }
 
-export const KnexConfig = {
-  client: 'postgresql',
-  connection: {
-    host: process.env.DATABASE_HOSTNAME || host,
-    database: process.env.DATABASE_NAME || database,
-    user: process.env.DATABASE_USERNAME || user,
-    password: process.env.DATABASE_PASSWORD || password,
-    port: process.env.DATABASE_PORT || port,
-  },
-  pool: {
-    min: process.env.DATABASE_POOL_MIN,
-    max: process.env.DATABASE_POOL_MAX,
-    idle: process.env.DATABASE_POOL_IDLE,
-  },
-  migrations: {
-    tableName: 'KnexMigrations',
-  },
+const DB_CONFIG = {
+  user,
+  password,
+  host,
+  port,
+  database,
+  poolMin,
+  poolMax,
+  poolIdle,
 };
 
-// import dotenv from 'dotenv';
+const config = {
+  PORT: Number(process.env.PORT ?? 3000),
+  ENVIRONMENT: process.env.NODE_ENV,
+  isProd: process.env.NODE_ENV === 'production',
+  isDev: process.env.NODE_ENV === 'development',
+  PATH_TO_PUBLIC,
+  PATH_TO_IMAGES,
 
-// if (process.env.NODE_ENV !== 'production') {
-//   const configFile = `./.env.${process.env.NODE_ENV}`;
-//   dotenv.config({path: configFile});
-// } else {
-//   dotenv.config();
-// }
+  APP_ACCESS_SECRET,
+  APP_REFRESH_SECRET,
 
-// export default {
-//   PORT: process.env.PORT,
-//   DB_URL: process.env.MONGODB_URI,
-//   APP_SECRET: process.env.APP_SECRET,
-// };
+  DATABASE_URL,
+  DB_CONFIG,
+};
+
+export default config;
