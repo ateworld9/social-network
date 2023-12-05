@@ -21,8 +21,8 @@
     "noImplicitReturns": false, //cause of error handling
     "noImplicitThis": true,
     "noImplicitAny": true,
-    "baseUrl": "./src",
-    "typeRoots": ["./src/@types", "./node_modules/@types"]
+    "baseUrl": "./src"
+    // "typeRoots": ["./src/@types", "./node_modules/@types"]
   },
   "include": ["src"],
   "exclude": ["./node_modules", "./build"]

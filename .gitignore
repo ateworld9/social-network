@@ -15,6 +15,7 @@
 **/*.log
 **/logger.log
 
+/client1
 /client2
 
 **/public/images
